@@ -3,9 +3,7 @@ import express, { Request, Response } from 'express';
 const app = express();
 const port = process.env.PORT || 8080;
 
-// app.get('/', (req: Request, res: Response) => {
-//   res.send('Hello from TypeScript Express!');
-// });
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
@@ -23,6 +21,7 @@ const items = [
     price: 2100
     },
 ];
+
 
 app.get('/api/items', (req: Request, res: Response) => {
     res.send(items);
