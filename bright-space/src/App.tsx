@@ -1,35 +1,22 @@
-import React, { use, useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import InfoTab from "./pages/InfoTab";
+import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 
 function App() {
-  const [items, setItems] = useState<
-    {
-      price: number;
-      name: string;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    fetch("/api/items")
-      .then((res) => res.json())
-      .then((data) => setItems(data));
-  }, []);
-
-  function renderItems() {
-    return items.map((item, i) => {
-      return (
-        <div key={i}>
-          <h3>{item.name}</h3>
-          <p>{item.price}</p>
-        </div>
-      );
-    });
-  }
-
   return (
-    <>
-      Hello World!!!
-      {renderItems()}
-    </>
+    <FluentProvider theme={webLightTheme}>
+      <Header />
+      <div style={{ padding: "1rem", paddingBottom: "80px" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="infotab" element={<InfoTab />} />
+        </Routes>
+      </div>
+      <Footer />
+    </FluentProvider>
   );
 }
 
