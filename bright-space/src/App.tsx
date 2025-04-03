@@ -1,9 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import InfoTab from "./pages/InfoTab";
-import BSContact from "./pages/BSContact";
-import BSTermsAndConditions from "./pages/BSTermsAndConditions";
-import BSPrivacy from "./pages/BSPrivacy";
+import BSHome from "./pages/BSHome";
+import BSContact from "./pages/footerPages/BSContact";
 import {
   FluentProvider,
   teamsLightTheme,
@@ -12,6 +9,9 @@ import {
 import { createContext, useContext, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import BSResource from "./pages/BSResource";
+import BSTermsAndConditions from "./pages/footerPages/BSTermsAndConditions";
+import BSPrivacy from "./pages/footerPages/BSPrivacy";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -36,18 +36,18 @@ function App() {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <FluentProvider theme={theme}>
         <Header />
-        <div style={{ padding: "1rem", paddingBottom: "80px" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="infotab" element={<InfoTab />} />
-            <Route path="contact" element={<BSContact />} />
-            <Route
-              path="terms-and-condition"
-              element={<BSTermsAndConditions />}
-            />
-            <Route path="privacy" element={<BSPrivacy />} />
-          </Routes>
-        </div>
+
+        <Routes>
+          <Route path="/" element={<BSHome />} />
+          <Route path="bs-resource" element={<BSResource />} />
+          <Route path="contact" element={<BSContact />} />
+          <Route
+            path="terms-and-condition"
+            element={<BSTermsAndConditions />}
+          />
+          <Route path="privacy" element={<BSPrivacy />} />
+        </Routes>
+
         <Footer />
       </FluentProvider>
     </ThemeContext.Provider>

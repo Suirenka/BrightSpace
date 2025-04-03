@@ -1,7 +1,7 @@
 import { Text, CardFooter, makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
-  footer: {
+  cardFooter: {
     borderTop: "1px solid var(--colorNeutralStroke1)",
     paddingTop: "0.5rem",
     textAlign: "center",
@@ -12,11 +12,13 @@ const useStyles = makeStyles({
 
 interface BSCardFooterProps {
   children: React.ReactNode;
+  givenStyles?: Record<string, string>;
 }
 
-const BSCardFooter = ({ children }: BSCardFooterProps) => {
-  const styles = useStyles();
-  return <CardFooter className={styles.footer}>{children}</CardFooter>;
+const BSCardFooter = ({ children, givenStyles }: BSCardFooterProps) => {
+  const defaultCardStyles = useStyles();
+  const styles = givenStyles ? givenStyles : defaultCardStyles;
+  return <CardFooter className={styles.cardFooter}>{children}</CardFooter>;
 };
 
 export default BSCardFooter;

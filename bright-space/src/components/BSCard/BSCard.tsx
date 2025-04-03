@@ -3,22 +3,19 @@ import { Card, makeStyles, shorthands } from "@fluentui/react-components";
 const useStyles = makeStyles({
   card: {
     margin: "auto",
-    maxWidth: "800px",
-    width: "90%",
-    minHeight: "65vh",
-    ...shorthands.padding("1rem"),
-    marginTop: "2rem",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
+    width: "70%",
+    padding: "2rem",
   },
 });
 
 interface BSCardProps {
   children: React.ReactNode;
+  givenStyles?: Record<string, string>;
 }
 
-const BSCard = ({ children }: BSCardProps) => {
-  const styles = useStyles();
+const BSCard = ({ children, givenStyles }: BSCardProps) => {
+  const defaultCardStyles = useStyles();
+  const styles = givenStyles ? givenStyles : defaultCardStyles;
   return <Card className={styles.card}>{children}</Card>;
 };
 

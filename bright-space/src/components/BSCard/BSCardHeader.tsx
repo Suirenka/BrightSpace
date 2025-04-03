@@ -6,22 +6,23 @@ import {
 } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
-  header: {
+  cardHeader: {
     borderBottom: "1px solid var(--colorNeutralStroke1)",
     paddingBottom: "0.5rem",
-    marginBottom: "1rem",
   },
 });
 
 interface BSCardHeaderProps {
   children: React.ReactNode;
+  givenStyles?: Record<string, string>;
 }
 
-const BSCardHeader = ({ children }: BSCardHeaderProps) => {
-  const styles = useStyles();
+const BSCardHeader = ({ children, givenStyles }: BSCardHeaderProps) => {
+  const defaultCardStyles = useStyles();
+  const styles = givenStyles ? givenStyles : defaultCardStyles;
   return (
     <CardHeader
-      className={styles.header}
+      className={styles.cardHeader}
       header={
         <Text as="h1" weight="semibold" size={600}>
           {children}

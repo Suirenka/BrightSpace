@@ -8,23 +8,25 @@ import {
   makeStyles,
   shorthands,
 } from "@fluentui/react-components";
+import { typographyStyles } from "@fluentui/react-theme";
 
 const useStyles = makeStyles({
-  body: {
-    marginBottom: "1rem",
-    lineHeight: 1.5,
-    padding: "20px",
+  cardBody: {
+    display: "flex",
+    flexDirection: "column",
+    lineHeight: "1.5rem",
   },
 });
 
 interface BSCardProps {
-  fontSize?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000;
   children: React.ReactNode;
+  givenStyles?: Record<string, string>;
 }
 
-const BSCardBody = ({ children, fontSize = 400 }: BSCardProps) => {
-  const styles = useStyles();
-  return <CardPreview className={styles.body}>{children}</CardPreview>;
+const BSCardBody = ({ children, givenStyles }: BSCardProps) => {
+  const defaultCardStyles = useStyles();
+  const styles = givenStyles ? givenStyles : defaultCardStyles;
+  return <Body1 className={styles.cardBody}>{children}</Body1>;
 };
 
 export default BSCardBody;

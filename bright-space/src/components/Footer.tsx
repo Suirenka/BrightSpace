@@ -4,18 +4,19 @@ import {
   Link,
   makeStyles,
   shorthands,
+  tokens,
 } from "@fluentui/react-components";
 import { teamsLightTheme } from "@fluentui/react-components";
 import githubLogoSrc from "../assets/images/logos/github-mark.png";
 import githubLogoWhiteSrc from "../assets/images/logos/github-mark-white.png";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import BSNavLink from "./BSLinks/BSNavLink";
 
 const useFooterStyles = makeStyles({
   footer: {
-    backgroundColor: "colorNeutralForeground1",
-    marginTop: "auto",
+    backgroundColor: tokens.colorBrandBackground2,
+    marginTop: "2rem",
     width: "100%",
     height: "auto",
     ...shorthands.padding("1rem"),
@@ -34,6 +35,17 @@ const useFooterStyles = makeStyles({
     width: "25px",
     height: "25px",
   },
+  navLink: {
+    color: tokens.colorBrandForegroundLinkHover,
+    textDecoration: "none",
+    fontSize: "14px",
+    ":hover": {
+      textDecoration: "underline",
+    },
+    display: "inline-flex",
+    alignItems: "center",
+    ...shorthands.gap("4px"),
+  },
 });
 
 const Footer = () => {
@@ -48,9 +60,24 @@ const Footer = () => {
         <Link href="https://github.com/Suirenka/BrightSpace">
           <Image className={styles.logo} src={githubLogo} alt="Logo" />
         </Link>
-        <RouterLink to="/contact">Contact Us</RouterLink>
-        <RouterLink to="/terms-and-condition">Terms and Conditions</RouterLink>
-        <RouterLink to="/privacy">Privacy Policy</RouterLink>
+        <BSNavLink
+          givenStyles={styles}
+          text={"Contact Us"}
+          route={"/contact"}
+          noArrow={true}
+        />
+        <BSNavLink
+          givenStyles={styles}
+          text={"Terms and Conditions"}
+          route={"/terms-and-condition"}
+          noArrow={true}
+        />
+        <BSNavLink
+          givenStyles={styles}
+          text={"Privacy Policy"}
+          route={"/privacy"}
+          noArrow={true}
+        />
       </div>
       <Text as="p" size={200}>
         All rights reserved. Copyright&copy; {new Date().getFullYear()} Bright
