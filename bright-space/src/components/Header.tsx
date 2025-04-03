@@ -1,12 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { makeStyles, shorthands } from "@fluentui/react-components";
-import { WeatherSunnyLow24Filled } from "@fluentui/react-icons";
-// ^ Adjust this import if you prefer a different icon variant, e.g. WeatherSunnyLow24Regular
+import { makeStyles, shorthands, Image } from "@fluentui/react-components";
+import BSLogo from "../assets/images/logos/BSLogo.jpg";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
+import BSThemeToggle from "./BSThemeToggle";
 
 const useHeaderStyles = makeStyles({
   header: {
-    backgroundColor: "#E8C33080",
+    backgroundColor: "colorNeutralForeground1",
     ...shorthands.padding("1rem"),
     display: "flex",
     alignItems: "center",
@@ -20,22 +22,24 @@ const useHeaderStyles = makeStyles({
   title: {
     margin: "0",
   },
-  icon: {
-    color: "orange",
-    marginLeft: "8px",
+  logo: {
+    width: "2vw",
+    marginLeft: "1rem",
   },
 });
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const styles = useHeaderStyles();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <header className={styles.header}>
       <div className={styles.brand} onClick={() => navigate("/")}>
         <h1 className={styles.title}>BrightSpace</h1>
-        <WeatherSunnyLow24Filled className={styles.icon} />
+        <Image className={styles.logo} src={BSLogo} alt="Logo" />
       </div>
+      <BSThemeToggle currentTheme={theme} onToggle={toggleTheme} />
     </header>
   );
 };

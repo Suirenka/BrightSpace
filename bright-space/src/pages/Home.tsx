@@ -10,6 +10,7 @@ import {
   Divider,
 } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
+import BSNavButton from "../components/BSNavButton";
 
 const useStyles = makeStyles({
   Container: {
@@ -107,9 +108,7 @@ export const Home = () => {
     <>
       <Banner />
       <UvRisksBox />
-      <ProtectionBox />
       <Divider />
-      <LocationSearch />
     </>
   );
 };
@@ -118,17 +117,10 @@ const Banner = () => {
   const styles = useStyles();
   return (
     <div className={styles.Container}>
-      <Title1 className={styles.title}>Sunshield</Title1>
+      <Title1 className={styles.title}>BrightSpace</Title1>
       <Subtitle1 className={styles.subtitle}>
-        Stay Safe Under the Sun!
+        Your Daily Companion for Positive Digital Living
       </Subtitle1>
-      <Body1 className={styles.intro}>
-        The sun brightens our days, lifts our spirits, and gives us that golden
-        glow. But beneath its radiant light lies an invisible threat: UV
-        radiation. You can’t see or feel it. Yet, it can damage your skin in
-        minutes, leading to sunburn, premature aging, and even long-term health
-        risks like skin cancer.
-      </Body1>
     </div>
   );
 };
@@ -146,9 +138,7 @@ const UvRisksBox = () => {
           outdoors.
         </Body1>
         <div className={styles.buttonRow}>
-          <Button appearance="primary" onClick={() => navigate("/infotab")}>
-            Learn More about UV Risk
-          </Button>
+          <BSNavButton text={"Learn More about UV Risk"} route={"/"} />
         </div>
       </div>
       <div className={styles.rightColumn}>
@@ -157,47 +147,5 @@ const UvRisksBox = () => {
     </div>
   );
 };
-
-const ProtectionBox = () => {
-  const styles = useStyles();
-  const navigate = useNavigate();
-  return (
-    <div className={styles.infoSection}>
-      <div className={styles.rightColumn}>
-        <img
-          src="/protection_img.jpeg"
-          alt="Protection"
-          className={styles.infoImage}
-        />
-      </div>
-      <div className={styles.leftColumn}>
-        <Title1 className={styles.risksTitle}>Protection</Title1>
-        <Body1 className={styles.risksParagraph}>
-          Protect yourself by checking the UV index before heading out. Wear
-          sunscreen, put on protective clothing, and seek shade when needed.
-        </Body1>
-        <div className={styles.buttonRow}>
-          <Button appearance="primary" onClick={() => navigate("/protection")}>
-            Learn More about Sun Protection
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-function LocationSearch() {
-  const styles = useStyles();
-  return (
-    <div className={styles.locationContainer}>
-      <h2 className={styles.heading2}>Find Your Local UV Index</h2>
-      <p className={styles.paragraph}>
-        Enter your location below to get the latest UV Index data and
-        personalized sun protection tips. Stay informed and stay safe in the
-        sun!
-      </p>
-    </div>
-  );
-}
 
 export default Home;
