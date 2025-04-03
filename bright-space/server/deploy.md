@@ -1,5 +1,10 @@
 # To deploy
 ## Local
+### build
+npm run build
+rm -rf ./server/build
+mv build server/
+
 ### Zip the code
 cd server
 zip -r project.zip . -x "node_modules/*" "dist/*" ".git/*"
@@ -11,6 +16,7 @@ aws configure
 aws s3 cp project.zip s3://bright-space/code-deploy-1/project.zip
 
 ### ssh
+cd ..
 ssh ubuntu@54.206.127.22 -i BrightSpace.pem
 
 ## In the server
@@ -19,7 +25,7 @@ unzip -o project.zip -d Code/express-codedeploy-1/
 npm install --prefix Code/express-codedeploy-1/
 npm run build --prefix Code/express-codedeploy-1/
 
-npm run dev --prefix Code/express-codedeploy-1/
+npm start --prefix Code/express-codedeploy-1/
 
 sudo lsof -i :8080
 kill -9 <PID>
