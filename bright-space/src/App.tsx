@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import BSResource from "./pages/BSResource";
 import BSTermsAndConditions from "./pages/footerPages/BSTermsAndConditions";
 import BSPrivacy from "./pages/footerPages/BSPrivacy";
+import BSSafetyGuide from "./pages/BSSafetyGuide";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -46,6 +47,7 @@ function App() {
             element={<BSTermsAndConditions />}
           />
           <Route path="privacy" element={<BSPrivacy />} />
+          <Route path="bs-staysafe" element={<BSSafetyGuide />} />
         </Routes>
 
         <Footer />

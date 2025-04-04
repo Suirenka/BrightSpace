@@ -3,161 +3,120 @@ import {
   shorthands,
   tokens,
   Title1,
-  Subtitle1,
+  Subtitle2,
   Text,
-  Image,
-  CardHeader,
 } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
-import BSCard from "../components/BSCard/BSCard";
-import BSCardBody from "../components/BSCard/BSCardBody";
-import BSCardHeader from "../components/BSCard/BSCardHeader";
+import {
+  ShieldCheckmark24Regular,
+  PeopleTeam24Regular,
+  Alert24Regular,
+  Chat24Regular,
+} from "@fluentui/react-icons";
 import BSNavLink from "../components/BSLinks/BSNavLink";
-import BSCardFooter from "../components/BSCard/BSCardFooter";
 
 const useStyles = makeStyles({
-  Container: {
-    backgroundImage: "url('/sunset_bg.jpeg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    minHeight: "40vh",
-    display: "flex",
-    flexDirection: "column",
-    ...shorthands.padding("20px"),
-    justifyContent: "center",
-    alignItems: "center",
+  container: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    paddingTop: "3rem",
+    paddingBottom: "3rem",
+    paddingLeft: "1.5rem",
+    paddingRight: "1.5rem",
     textAlign: "center",
-    color: tokens.colorNeutralForegroundOnBrand,
   },
   title: {
-    marginBottom: "1rem",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+    fontWeight: "bold",
+    fontSize: "2rem",
+    marginBottom: "0.5rem",
   },
   subtitle: {
-    maxWidth: "600px",
-    margin: "0 auto",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
-  },
-  locationContainer: {
-    ...shorthands.padding("2rem"),
-    maxWidth: "600px",
+    fontSize: "1.1rem",
+    color: tokens.colorNeutralForeground3,
+    marginBottom: "2rem",
+    lineHeight: "1.6",
+    maxWidth: "700px",
     marginLeft: "auto",
     marginRight: "auto",
   },
-  heading2: {
-    marginBottom: "1rem",
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "1.5rem",
+    marginTop: "2rem",
   },
-  paragraph: {
-    marginBottom: "1.5rem",
-  },
-  locationBoxWrapper: {
-    display: "flex",
-    gap: "1rem",
-    alignItems: "center",
-  },
-  infoSection: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    ...shorthands.gap("1rem"),
-    ...shorthands.padding("2rem"),
-    "@media(max-width: 768px)": {
-      flexDirection: "column",
-      textAlign: "center",
-    },
-  },
-  leftColumn: {
-    flex: "1 1 auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  card: {
+    padding: "1.5rem",
+    borderRadius: "12px",
+    backgroundColor: tokens.colorNeutralBackground1,
+    boxShadow: tokens.shadow4,
     textAlign: "center",
   },
-
-  risksParagraph: {
-    marginBottom: "1rem",
-    maxWidth: "500px",
+  icon: {
+    marginBottom: "0.75rem",
+    color: tokens.colorBrandForeground1,
+    fontSize: "32px",
   },
-  intro: {
-    marginTop: "1rem",
-    maxWidth: "500px",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+  cardTitle: {
+    fontWeight: 600,
+    fontSize: "1.1rem",
+    marginBottom: "0.4rem",
   },
-  card: {
-    margin: "auto",
-    width: "90%",
-    ...shorthands.padding("1rem"),
-    marginTop: "2rem",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
+  cardDesc: {
+    fontSize: "0.95rem",
+    color: tokens.colorNeutralForeground3,
   },
-});
-
-const useResourceStyles = makeStyles({
-  card: {
-    margin: "auto",
-    width: "70%",
-    ...shorthands.padding("1rem"),
-    marginTop: "2rem",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
-    padding: "2rem",
-  },
-  resourceTitle: {
-    marginBottom: "0.5rem",
-  },
-  resourceCardBody: {
-    display: "flex",
-    flexDirection: "row",
-    lineHeight: "1.5rem",
-  },
-  cardBody: {
-    display: "flex",
-    flexDirection: "row",
-    lineHeight: "1.5rem",
-  },
-  resourceImage: {
-    width: "200px",
-    height: "200px",
+  navWrapper: {
+    marginTop: "3rem",
+    textAlign: "center",
   },
 });
 
-export const BSHome = () => {
-  return (
-    <>
-      <ResourceCard />
-    </>
-  );
-};
+const resourceCards = [
+  {
+    icon: <Alert24Regular fontSize={32} />,
+    title: "Spotting Cyberbullying",
+    desc: "Know the signs before it gets worse.",
+  },
+  {
+    icon: <ShieldCheckmark24Regular fontSize={32} />,
+    title: "What To Do If You’re Targeted",
+    desc: "Step-by-step actions to protect yourself.",
+  },
+  {
+    icon: <PeopleTeam24Regular fontSize={32} />,
+    title: "Helping a Friend",
+    desc: "Be the reason someone feels safe again.",
+  },
+  {
+    icon: <Chat24Regular fontSize={32} />,
+    title: "When It Happens in Group Chats",
+    desc: "What to do when the whole vibe goes toxic.",
+  },
+];
 
-const ResourceCard = () => {
-  const styles = useResourceStyles();
-  const navigate = useNavigate();
+const BSResource = () => {
+  const styles = useStyles();
+
   return (
-    <BSCard givenStyles={styles}>
-      <BSCardHeader>Digital Citizenship Resources for Teens</BSCardHeader>
-      <BSCardBody givenStyles={styles}>
-        <ResourceCardContent />
-      </BSCardBody>
-      <BSCardFooter>
+    <div className={styles.container}>
+      <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
+      
+
+      <div className={styles.grid}>
+        {resourceCards.map((item, index) => (
+          <div key={index} className={styles.card}>
+            <div className={styles.icon}>{item.icon}</div>
+            <div className={styles.cardTitle}>{item.title}</div>
+            <div className={styles.cardDesc}>{item.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.navWrapper}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
-      </BSCardFooter>
-    </BSCard>
+      </div>
+    </div>
   );
 };
 
-const ResourceCardContent = () => {
-  const styles = useResourceStyles();
-  return (
-    <>
-      <Text>
-        tools and tips you need to navigate the online world safely and
-        responsibly.
-      </Text>
-    </>
-  );
-};
-export default BSHome;
+export default BSResource;
