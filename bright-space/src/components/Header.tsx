@@ -11,6 +11,7 @@ const useHeaderStyles = makeStyles({
   header: {
     backgroundColor: tokens.colorBrandBackground2,
     justifyItems: "center",
+    boxShadow: "0 2px 4px tokens.colorNeutralShadowAmbient",
   },
   headerContent: {
     backgroundColor: tokens.colorBrandBackground2,
