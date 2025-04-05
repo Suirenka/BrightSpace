@@ -13,6 +13,11 @@ import BSResource from "./pages/BSResource";
 import BSTermsAndConditions from "./pages/footerPages/BSTermsAndConditions";
 import BSPrivacy from "./pages/footerPages/BSPrivacy";
 import BSSafetyGuide from "./pages/BSSafetyGuide";
+import SpottingCyberbullying from "./pages/resourcePages/SpottingCyberbullying";
+import WhatToDoIfTargeted from "./pages/resourcePages/WhatToDoIfTargeted";
+import HelpFriends from "./pages/resourcePages/HelpFriends";
+import GroupChats from "./pages/resourcePages/GroupChats";
+
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -48,6 +53,10 @@ function App() {
           />
           <Route path="privacy" element={<BSPrivacy />} />
           <Route path="bs-staysafe" element={<BSSafetyGuide />} />
+          <Route path="spotting-cyberbullying" element={<SpottingCyberbullying />} />
+          <Route path="what-to-do-if-targeted" element={<WhatToDoIfTargeted />} />
+          <Route path="/help-friends" element={<HelpFriends />} />
+          <Route path="group-chat-guidance" element={<GroupChats />} />
         </Routes>
 
         <Footer />

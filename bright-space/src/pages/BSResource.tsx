@@ -12,6 +12,7 @@ import {
   Alert24Regular,
   Chat24Regular,
 } from "@fluentui/react-icons";
+import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
@@ -50,6 +51,12 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: tokens.shadow4,
     textAlign: "center",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    ":hover": {
+      transform: "scale(1.05)",
+      boxShadow: tokens.shadow16,
+      cursor: "pointer",
+    },
   },
   icon: {
     marginBottom: "0.75rem",
@@ -76,35 +83,43 @@ const resourceCards = [
     icon: <Alert24Regular fontSize={32} />,
     title: "Spotting Cyberbullying",
     desc: "Know the signs before it gets worse.",
+    route: "/spotting-cyberbullying",
   },
   {
     icon: <ShieldCheckmark24Regular fontSize={32} />,
     title: "What To Do If You’re Targeted",
     desc: "Step-by-step actions to protect yourself.",
+    route: "/what-to-do-if-targeted",
   },
   {
     icon: <PeopleTeam24Regular fontSize={32} />,
     title: "Helping a Friend",
     desc: "Be the reason someone feels safe again.",
+    route: "/help-friends",
   },
   {
     icon: <Chat24Regular fontSize={32} />,
     title: "When It Happens in Group Chats",
     desc: "What to do when the whole vibe goes toxic.",
+    route: "/group-chat-guidance",
   },
 ];
 
 const BSResource = () => {
   const styles = useStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
       <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
-      
 
       <div className={styles.grid}>
         {resourceCards.map((item, index) => (
-          <div key={index} className={styles.card}>
+          <div
+            key={index}
+            className={styles.card}
+            onClick={() => navigate(item.route)}
+          >
             <div className={styles.icon}>{item.icon}</div>
             <div className={styles.cardTitle}>{item.title}</div>
             <div className={styles.cardDesc}>{item.desc}</div>

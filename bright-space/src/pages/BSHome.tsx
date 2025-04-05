@@ -18,7 +18,7 @@ import BSCardFooter from "../components/BSCard/BSCardFooter";
 import ResourceImage from "../assets/images/home/Resource.png";
 import BSBanner from "../components/BSBanner";
 
-const useResourceStyles = makeStyles({
+const useStyles = makeStyles({
   card: {
     margin: "auto",
     width: "70%",
@@ -31,7 +31,7 @@ const useResourceStyles = makeStyles({
   resourceTitle: {
     marginBottom: "0.5rem",
   },
-  cardBody: {
+  resourceCardBody: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -57,7 +57,7 @@ const useResourceStyles = makeStyles({
   },
 });
 
-export const BSHome = () => {
+const BSHome = () => {
   return (
     <>
       <BSBanner />
@@ -67,7 +67,7 @@ export const BSHome = () => {
 };
 
 const ResourceCard = () => {
-  const styles = useResourceStyles();
+  const styles = useStyles();
   const navigate = useNavigate();
 
   return (
@@ -78,21 +78,7 @@ const ResourceCard = () => {
         </Title1>
       </BSCardHeader>
       <BSCardBody givenStyles={styles}>
-        <div className={styles.cardBody}>
-          <div className={styles.leftColumn}>
-            <Text className={styles.text}>
-              Find the tools and tips you need to navigate the online world safely and responsibly.
-            </Text>
-            <Button
-              className={styles.button}
-              appearance="primary"
-              onClick={() => navigate("/bs-staysafe")}
-            >
-              Tools →
-            </Button>
-          </div>
-          <Image className={styles.resourceImage} src={ResourceImage} />
-        </div>
+        <ResourceCardContent navigate={navigate} />
       </BSCardBody>
       <BSCardFooter>
         <BSNavLink
@@ -101,6 +87,29 @@ const ResourceCard = () => {
         />
       </BSCardFooter>
     </BSCard>
+  );
+};
+
+const ResourceCardContent = ({ navigate }: { navigate: any }) => {
+  const styles = useStyles();
+
+  return (
+    <div className={styles.resourceCardBody}>
+      <div className={styles.leftColumn}>
+        <Text className={styles.text}>
+          Find the tools and tips you need to navigate the online world safely
+          and responsibly.
+        </Text>
+        <Button
+          className={styles.button}
+          appearance="primary"
+          onClick={() => navigate("/bs-staysafe")}
+        >
+          Tools →
+        </Button>
+      </div>
+      <Image className={styles.resourceImage} src={ResourceImage} />
+    </div>
   );
 };
 
