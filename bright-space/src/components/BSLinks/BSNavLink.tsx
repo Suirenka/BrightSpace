@@ -20,10 +20,10 @@ const useStyles = makeStyles({
   },
 });
 
-interface BSNavButtonProps {
+interface BSNavLinkProps {
   text: string;
   route: string;
-  givenStyles?: Record<string, string>;
+  givenLinkStyle?: string;
   back?: boolean;
   noArrow?: boolean;
 }
@@ -31,30 +31,30 @@ interface BSNavButtonProps {
 const BSNavLink = ({
   text,
   route,
-  givenStyles,
+  givenLinkStyle,
   back = false,
   noArrow = false,
-}: BSNavButtonProps) => {
+}: BSNavLinkProps) => {
   const defaultCardStyles = useStyles();
-  const linkStyle = givenStyles ? givenStyles : defaultCardStyles;
+  const linkStyle = givenLinkStyle ? givenLinkStyle : defaultCardStyles.navLink;
   if (noArrow) {
     return !back ? (
-      <RouterLink className={linkStyle.navLink} to={route}>
+      <RouterLink className={linkStyle} to={route}>
         {text}
       </RouterLink>
     ) : (
-      <RouterLink className={linkStyle.navLink} to={route}>
+      <RouterLink className={linkStyle} to={route}>
         {text}
       </RouterLink>
     );
   }
   return !back ? (
-    <RouterLink className={linkStyle.navLink} to={route}>
+    <RouterLink className={linkStyle} to={route}>
       {text}
       <ArrowCircleRight20Regular />
     </RouterLink>
   ) : (
-    <RouterLink className={linkStyle.navLink} to={route}>
+    <RouterLink className={linkStyle} to={route}>
       <ArrowCircleLeft20Regular />
       {text}
     </RouterLink>

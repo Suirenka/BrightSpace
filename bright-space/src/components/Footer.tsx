@@ -68,19 +68,19 @@ const Footer = () => {
           <Image className={styles.logo} src={githubLogo} alt="Logo" />
         </Link>
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Contact Us"}
           route={"/contact"}
           noArrow={true}
         />
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Terms and Conditions"}
           route={"/terms-and-condition"}
           noArrow={true}
         />
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Privacy Policy"}
           route={"/privacy"}
           noArrow={true}
