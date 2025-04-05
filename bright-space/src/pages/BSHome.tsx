@@ -23,11 +23,10 @@ const useResourceStyles = makeStyles({
   card: {
     margin: "auto",
     width: "70%",
-    ...shorthands.padding("1rem"),
-    marginTop: "2rem",
     padding: "2rem",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+    backgroundColor: tokens.colorNeutralBackground1,
   },
   resourceTitle: {
     marginBottom: "0.5rem",
@@ -62,13 +61,13 @@ const ResourceCard = () => {
   const styles = useResourceStyles();
   const navigate = useNavigate();
   return (
-    <BSCard givenStyles={styles}>
+    <BSCard givenCardStyle={styles.card}>
       <BSCardHeader>
         <Title1 className={styles.resourceTitle}>
           Digital Citizenship Resources for Teens
         </Title1>
       </BSCardHeader>
-      <BSCardBody givenStyles={styles}>
+      <BSCardBody givenCardBodyStyle={styles.cardBody}>
         <ResourceCardContent />
       </BSCardBody>
       <BSCardFooter>

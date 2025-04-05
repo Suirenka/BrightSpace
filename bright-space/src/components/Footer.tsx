@@ -16,7 +16,6 @@ import BSNavLink from "./BSLinks/BSNavLink";
 const useFooterStyles = makeStyles({
   footer: {
     backgroundColor: tokens.colorBrandBackground2,
-    marginTop: "2rem",
     width: "100%",
     height: "auto",
     ...shorthands.padding("1rem"),
@@ -45,6 +44,14 @@ const useFooterStyles = makeStyles({
     display: "inline-flex",
     alignItems: "center",
     ...shorthands.gap("4px"),
+  },
+  card: {
+    margin: "auto",
+    width: "70%",
+    padding: "2rem",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+    backgroundColor: tokens.colorNeutralBackground1,
   },
 });
 

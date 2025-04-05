@@ -137,9 +137,9 @@ const ResourceCard = () => {
   const styles = useResourceStyles();
   const navigate = useNavigate();
   return (
-    <BSCard givenStyles={styles}>
+    <BSCard givenCardStyle={styles.card}>
       <BSCardHeader>Digital Citizenship Resources for Teens</BSCardHeader>
-      <BSCardBody givenStyles={styles}>
+      <BSCardBody givenCardBodyStyle={styles.cardBody}>
         <ResourceCardContent />
       </BSCardBody>
       <BSCardFooter>

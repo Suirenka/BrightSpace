@@ -18,12 +18,14 @@ const useStyles = makeStyles({
 
 interface BSCardProps {
   children: React.ReactNode;
-  givenStyles?: Record<string, string>;
+  givenCardPreviewStyles?: string;
 }
-const BSCardPreview = ({ children, givenStyles }: BSCardProps) => {
+const BSCardPreview = ({ children, givenCardPreviewStyles }: BSCardProps) => {
   const defaultCardStyles = useStyles();
-  const styles = givenStyles ? givenStyles : defaultCardStyles;
-  return <CardPreview className={styles.cardPreview}>{children}</CardPreview>;
+  const cardPreviewStyle = givenCardPreviewStyles
+    ? givenCardPreviewStyles
+    : defaultCardStyles.cardPreview;
+  return <CardPreview className={cardPreviewStyle}>{children}</CardPreview>;
 };
 
 export default BSCardPreview;

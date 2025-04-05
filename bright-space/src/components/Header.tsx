@@ -24,7 +24,6 @@ const useHeaderStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
-    marginLeft: "2rem",
   },
   title: {
     margin: "0",

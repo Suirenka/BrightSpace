@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 const BSContact = () => {
   const contactStyle = useStyles();
   return (
-    <BSCard givenStyles={contactStyle}>
+    <BSCard givenCardStyle={contactStyle.card}>
       <BSCardHeader>Contact Us</BSCardHeader>
       <BSCardBody>
         If you have any questions or concerns, please contact us at:
