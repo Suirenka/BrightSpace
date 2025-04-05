@@ -25,7 +25,6 @@ const useResourceStyles = makeStyles({
     width: "70%",
     padding: "2rem",
     marginTop: "2rem",
-    padding: "2rem",
     boxShadow: `0 2px 8px ${tokens.colorNeutralShadowKeyDarker}`,
     borderRadius: "8px",
   },
