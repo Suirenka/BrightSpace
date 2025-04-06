@@ -17,6 +17,7 @@ import SpottingCyberbullying from "./pages/resourcePages/SpottingCyberbullying";
 import WhatToDoIfTargeted from "./pages/resourcePages/WhatToDoIfTargeted";
 import HelpFriends from "./pages/resourcePages/HelpFriends";
 import GroupChats from "./pages/resourcePages/GroupChats";
+import BSReport from "./pages/BSReport";
 
 
 interface IThemeContext {
@@ -57,6 +58,7 @@ function App() {
           <Route path="what-to-do-if-targeted" element={<WhatToDoIfTargeted />} />
           <Route path="/help-friends" element={<HelpFriends />} />
           <Route path="group-chat-guidance" element={<GroupChats />} />
+          <Route path="/report" element={<BSReport />} />
         </Routes>
 
         <Footer />

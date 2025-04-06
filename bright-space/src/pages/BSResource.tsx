@@ -28,16 +28,17 @@ const useStyles = makeStyles({
   title: {
     fontWeight: "bold",
     fontSize: "2rem",
-    marginBottom: "0.5rem",
+    marginBottom: "0.75rem",
   },
-  subtitle: {
+  description: {
     fontSize: "1.1rem",
     color: tokens.colorNeutralForeground3,
-    marginBottom: "2rem",
+    marginBottom: "0.5rem",
     lineHeight: "1.6",
-    maxWidth: "700px",
-    marginLeft: "auto",
-    marginRight: "auto",
+  },
+  reportLineWrapper: {
+    textAlign: "center",
+    marginBottom: "2rem",
   },
   grid: {
     display: "grid",
@@ -110,9 +111,15 @@ const BSResource = () => {
   const navigate = useNavigate();
 
   return (
-
     <div className={styles.container}>
       <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
+
+      <div className={styles.reportLineWrapper}>
+        <Subtitle2>
+          Witnessed something harmful?{" "}
+          <BSNavLink text="Report it" route="/report" />
+        </Subtitle2>
+      </div>
 
       <div className={styles.grid}>
         {resourceCards.map((item, index) => (
@@ -129,7 +136,6 @@ const BSResource = () => {
       </div>
 
       <div className={styles.navWrapper}>
-
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
