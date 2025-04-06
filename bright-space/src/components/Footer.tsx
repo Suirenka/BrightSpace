@@ -16,7 +16,6 @@ import BSNavLink from "./BSLinks/BSNavLink";
 const useFooterStyles = makeStyles({
   footer: {
     backgroundColor: tokens.colorBrandBackground2,
-    marginTop: "2rem",
     width: "100%",
     height: "auto",
     ...shorthands.padding("1rem"),
@@ -46,6 +45,14 @@ const useFooterStyles = makeStyles({
     alignItems: "center",
     ...shorthands.gap("4px"),
   },
+  card: {
+    margin: "auto",
+    width: "70%",
+    padding: "2rem",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+    backgroundColor: tokens.colorNeutralBackground1,
+  },
 });
 
 const Footer = () => {
@@ -61,19 +68,19 @@ const Footer = () => {
           <Image className={styles.logo} src={githubLogo} alt="Logo" />
         </Link>
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Contact Us"}
           route={"/contact"}
           noArrow={true}
         />
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Terms and Conditions"}
           route={"/terms-and-condition"}
           noArrow={true}
         />
         <BSNavLink
-          givenStyles={styles}
+          givenLinkStyle={styles.navLink}
           text={"Privacy Policy"}
           route={"/privacy"}
           noArrow={true}

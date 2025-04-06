@@ -12,13 +12,18 @@ const useStyles = makeStyles({
 
 interface BSCardFooterProps {
   children: React.ReactNode;
-  givenStyles?: Record<string, string>;
+  givenCardFooterStyles?: string;
 }
 
-const BSCardFooter = ({ children, givenStyles }: BSCardFooterProps) => {
+const BSCardFooter = ({
+  children,
+  givenCardFooterStyles,
+}: BSCardFooterProps) => {
   const defaultCardStyles = useStyles();
-  const styles = givenStyles ? givenStyles : defaultCardStyles;
-  return <CardFooter className={styles.cardFooter}>{children}</CardFooter>;
+  const cardFooterStyle = givenCardFooterStyles
+    ? givenCardFooterStyles
+    : defaultCardStyles.cardFooter;
+  return <CardFooter className={cardFooterStyle}>{children}</CardFooter>;
 };
 
 export default BSCardFooter;

@@ -110,6 +110,7 @@ const BSResource = () => {
   const navigate = useNavigate();
 
   return (
+
     <div className={styles.container}>
       <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
 
@@ -128,6 +129,7 @@ const BSResource = () => {
       </div>
 
       <div className={styles.navWrapper}>
+
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>

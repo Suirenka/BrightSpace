@@ -14,15 +14,20 @@ const useStyles = makeStyles({
 
 interface BSCardHeaderProps {
   children: React.ReactNode;
-  givenStyles?: Record<string, string>;
+  givenCardHeaderStyles?: string;
 }
 
-const BSCardHeader = ({ children, givenStyles }: BSCardHeaderProps) => {
+const BSCardHeader = ({
+  children,
+  givenCardHeaderStyles,
+}: BSCardHeaderProps) => {
   const defaultCardStyles = useStyles();
-  const styles = givenStyles ? givenStyles : defaultCardStyles;
+  const cardHeaderStyle = givenCardHeaderStyles
+    ? givenCardHeaderStyles
+    : defaultCardStyles.cardHeader;
   return (
     <CardHeader
-      className={styles.cardHeader}
+      className={cardHeaderStyle}
       header={
         <Text as="h1" weight="semibold" size={600}>
           {children}

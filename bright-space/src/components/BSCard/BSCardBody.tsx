@@ -20,13 +20,15 @@ const useStyles = makeStyles({
 
 interface BSCardProps {
   children: React.ReactNode;
-  givenStyles?: Record<string, string>;
+  givenCardBodyStyle?: string;
 }
 
-const BSCardBody = ({ children, givenStyles }: BSCardProps) => {
+const BSCardBody = ({ children, givenCardBodyStyle }: BSCardProps) => {
   const defaultCardStyles = useStyles();
-  const styles = givenStyles ? givenStyles : defaultCardStyles;
-  return <Body1 className={styles.cardBody}>{children}</Body1>;
+  const cardBodyStyle = givenCardBodyStyle
+    ? givenCardBodyStyle
+    : defaultCardStyles.cardBody;
+  return <Body1 className={cardBodyStyle}>{children}</Body1>;
 };
 
 export default BSCardBody;

@@ -1,22 +1,30 @@
-import { Card, makeStyles, shorthands } from "@fluentui/react-components";
+import {
+  Card,
+  makeStyles,
+  shorthands,
+  tokens,
+} from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   card: {
     margin: "auto",
     width: "70%",
     padding: "2rem",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+    backgroundColor: tokens.colorNeutralBackground1,
   },
 });
 
 interface BSCardProps {
   children: React.ReactNode;
-  givenStyles?: Record<string, string>;
+  givenCardStyle?: string;
 }
 
-const BSCard = ({ children, givenStyles }: BSCardProps) => {
+const BSCard = ({ children, givenCardStyle }: BSCardProps) => {
   const defaultCardStyles = useStyles();
-  const styles = givenStyles ? givenStyles : defaultCardStyles;
-  return <Card className={styles.card}>{children}</Card>;
+  const cardStyle = givenCardStyle ? givenCardStyle : defaultCardStyles.card;
+  return <Card className={cardStyle}>{children}</Card>;
 };
 
 export default BSCard;
