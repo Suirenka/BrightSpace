@@ -1,14 +1,13 @@
+// src/pages/BSHome.tsx
 import * as React from "react";
 import {
   makeStyles,
   shorthands,
   tokens,
   Title1,
-  Subtitle1,
   Text,
   Button,
   Image,
-  Divider,
 } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
@@ -19,7 +18,7 @@ import BSCardFooter from "../components/BSCard/BSCardFooter";
 import ResourceImage from "../assets/images/home/Resource.png";
 import BSBanner from "../components/BSBanner";
 
-const useResourceStyles = makeStyles({
+const useStyles = makeStyles({
   card: {
     margin: "auto",
     width: "70%",
@@ -34,13 +33,22 @@ const useResourceStyles = makeStyles({
   resourceCardBody: {
     display: "flex",
     flexDirection: "row",
-    lineHeight: "1.5rem",
-  },
-  cardBody: {
     justifyContent: "space-between",
+    gap: "2rem",
+    alignItems: "flex-start",
+  },
+  leftColumn: {
     display: "flex",
-    flexDirection: "row",
-    lineHeight: "1.5rem",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    flex: 1,
+  },
+  text: {
+    marginBottom: "1rem",
+    lineHeight: "1.6",
+  },
+  button: {
+    alignSelf: "flex-start",
   },
   resourceImage: {
     width: "200px",
@@ -48,7 +56,7 @@ const useResourceStyles = makeStyles({
   },
 });
 
-export const BSHome = () => {
+const BSHome = () => {
   return (
     <>
       <BSBanner />
@@ -58,8 +66,9 @@ export const BSHome = () => {
 };
 
 const ResourceCard = () => {
-  const styles = useResourceStyles();
+  const styles = useStyles();
   const navigate = useNavigate();
+
   return (
     <BSCard givenCardStyle={styles.card}>
       <BSCardHeader>
@@ -67,8 +76,9 @@ const ResourceCard = () => {
           Digital Citizenship Resources for Teens
         </Title1>
       </BSCardHeader>
-      <BSCardBody givenCardBodyStyle={styles.cardBody}>
-        <ResourceCardContent />
+
+      <BSCardBody givenCardBodyStyle={styles}>
+        <ResourceCardContent navigate={navigate} />
       </BSCardBody>
       <BSCardFooter>
         <BSNavLink
@@ -80,16 +90,27 @@ const ResourceCard = () => {
   );
 };
 
-const ResourceCardContent = () => {
-  const styles = useResourceStyles();
+const ResourceCardContent = ({ navigate }: { navigate: any }) => {
+  const styles = useStyles();
+
   return (
-    <>
-      <Text>
-        Find the tools and tips you need to navigate the online world safely and
-        responsibly.
-      </Text>
+    <div className={styles.resourceCardBody}>
+      <div className={styles.leftColumn}>
+        <Text className={styles.text}>
+          Find the tools and tips you need to navigate the online world safely
+          and responsibly.
+        </Text>
+        <Button
+          className={styles.button}
+          appearance="primary"
+          onClick={() => navigate("/bs-staysafe")}
+        >
+          Tools →
+        </Button>
+      </div>
       <Image className={styles.resourceImage} src={ResourceImage} />
-    </>
+    </div>
   );
 };
+
 export default BSHome;
