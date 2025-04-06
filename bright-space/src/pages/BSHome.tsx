@@ -67,7 +67,6 @@ const BSHome = () => {
 
 const ResourceCard = () => {
   const styles = useStyles();
-  const navigate = useNavigate();
 
   return (
     <BSCard givenCardStyle={styles.card}>
@@ -77,8 +76,8 @@ const ResourceCard = () => {
         </Title1>
       </BSCardHeader>
 
-      <BSCardBody givenCardBodyStyle={styles}>
-        <ResourceCardContent navigate={navigate} />
+      <BSCardBody givenCardBodyStyle={styles.resourceCardBody}>
+        <ResourceCardContent />
       </BSCardBody>
       <BSCardFooter>
         <BSNavLink
@@ -90,9 +89,9 @@ const ResourceCard = () => {
   );
 };
 
-const ResourceCardContent = ({ navigate }: { navigate: any }) => {
+const ResourceCardContent = () => {
   const styles = useStyles();
-
+  const navigate = useNavigate();
   return (
     <div className={styles.resourceCardBody}>
       <div className={styles.leftColumn}>
@@ -100,6 +99,7 @@ const ResourceCardContent = ({ navigate }: { navigate: any }) => {
           Find the tools and tips you need to navigate the online world safely
           and responsibly.
         </Text>
+
         <Button
           className={styles.button}
           appearance="primary"
