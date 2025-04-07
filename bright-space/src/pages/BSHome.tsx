@@ -102,13 +102,13 @@ const ResourceCardContent = () => {
           and responsibly.
         </Text>
 
-        <Button
+        {/* <Button
           className={styles.button}
           appearance="primary"
           onClick={() => navigate("/bs-staysafe")}
         >
           Tools →
-        </Button>
+        </Button> */}
       </div>
       <Image className={styles.resourceImage} src={ResourceImage} />
     </div>

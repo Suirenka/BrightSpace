@@ -39,7 +39,14 @@ const useStyles = makeStyles({
     maxWidth: "750px",
     width: "100%",
     boxShadow: tokens.shadow4,
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    ":hover": {
+      transform: "scale(1.03)",
+      boxShadow: tokens.shadow16,
+      cursor: "pointer",
+    },
   },
+  
   subtitle: {
     fontWeight: "600",
     fontSize: "1.2rem",

@@ -25,7 +25,9 @@ const useStyles = makeStyles({
   cardBody: {
     display: "flex",
     flexDirection: "column",
-    lineHeight: "1.5rem",
+    lineHeight: "1.6",
+    gap: "1rem",
+    padding: "1rem",
   },
   userInput: {
     width: "100%",
@@ -33,27 +35,55 @@ const useStyles = makeStyles({
     padding: "8px",
     marginBottom: "0.5rem",
   },
+  cardHeaderCentered: {
+    textAlign: "center",
+    fontSize: "1.5rem",
+    fontWeight: 600,
+  },
   errorBar: {
     backgroundColor: tokens.colorPaletteRedBackground2,
-    color: tokens.colorPaletteRedForeground3,
+    color: tokens.colorPaletteRedForeground1,
+    borderLeft: `4px solid ${tokens.colorPaletteRedBorder2}`,
+    borderRadius: "6px",
+    ...shorthands.padding("0.75rem"),
   },
   submitBox: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
+    gap: "0.75rem",
+    marginTop: "0.75rem",
   },
   negativeResponse: {
-    backgroundColor: tokens.colorStatusWarningForegroundInverted,
+    backgroundColor: tokens.colorPaletteDarkOrangeBackground2,
+    color: tokens.colorPaletteDarkOrangeForeground1,
+    borderLeft: `4px solid ${tokens.colorPaletteDarkOrangeBorderActive}`,
+    borderRadius: "6px",
+    ...shorthands.padding("0.75rem"),
   },
   harshResponse: {
     backgroundColor: tokens.colorPaletteRedBackground2,
+    color: tokens.colorPaletteRedForeground1,
+    borderLeft: `4px solid ${tokens.colorPaletteRedBorder2}`,
+    borderRadius: "6px",
+    ...shorthands.padding("0.75rem"),
   },
   neutralResponse: {
-    backgroundColor: tokens.colorPaletteMarigoldBorder1,
+    backgroundColor: tokens.colorPaletteMarigoldBackground2,
+    color: tokens.colorPaletteMarigoldForeground1,
+    borderLeft: `4px solid ${tokens.colorPaletteMarigoldBorderActive}`,
+    borderRadius: "6px",
+    ...shorthands.padding("0.75rem"),
   },
   positiveResponse: {
-    backgroundColor: tokens.colorStatusSuccessBorder1,
+    backgroundColor: tokens.colorPaletteLightGreenBackground2,
+    color: tokens.colorPaletteLightGreenForeground1,
+    borderLeft: `4px solid ${tokens.colorPaletteLightGreenBorder2}`,
+    borderRadius: "6px",
+    ...shorthands.padding("0.75rem"),
   },
 });
+
 
 export const BSPostingCoach = () => {
   return <ResourceCard />;
@@ -63,7 +93,7 @@ const ResourceCard = () => {
   const styles = useStyles();
   return (
     <BSCard>
-      <BSCardHeader>Intention Analysis</BSCardHeader>
+      <BSCardHeader>💬 Intention Analysis</BSCardHeader>
       <BSCardBody givenCardBodyStyle={styles.cardBody}>
         <CardContent />
       </BSCardBody>
@@ -128,7 +158,7 @@ const CardContent = () => {
   return (
     <>
       <div style={{ marginTop: "1rem" }}>
-        <Field label="Write your message...">
+        <Field label="Let’s see how your message sounds before posting it….">
           <Textarea
             placeholder="Enter your post..."
             value={prompt}
@@ -136,7 +166,12 @@ const CardContent = () => {
           />
         </Field>
         <Field className={styles.submitBox}>
-          <Button onClick={handleSubmit} disabled={loading}>
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            appearance="primary"
+            style={{ backgroundColor: "#3B82F6", color: "white" }}
+          >
             {loading ? "Processing..." : "Submit"}
           </Button>
           {showErrorBar && (

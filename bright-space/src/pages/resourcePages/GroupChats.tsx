@@ -39,6 +39,12 @@ const useStyles = makeStyles({
     maxWidth: "750px",
     width: "100%",
     boxShadow: tokens.shadow4,
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    ":hover": {
+      transform: "scale(1.03)",
+      boxShadow: tokens.shadow16,
+      cursor: "pointer",
+    },
   },
   paragraph: {
     fontSize: "1rem",
@@ -63,29 +69,28 @@ const GroupChats = () => {
 
       <div className={styles.section}>
         <Text className={styles.paragraph}>
-          If a group chat starts to feel negative or toxic, take a step back. You
-          don’t have to stay in a conversation that makes you uncomfortable.
+          😣 <strong>Feeling uncomfortable?</strong> If a group chat starts to feel negative or toxic, take a step back. You don’t have to stay in a conversation that makes you feel bad.
         </Text>
       </div>
 
       <div className={styles.section}>
         <Text className={styles.paragraph}>
-          Try to redirect the conversation or send a private message to someone
-          you trust in the group. If the chat continues to be hostile, you can
-          mute, leave, or report it—especially if bullying is involved.
+          💬 <strong>Change the tone.</strong> Try to redirect the conversation or send a private message to someone you trust in the group. If things stay hostile, don’t be afraid to mute, leave, or report it.
         </Text>
       </div>
 
       <div className={styles.section}>
         <Text className={styles.paragraph}>
-          If you're feeling overwhelmed, talk to a friend or adult you trust.
-          Group dynamics can be tricky, and it's okay to remove yourself from a
-          situation that doesn't feel safe.
+          🛟 <strong>Take care of you.</strong> If you're feeling overwhelmed, talk to a friend or adult you trust. It’s totally okay to remove yourself from a space that doesn’t feel safe.
         </Text>
       </div>
 
       <div className={styles.backLink}>
-        <BSNavLink text={"Go Back to Resources"} route={"/bs-resource"} back={true} />
+        <BSNavLink
+          text={"Go Back to Resources"}
+          route={"/bs-resource"}
+          back={true}
+        />
       </div>
     </div>
   );
