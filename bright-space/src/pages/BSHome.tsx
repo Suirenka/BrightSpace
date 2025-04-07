@@ -17,6 +17,7 @@ import BSCardBody from "../components/BSCard/BSCardBody";
 import BSCardFooter from "../components/BSCard/BSCardFooter";
 import ResourceImage from "../assets/images/home/Resource.png";
 import BSBanner from "../components/BSBanner";
+import PostingCoachCard from "../components/BSPostingCoach/PostingCoachCard";
 
 const useStyles = makeStyles({
   card: {
@@ -61,6 +62,7 @@ const BSHome = () => {
     <>
       <BSBanner />
       <ResourceCard />
+      <PostingCoachCard />
     </>
   );
 };
