@@ -18,7 +18,7 @@ import WhatToDoIfTargeted from "./pages/resourcePages/WhatToDoIfTargeted";
 import HelpFriends from "./pages/resourcePages/HelpFriends";
 import GroupChats from "./pages/resourcePages/GroupChats";
 import BSReport from "./pages/BSReport";
-
+import BSPostingCoach from "./pages/BSPostingCoach";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -47,6 +47,7 @@ function App() {
         <Routes>
           <Route path="/" element={<BSHome />} />
           <Route path="bs-resource" element={<BSResource />} />
+          <Route path="bs-posting-coach" element={<BSPostingCoach />} />
           <Route path="contact" element={<BSContact />} />
           <Route
             path="terms-and-condition"
@@ -54,8 +55,14 @@ function App() {
           />
           <Route path="privacy" element={<BSPrivacy />} />
           <Route path="bs-staysafe" element={<BSSafetyGuide />} />
-          <Route path="spotting-cyberbullying" element={<SpottingCyberbullying />} />
-          <Route path="what-to-do-if-targeted" element={<WhatToDoIfTargeted />} />
+          <Route
+            path="spotting-cyberbullying"
+            element={<SpottingCyberbullying />}
+          />
+          <Route
+            path="what-to-do-if-targeted"
+            element={<WhatToDoIfTargeted />}
+          />
           <Route path="/help-friends" element={<HelpFriends />} />
           <Route path="group-chat-guidance" element={<GroupChats />} />
           <Route path="/report" element={<BSReport />} />
