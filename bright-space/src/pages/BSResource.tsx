@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
     gap: "1.5rem",
-    marginTop: "2rem",
+    marginTop: "4rem",
   },
   card: {
     padding: "1.5rem",
@@ -88,7 +88,7 @@ const resourceCards = [
   },
   {
     icon: <ShieldCheckmark24Regular fontSize={32} />,
-    title: "What To Do If You’re Targeted",
+    title: "What to do if you’re Targeted",
     desc: "Step-by-step actions to protect yourself.",
     route: "/what-to-do-if-targeted",
   },
@@ -100,7 +100,7 @@ const resourceCards = [
   },
   {
     icon: <Chat24Regular fontSize={32} />,
-    title: "When It Happens in Group Chats",
+    title: "When it Happens in Group Chats",
     desc: "What to do when the whole vibe goes toxic.",
     route: "/group-chat-guidance",
   },
@@ -112,7 +112,8 @@ const BSResource = () => {
 
   return (
     <div className={styles.container}>
-      <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
+      <Title1 className={styles.title}>Stay Safe Online</Title1>
+      
 
       <div className={styles.reportLineWrapper}>
         <Subtitle2>
