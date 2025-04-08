@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import {
   makeStyles,
-  shorthands,
   tokens,
-  Text,
   Button,
-  Input,
-  InputProps,
   Field,
   Textarea,
   MessageBar,
@@ -100,16 +96,15 @@ const CardContent = () => {
       const data = await res.json();
       let dataString = JSON.stringify(data);
       dataString = dataString.replace(/^"|"$/g, "");
-      const [level, suggestion] = dataString.split("-");
+      const [level, suggestion, improvedPost] = dataString.split("-");
 
       const result = {
         level: level,
         suggestion: suggestion,
+        improvedPost: improvedPost,
       };
-
       setApiResponse(result);
     } catch (err: any) {
-      console.error("Fetch error:", err);
       setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -155,7 +150,6 @@ const CardContent = () => {
             </MessageBar>
           )}
         </Field>
-        <Field></Field>
       </div>
 
       {apiResponse && <ResponseContent {...apiResponse} />}
@@ -166,47 +160,39 @@ const CardContent = () => {
 export const ResponseContent = (apiResponse: {
   level: string;
   suggestion: string;
+  improvedPost: string;
 }) => {
   const styles = useStyles();
   if (!apiResponse) {
     return null;
   }
+
+  let response = "";
+  let responseStyle = styles.neutralResponse;
   if (apiResponse.level === "0") {
-    return (
-      <MessageBar className={styles.harshResponse}>
-        <MessageBarBody>
-          <MessageBarTitle>Tone: Harsh 😡</MessageBarTitle>
-          {apiResponse.suggestion}
-        </MessageBarBody>
-      </MessageBar>
-    );
+    response = "Tone: Harsh 😡";
+    responseStyle = styles.harshResponse;
   } else if (apiResponse.level === "1") {
-    return (
-      <MessageBar className={styles.negativeResponse}>
-        <MessageBarBody>
-          <MessageBarTitle>Tone: Negative 😟</MessageBarTitle>
-          {apiResponse.suggestion}
-        </MessageBarBody>
-      </MessageBar>
-    );
+    response = "Tone: Negative 😟";
+    responseStyle = styles.negativeResponse;
   } else if (apiResponse.level === "2") {
-    return (
-      <MessageBar className={styles.neutralResponse}>
-        <MessageBarBody>
-          <MessageBarTitle>Tone: Neutral 😐</MessageBarTitle>
-          {apiResponse.suggestion}
-        </MessageBarBody>
-      </MessageBar>
-    );
+    response = "Tone: Neutral 😐";
+    responseStyle = styles.neutralResponse;
+  } else {
+    response = "Tone: Positive ☺️";
+    responseStyle = styles.positiveResponse;
   }
 
   return (
-    <MessageBar className={styles.positiveResponse}>
-      <MessageBarBody>
-        <MessageBarTitle>Tone: Positive ☺️</MessageBarTitle>
-        {apiResponse.suggestion}
-      </MessageBarBody>
-    </MessageBar>
+    <>
+      <MessageBar className={responseStyle}>
+        <MessageBarBody>
+          <MessageBarTitle>{response}</MessageBarTitle>
+          {apiResponse.suggestion}
+        </MessageBarBody>
+      </MessageBar>
+      <Field>{apiResponse.improvedPost}</Field>
+    </>
   );
 };
 
