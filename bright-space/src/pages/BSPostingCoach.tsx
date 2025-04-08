@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { shorthands } from "@fluentui/react-components";
 import {
   makeStyles,
   tokens,
@@ -16,6 +17,7 @@ import BSCardHeader from "../components/BSCard/BSCardHeader";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import BSCardFooter from "../components/BSCard/BSCardFooter";
 import { DismissRegular } from "@fluentui/react-icons";
+import CoachImage from "../assets/images/home/CoachCheck.jpeg";
 
 const useStyles = makeStyles({
   cardBody: {
@@ -47,8 +49,9 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: "0.75rem",
-    marginTop: "0.75rem",
+    gap: "0.5rem",
+    marginTop: "0.05rem",
+    marginBottom: "-1rem",
   },
   negativeResponse: {
     backgroundColor: tokens.colorPaletteDarkOrangeBackground2,
@@ -78,8 +81,32 @@ const useStyles = makeStyles({
     borderRadius: "6px",
     ...shorthands.padding("0.75rem"),
   },
+  checkContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    padding: "0.5rem 0",
+  },
+  title: {
+    fontSize: "1.25rem",
+    fontWeight: 700,
+    color: "#1E3A8A",
+  },
+  subtitle: {
+    fontSize: "1rem",
+    marginBottom: "0.75rem",
+  },
+  promptItem: {
+    fontSize: "1rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  },
+  ctaButton: {
+    backgroundColor: "#3B82F6",
+    color: "white",
+  },
 });
-
 
 export const BSPostingCoach = () => {
   return <ResourceCard />;
@@ -89,7 +116,7 @@ const ResourceCard = () => {
   const styles = useStyles();
   return (
     <BSCard>
-      <BSCardHeader>💬 Intention Analysis</BSCardHeader>
+      <BSCardHeader>💬 Message Tone Checker</BSCardHeader>
       <BSCardBody givenCardBodyStyle={styles.cardBody}>
         <CardContent />
       </BSCardBody>
@@ -151,23 +178,26 @@ const CardContent = () => {
   };
 
   return (
-    <>
-      <div style={{ marginTop: "1rem" }}>
+    <div style={{ display: "flex", flexDirection: "row", gap: "2rem", alignItems: "flex-start" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1.5rem", maxWidth: "600px" }}>
+
         <Field label="Let’s see how your message sounds before posting it….">
           <Textarea
             placeholder="Enter your post..."
             value={prompt}
             onChange={onChange}
+            style={{ height: "100px" }}
           />
         </Field>
+
         <Field className={styles.submitBox}>
           <Button
             onClick={handleSubmit}
             disabled={loading}
             appearance="primary"
-            style={{ backgroundColor: "#3B82F6", color: "white" }}
+            className={styles.ctaButton}
           >
-            {loading ? "Processing..." : "Submit"}
+            {loading ? "Processing..." : "Try tone detection"}
           </Button>
           {showErrorBar && (
             <MessageBar className={styles.errorBar}>
@@ -185,10 +215,22 @@ const CardContent = () => {
             </MessageBar>
           )}
         </Field>
+
+        {apiResponse && (
+          <div style={{ marginTop: "1rem" }}>
+            <ResponseContent {...apiResponse} />
+          </div>
+        )}
       </div>
 
-      {apiResponse && <ResponseContent {...apiResponse} />}
-    </>
+      <div style={{ maxWidth: "300px", flexShrink: 0 }}>
+        <img
+          src={CoachImage}
+          alt="Coach Illustration"
+          style={{ width: "100%", borderRadius: "12px" }}
+        />
+      </div>
+    </div>
   );
 };
 
