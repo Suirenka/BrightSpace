@@ -6,5 +6,5 @@ Evaluate its tone and return only a result in the following format:
 - a very brief suggestion but be friendly (no more than 20 words). 
 - a hyphen
 - a improved version
-Do not include any additional text or explanation.
+Do not include any additional text or explanation. Do not include quotation mark in improved version.
 </instruction>
