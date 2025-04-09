@@ -116,7 +116,7 @@ const ResourceCard = () => {
   const styles = useStyles();
   return (
     <BSCard>
-      <BSCardHeader>💬 Message Tone Checker</BSCardHeader>
+      <BSCardHeader>✨Message Tone Check</BSCardHeader>
       <BSCardBody givenCardBodyStyle={styles.cardBody}>
         <CardContent />
       </BSCardBody>
