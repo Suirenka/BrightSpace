@@ -21,11 +21,11 @@ const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2023-03-15-preview";
 
 const systemPrompt = fs.readFileSync(
-  path.join(__dirname, "systemRole.md"),
+  path.join(__dirname, "..", "systemRole.md"),
   "utf-8"
 );
 const userPromptTemplate = fs.readFileSync(
-  path.join(__dirname, "prompt.md"),
+  path.join(__dirname, "..", "prompt.md"),
   "utf-8"
 );
 
