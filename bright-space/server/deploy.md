@@ -25,12 +25,11 @@ unzip -o project.zip -d Code/express-codedeploy-1/
 npm install --prefix Code/express-codedeploy-1/
 npm run build --prefix Code/express-codedeploy-1/
 
-npm start --prefix Code/express-codedeploy-1/
-
 screen -ls
-screen -X -S 12345.my_screen quit
+screen -X -S 12345.bright_space quit
 screen -S bright_space
 
+npm start --prefix Code/express-codedeploy-1/
 
 sudo lsof -i :8080
 kill -9 <PID>
