@@ -9,7 +9,7 @@ import BSNavLink from "../../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
   pageWrapper: {
-    maxWidth: "850px",
+    maxWidth: "700px",
     margin: "0 auto",
     padding: "2.5rem 1.5rem",
     display: "flex",
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     maxWidth: "700px",
     textAlign: "center",
     color: tokens.colorNeutralForeground3,
-    marginBottom: "2rem",
+    marginBottom: "3rem",
     lineHeight: "1.7",
   },
   section: {
@@ -37,7 +37,13 @@ const useStyles = makeStyles({
     marginBottom: "1.5rem",
     width: "100%",
     boxShadow: tokens.shadow4,
-  },
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    ":hover": {
+      transform: "scale(1.03)",
+      boxShadow: tokens.shadow16,
+      cursor: "pointer",
+    },
+  },  
   suggestionText: {
     fontSize: "1rem",
     color: tokens.colorNeutralForeground1,
@@ -59,7 +65,7 @@ const HelpFriends = () => {
     <div className={styles.pageWrapper}>
       <Title1 className={styles.title}>Helping a Friend</Title1>
       <Subtitle2 className={styles.subtitle}>
-        If you notice a friend being bullied or struggling online, your support can make all the difference.
+        If you notice a friend being bullied online, your support can make all the difference.
       </Subtitle2>
 
       <div className={styles.section}>

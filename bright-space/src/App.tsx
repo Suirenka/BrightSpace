@@ -12,11 +12,11 @@ import Footer from "./components/Footer";
 import BSResource from "./pages/BSResource";
 import BSTermsAndConditions from "./pages/footerPages/BSTermsAndConditions";
 import BSPrivacy from "./pages/footerPages/BSPrivacy";
-import BSSafetyGuide from "./pages/BSSafetyGuide";
 import SpottingCyberbullying from "./pages/resourcePages/SpottingCyberbullying";
 import WhatToDoIfTargeted from "./pages/resourcePages/WhatToDoIfTargeted";
 import HelpFriends from "./pages/resourcePages/HelpFriends";
 import GroupChats from "./pages/resourcePages/GroupChats";
+import BSReport from "./pages/BSReport";
 import BSPostingCoach from "./pages/BSPostingCoach";
 
 interface IThemeContext {
@@ -53,7 +53,6 @@ function App() {
             element={<BSTermsAndConditions />}
           />
           <Route path="privacy" element={<BSPrivacy />} />
-          <Route path="bs-staysafe" element={<BSSafetyGuide />} />
           <Route
             path="spotting-cyberbullying"
             element={<SpottingCyberbullying />}
@@ -64,6 +63,7 @@ function App() {
           />
           <Route path="/help-friends" element={<HelpFriends />} />
           <Route path="group-chat-guidance" element={<GroupChats />} />
+          <Route path="/report" element={<BSReport />} />
         </Routes>
 
         <Footer />

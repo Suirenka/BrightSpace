@@ -1,59 +1,57 @@
-// src/pages/BSHome.tsx
 import * as React from "react";
 import {
   makeStyles,
-  shorthands,
-  tokens,
   Title1,
   Text,
-  Button,
   Image,
 } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
+import { mergeClasses } from "@fluentui/react-components";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import BSCard from "../components/BSCard/BSCard";
 import BSCardHeader from "../components/BSCard/BSCardHeader";
 import BSCardBody from "../components/BSCard/BSCardBody";
 import BSCardFooter from "../components/BSCard/BSCardFooter";
-import ResourceImage from "../assets/images/home/Resource.png";
 import BSBanner from "../components/BSBanner";
-import PostingCoachCard from "../components/BSPostingCoach/PostingCoachCard";
+import ResourceImage from "../assets/images/home/Resource.png";
+import PostingCoachImage from "../assets/images/home/Coach.png";
 
 const useStyles = makeStyles({
   card: {
-    margin: "auto",
+    margin: "2rem auto",
     width: "70%",
     padding: "2rem",
-    marginTop: "2rem",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
+    borderRadius: "12px",
   },
-  resourceTitle: {
-    marginBottom: "0.5rem",
-  },
-  resourceCardBody: {
+  sectionBody: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     gap: "2rem",
-    alignItems: "flex-start",
   },
-  leftColumn: {
+  reverse: {
+    flexDirection: "row-reverse",
+  },
+  content: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
-    flex: 1,
+    gap: "1rem",
   },
-  text: {
-    marginBottom: "1rem",
+  image: {
+    maxWidth: "240px",
+    height: "auto",
+    width: "auto", 
+    borderRadius: "8px",
+    objectFit: "contain",
+  },
+  centeredTitle: {
+    textAlign: "center",
+  },
+  description: {
+    fontSize: "1rem",
     lineHeight: "1.6",
-  },
-  button: {
-    alignSelf: "flex-start",
-  },
-  resourceImage: {
-    width: "200px",
-    height: "200px",
   },
 });
 
@@ -61,57 +59,65 @@ const BSHome = () => {
   return (
     <>
       <BSBanner />
-      <ResourceCard />
-      <PostingCoachCard />
+      <InfoSection
+        title="Digital Citizenship Resources for Teens"
+        description="Find the tools and tips you need to navigate the online world safely and responsibly."
+        linkText="Learn More about the resources"
+        linkTo="/bs-resource"
+        image={ResourceImage}
+      />
+      <InfoSection
+        title="Intentional Posting Coach"
+        description="The Posting Coach helps teens navigate the complexities of online communication, offering guidance on kind and respectful expression."
+        linkText="Try the Posting Coach"
+        linkTo="/bs-posting-coach"
+        image={PostingCoachImage}
+        reverse
+      />
     </>
   );
 };
 
-const ResourceCard = () => {
+type InfoSectionProps = {
+  title: string;
+  description: string;
+  linkText: string;
+  linkTo: string;
+  image: string;
+  reverse?: boolean;
+};
+
+const InfoSection = ({
+  title,
+  description,
+  linkText,
+  linkTo,
+  image,
+  reverse = false,
+}: InfoSectionProps) => {
   const styles = useStyles();
 
   return (
     <BSCard givenCardStyle={styles.card}>
       <BSCardHeader>
-        <Title1 className={styles.resourceTitle}>
-          Digital Citizenship Resources for Teens
-        </Title1>
+        <Title1>{title}</Title1>
       </BSCardHeader>
 
-      <BSCardBody givenCardBodyStyle={styles.resourceCardBody}>
-        <ResourceCardContent />
+      <BSCardBody
+        givenCardBodyStyle={mergeClasses(
+          styles.sectionBody,
+          reverse && styles.reverse
+        )}
+      >
+        <div className={styles.content}>
+        <Text className={styles.description}>{description}</Text>
+          <BSNavLink text={linkText} route={linkTo} />
+        </div>
+        <Image className={styles.image} src={image} />
       </BSCardBody>
-      <BSCardFooter>
-        <BSNavLink
-          text={"Learn More about the resources"}
-          route={"/bs-resource"}
-        />
-      </BSCardFooter>
+
+      <BSCardFooter><></></BSCardFooter>
     </BSCard>
-  );
-};
-
-const ResourceCardContent = () => {
-  const styles = useStyles();
-  const navigate = useNavigate();
-  return (
-    <div className={styles.resourceCardBody}>
-      <div className={styles.leftColumn}>
-        <Text className={styles.text}>
-          Find the tools and tips you need to navigate the online world safely
-          and responsibly.
-        </Text>
-
-        <Button
-          className={styles.button}
-          appearance="primary"
-          onClick={() => navigate("/bs-staysafe")}
-        >
-          Tools →
-        </Button>
-      </div>
-      <Image className={styles.resourceImage} src={ResourceImage} />
-    </div>
   );
 };
 
