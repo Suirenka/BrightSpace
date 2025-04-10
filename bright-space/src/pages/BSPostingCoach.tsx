@@ -6,16 +6,16 @@ import {
   Field,
   MessageBar,
   MessageBarBody,
-  MessageBarTitle,
   MessageBarActions,
   shorthands,
+  tokens,
 } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
-import BSNavLink from "../components/BSLinks/BSNavLink"; // 👈 添加回跳转组件
+import BSNavLink from "../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
   page: {
-    backgroundColor: "#f5f3ff",
+    backgroundColor: tokens.colorBrandBackground2Hover,
     minHeight: "100vh",
     padding: "2.5rem 1rem",
     display: "flex",
@@ -26,16 +26,16 @@ const useStyles = makeStyles({
   title: {
     fontSize: "2rem",
     fontWeight: 700,
-    color: "#4c1d95",
+    color: tokens.colorCompoundBrandBackgroundHover,
     textAlign: "center",
   },
   subtitle: {
     fontSize: "1rem",
-    color: "#4b5563",
+    color: tokens.colorNeutralStrokeAccessible,
     textAlign: "center",
   },
   card: {
-    backgroundColor: "#ffffff",
+    backgroundColor: tokens.colorNeutralForegroundInverted,
     padding: "2rem",
     borderRadius: "24px",
     boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
@@ -56,8 +56,8 @@ const useStyles = makeStyles({
     fontSize: "1rem",
   },
   button: {
-    backgroundColor: "#8b5cf6",
-    color: "white",
+    backgroundColor: tokens.colorCompoundBrandBackgroundHover,
+    color: tokens.colorNeutralForegroundInverted,
     fontWeight: 600,
     fontSize: "1rem",
     borderRadius: "12px",
@@ -157,7 +157,8 @@ const BSPostingCoach = () => {
       <div>
         <h1 className={styles.title}>Post Coach</h1>
         <p className={styles.subtitle}>
-          Let’s make sure your post says what you mean, in a kind and confident way.
+          Let’s make sure your post says what you mean, in a kind and confident
+          way.
         </p>
       </div>
 
@@ -198,7 +199,6 @@ const BSPostingCoach = () => {
 
         {apiResponse && <ResponseContent {...apiResponse} />}
 
-        {/* ✅ 永久显示的 Go Back 按钮 */}
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <BSNavLink text="Go Back to Home" route="/" back />
         </div>

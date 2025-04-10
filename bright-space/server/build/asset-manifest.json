@@ -1,18 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.d689a8a5.js",
+    "main.js": "/static/js/main.c6164b83.js",
     "static/js/453.456922e1.chunk.js": "/static/js/453.456922e1.chunk.js",
-    "static/media/Banner.gif": "/static/media/Banner.b013ee22f0b8482b2366.gif",
-    "static/media/Resource.png": "/static/media/Resource.681a8b8f4d59805b2ca4.png",
+    "static/media/Banner.jpg": "/static/media/Banner.01d7bd1d6f3c13766b5b.jpg",
     "static/media/bright-space-round.png": "/static/media/bright-space-round.593f6efc7462c5bc7d14.png",
+    "static/media/Resource.png": "/static/media/Resource.0d4835c91819c866f274.png",
+    "static/media/Coach.png": "/static/media/Coach.0a06fc869c1a1bf4a525.png",
+    "static/media/instagram.svg": "/static/media/instagram.fe4919af484ac7cdd8909acbd6b47e46.svg",
+    "static/media/snapchat.svg": "/static/media/snapchat.1093028f73dcfa4165fb0e2fff749b23.svg",
     "index.html": "/index.html",
+    "static/media/discord.svg": "/static/media/discord.105be1048fb59c09cd2923ae3d30d75d.svg",
+    "static/media/tiktok.svg": "/static/media/tiktok.a57d4d5b1145b81bd85dceb79a409462.svg",
     "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.d689a8a5.js.map": "/static/js/main.d689a8a5.js.map",
+    "main.c6164b83.js.map": "/static/js/main.c6164b83.js.map",
     "453.456922e1.chunk.js.map": "/static/js/453.456922e1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.d689a8a5.js"
+    "static/js/main.c6164b83.js"
   ]
 }

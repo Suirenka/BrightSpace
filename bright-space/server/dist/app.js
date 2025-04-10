@@ -19,8 +19,8 @@ const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
 const deploymentName = process.env.AZURE_OPENAI_DEPLOYMENT_NAME;
 const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2023-03-15-preview";
-const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "systemRole.md"), "utf-8");
-const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "prompt.md"), "utf-8");
+const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "systemRole.md"), "utf-8");
+const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "prompt.md"), "utf-8");
 // Intention Analysis API
 app.get("/api/intention-analysis", async (req, res) => {
     const userInput = req.query.prompt;

@@ -27,6 +27,11 @@ npm run build --prefix Code/express-codedeploy-1/
 
 npm start --prefix Code/express-codedeploy-1/
 
+screen -ls
+screen -X -S 12345.my_screen quit
+screen -S bright_space
+
+
 sudo lsof -i :8080
 kill -9 <PID>
 ## 
