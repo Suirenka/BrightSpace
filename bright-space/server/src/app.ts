@@ -29,6 +29,10 @@ const userPromptTemplate = fs.readFileSync(
   "utf-8"
 );
 
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
+
 // Intention Analysis API
 app.get(
   "/api/intention-analysis",
