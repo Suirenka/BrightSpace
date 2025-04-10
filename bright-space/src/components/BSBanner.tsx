@@ -1,50 +1,61 @@
 import {
   Subtitle1,
   Title1,
-  Image,
   makeStyles,
   shorthands,
   tokens,
 } from "@fluentui/react-components";
-import BannerGif from "../assets/images/home/Banner.gif";
+import BannerImage from "../assets/images/home/Banner.jpg";
 
 const useStyles = makeStyles({
   Banner: {
     position: "relative",
+    width: "100%",
+    height: "90vh",
+    backgroundImage: `url(${BannerImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     display: "flex",
-    overflow: "hidden",
-    minHeight: "40vh",
-    width: "100vw",
-    backgroundImage: `url(${BannerGif})`,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  Overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: "linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.1))",
+    zIndex: 1,
   },
   Container: {
-    width: "70%",
-    minHeight: "40vh",
-    display: "flex",
-    flexDirection: "column",
+    position: "relative",
+    zIndex: 2,
+    textAlign: "center",
+    color: "white",
     ...shorthands.padding("20px"),
-    justifyContent: "center",
-    color: tokens.colorNeutralForegroundOnBrand,
   },
   title: {
+    fontSize: "3rem",
     marginBottom: "1rem",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+    width: "100%",
+    textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
   },
   subtitle: {
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+    textShadow: "1px 1px 4px rgba(0, 0, 0, 0.6)",
   },
 });
 
 const BSBanner = () => {
   const styles = useStyles();
+
   return (
     <div className={styles.Banner}>
+      <div className={styles.Overlay} />
       <div className={styles.Container}>
-        <Title1 className={styles.title}>BrightSpace</Title1>
-        <Subtitle1 className={styles.subtitle}>
+        <Title1 className={styles.title}>
           Your Daily Companion for Positive Digital Living
-        </Subtitle1>
+        </Title1>
       </div>
     </div>
   );

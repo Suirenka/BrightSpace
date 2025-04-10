@@ -12,6 +12,7 @@ import githubLogoWhiteSrc from "../assets/images/logos/github-mark-white.png";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
 import BSNavLink from "./BSLinks/BSNavLink";
+import BSThemeToggle from "./BSThemeToggle";
 
 const useFooterStyles = makeStyles({
   footer: {
@@ -45,19 +46,21 @@ const useFooterStyles = makeStyles({
     alignItems: "center",
     ...shorthands.gap("4px"),
   },
-  card: {
-    margin: "auto",
-    width: "70%",
-    padding: "2rem",
-    marginTop: "2rem",
-    marginBottom: "2rem",
-    backgroundColor: tokens.colorNeutralBackground1,
+  themeRow: {
+    borderTop: "1px solid #e0e0e0",
+    paddingTop: "0.75rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "0.5rem",
+    fontSize: "0.875rem",
+    color: tokens.colorNeutralForeground3,
   },
 });
 
 const Footer = () => {
   const styles = useFooterStyles();
-  const { theme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const githubLogo =
     theme === teamsLightTheme ? githubLogoSrc : githubLogoWhiteSrc;
 
@@ -86,10 +89,16 @@ const Footer = () => {
           noArrow={true}
         />
       </div>
+
       <Text as="p" size={200}>
         All rights reserved. Copyright&copy; {new Date().getFullYear()} Bright
         Space by Digicon.
       </Text>
+
+      <div className={styles.themeRow}>
+        {/* <Text>Theme: {theme === teamsLightTheme ? "Light" : "Dark"}</Text> */}
+        <BSThemeToggle currentTheme={theme} onToggle={toggleTheme} />
+      </div>
     </footer>
   );
 };

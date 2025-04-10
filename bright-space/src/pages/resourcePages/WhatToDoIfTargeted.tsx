@@ -39,7 +39,13 @@ const useStyles = makeStyles({
     maxWidth: "750px",
     width: "100%",
     boxShadow: tokens.shadow4,
-  },
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    ":hover": {
+      transform: "scale(1.03)",
+      boxShadow: tokens.shadow16,
+      cursor: "pointer",
+    },
+  },  
   sectionTitle: {
     fontWeight: "600",
     fontSize: "1.15rem",
@@ -67,42 +73,42 @@ const WhatToDoIfTargeted = () => {
       </Subtitle2>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>1. 🧘 Stay Calm</Text>
+        <Text className={styles.sectionTitle}>1. 🧘 Stay Calm: </Text>
         <Text className={styles.paragraph}>
           It’s normal to feel upset, but try to remain calm and composed. Don’t respond immediately to hurtful comments.
         </Text>
       </div>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>2. 🚫 Don’t Engage</Text>
+        <Text className={styles.sectionTitle}>2. 🚫 Don’t Engage: </Text>
         <Text className={styles.paragraph}>
           Avoid replying or retaliating. Responding may escalate the situation or encourage further bullying.
         </Text>
       </div>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>3. 🚷 Block and Report</Text>
+        <Text className={styles.sectionTitle}>3. 🚷 Block and Report: </Text>
         <Text className={styles.paragraph}>
           Use the platform’s tools to block the bully and report their behavior. This helps platforms take action.
         </Text>
       </div>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>4. 📸 Save the Evidence</Text>
+        <Text className={styles.sectionTitle}>4. 📸 Save the Evidence: </Text>
         <Text className={styles.paragraph}>
           Take screenshots or save messages that contain abusive content in case they are needed for reports or investigations.
         </Text>
       </div>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>5. 🗣️ Talk to Someone</Text>
+        <Text className={styles.sectionTitle}>5. 🗣️ Talk to Someone: </Text>
         <Text className={styles.paragraph}>
           You don’t have to deal with it alone. Reach out to a trusted adult, teacher, friend, or support service.
         </Text>
       </div>
 
       <div className={styles.section}>
-        <Text className={styles.sectionTitle}>6. 🛡️ Report to Authorities (if serious)</Text>
+        <Text className={styles.sectionTitle}>6. 🛡️ Report to Authorities (if serious): </Text>
         <Text className={styles.paragraph}>
           If the behavior is threatening or illegal, contact local authorities or school officials.
         </Text>

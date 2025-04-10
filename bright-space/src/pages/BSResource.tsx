@@ -28,22 +28,23 @@ const useStyles = makeStyles({
   title: {
     fontWeight: "bold",
     fontSize: "2rem",
-    marginBottom: "0.5rem",
+    marginBottom: "0.75rem",
   },
-  subtitle: {
+  description: {
     fontSize: "1.1rem",
     color: tokens.colorNeutralForeground3,
-    marginBottom: "2rem",
+    marginBottom: "0.5rem",
     lineHeight: "1.6",
-    maxWidth: "700px",
-    marginLeft: "auto",
-    marginRight: "auto",
+  },
+  reportLineWrapper: {
+    textAlign: "center",
+    marginBottom: "2rem",
   },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
     gap: "1.5rem",
-    marginTop: "2rem",
+    marginTop: "4rem",
   },
   card: {
     padding: "1.5rem",
@@ -87,7 +88,7 @@ const resourceCards = [
   },
   {
     icon: <ShieldCheckmark24Regular fontSize={32} />,
-    title: "What To Do If You’re Targeted",
+    title: "What to do if you’re Targeted",
     desc: "Step-by-step actions to protect yourself.",
     route: "/what-to-do-if-targeted",
   },
@@ -99,7 +100,7 @@ const resourceCards = [
   },
   {
     icon: <Chat24Regular fontSize={32} />,
-    title: "When It Happens in Group Chats",
+    title: "When it Happens in Group Chats",
     desc: "What to do when the whole vibe goes toxic.",
     route: "/group-chat-guidance",
   },
@@ -110,9 +111,15 @@ const BSResource = () => {
   const navigate = useNavigate();
 
   return (
-
     <div className={styles.container}>
-      <Title1 className={styles.title}>Digital Citizenship Resources</Title1>
+      <Title1 className={styles.title}>Stay Safe Online</Title1>
+
+      <div className={styles.reportLineWrapper}>
+        <Subtitle2>
+          Witnessed something harmful?{" "}
+          <BSNavLink text="Report it" route="/report" />
+        </Subtitle2>
+      </div>
 
       <div className={styles.grid}>
         {resourceCards.map((item, index) => (
@@ -129,7 +136,6 @@ const BSResource = () => {
       </div>
 
       <div className={styles.navWrapper}>
-
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
