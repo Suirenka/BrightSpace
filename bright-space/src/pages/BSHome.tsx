@@ -56,24 +56,33 @@ const useStyles = makeStyles({
 });
 
 const BSHome = () => {
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+
+  const handleExploreClick = () => {
+    sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
-      <BSBanner />
-      <InfoSection
-        title="Digital Citizenship Resources for Teens"
-        description="Find the tools and tips you need to navigate the online world safely and responsibly."
-        linkText="Learn More about the resources"
-        linkTo="/bs-resource"
-        image={ResourceImage}
-      />
-      <InfoSection
-        title="Intentional Posting Coach"
-        description="The Posting Coach helps teens navigate the complexities of online communication, offering guidance on kind and respectful expression."
-        linkText="Try the Posting Coach"
-        linkTo="/bs-posting-coach"
-        image={PostingCoachImage}
-        reverse
-      />
+      <BSBanner onExploreClick={handleExploreClick} />
+
+      <div ref={sectionRef}>
+        <InfoSection
+          title="Digital Citizenship Resources for Teens"
+          description="Find the tools and tips you need to navigate the online world safely and responsibly."
+          linkText="Learn More about the resources"
+          linkTo="/bs-resource"
+          image={ResourceImage}
+        />
+        <InfoSection
+          title="Intentional Posting Coach"
+          description="The Posting Coach helps teens navigate the complexities of online communication, offering guidance on kind and respectful expression."
+          linkText="Try the Posting Coach"
+          linkTo="/bs-posting-coach"
+          image={PostingCoachImage}
+          reverse
+        />
+      </div>
     </>
   );
 };
@@ -110,7 +119,7 @@ const InfoSection = ({
         )}
       >
         <div className={styles.content}>
-        <Text className={styles.description}>{description}</Text>
+          <Text className={styles.description}>{description}</Text>
           <BSNavLink text={linkText} route={linkTo} />
         </div>
         <Image className={styles.image} src={image} />
