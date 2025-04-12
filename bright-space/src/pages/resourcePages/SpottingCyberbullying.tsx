@@ -92,7 +92,7 @@ const SpottingCyberbullying = () => {
       </div>
 
       <div className={styles.section}>
-        <Subtitle1 className={styles.subtitle}>📍 Where It Happens</Subtitle1>
+        <Subtitle1 className={styles.subtitle}>📍 Where it Happens: </Subtitle1>
         <Text className={styles.paragraph}>
           Instagram, TikTok, Snapchat, Discord, group chats, gaming voice channels — bullying can happen anywhere people interact online.
         </Text>
@@ -110,7 +110,7 @@ const SpottingCyberbullying = () => {
       </div>
 
       <div className={styles.section}>
-        <Subtitle1 className={styles.subtitle}>📌 Reminder</Subtitle1>
+        <Subtitle1 className={styles.subtitle}>📌 Reminder: </Subtitle1>
         <Text className={styles.paragraph}>
           You don’t have to fix everything — just being able to spot when something feels off is a powerful first step.
         </Text>

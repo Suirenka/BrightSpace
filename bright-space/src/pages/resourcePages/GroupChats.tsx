@@ -62,7 +62,7 @@ const GroupChats = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      <Title1 className={styles.title}>When It Happens in Group Chats</Title1>
+      <Title1 className={styles.title}>When it Happens in Group Chats</Title1>
       <Subtitle2 className={styles.subtitle}>
         What to do when the whole vibe goes toxic.
       </Subtitle2>
@@ -75,13 +75,13 @@ const GroupChats = () => {
 
       <div className={styles.section}>
         <Text className={styles.paragraph}>
-          💬 <strong>Change the tone.</strong> Try to redirect the conversation or send a private message to someone you trust in the group. If things stay hostile, don’t be afraid to mute, leave, or report it.
+          💬 <strong>Change the tone: </strong> Try to redirect the conversation or send a private message to someone you trust in the group. If things stay hostile, don’t be afraid to mute, leave, or report it.
         </Text>
       </div>
 
       <div className={styles.section}>
         <Text className={styles.paragraph}>
-          🛟 <strong>Take care of you.</strong> If you're feeling overwhelmed, talk to a friend or adult you trust. It’s totally okay to remove yourself from a space that doesn’t feel safe.
+          🛟 <strong>Take care of you: </strong> If you're feeling overwhelmed, talk to a friend or adult you trust. It’s totally okay to remove yourself from a space that doesn’t feel safe.
         </Text>
       </div>
 
