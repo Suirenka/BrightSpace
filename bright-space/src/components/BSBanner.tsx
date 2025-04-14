@@ -48,15 +48,20 @@ const useStyles = makeStyles({
     width: "100%",
     textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
   },
-  scrollButton: {
-    backgroundColor: "#8b5cf6",
-    color: "#ffffff",
-    fontWeight: 600,
-    fontSize: "1.1rem",
-    padding: "0.55rem 1.5rem",
-    borderRadius: "8px",
+  button: {
+    backgroundColor: "#7B5EFF",
+    color: "#fff",
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    borderRadius: "9999px",
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.2s ease",
+    width: "fit-content",
+  
     ":hover": {
-      backgroundColor: "#7c3aed",
+      backgroundColor: "#1749cc",
     },
   },
 });
@@ -73,7 +78,7 @@ const BSBanner = ({ onExploreClick }: { onExploreClick: () => void }) => {
         </Title1>
         <Button
           onClick={onExploreClick}
-          className={styles.scrollButton}
+          className={styles.button}
         >
           Explore More
         </Button>
