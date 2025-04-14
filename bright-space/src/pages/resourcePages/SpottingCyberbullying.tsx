@@ -221,10 +221,10 @@ const SpottingCyberbullying = () => {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.5 }}
           >
-            <Title1 className={styles.title}>Spotting Cyberbullying 🎯</Title1>
+            <Title1 className={styles.title}>Spotting Cyberbullying</Title1>
             {step === 0 && (
               <div className={styles.introText}>
-                🎯📌 Let’s see how you'd handle a few real-life moments. You can try again if you pick the wrong option.🎯
+                Let’s see how you'd handle a few real-life moments. You can try again if you pick the wrong option.
               </div>
             )}
             <div className={styles.scenarioText}>{scenario.question.split("\n")[0]}</div>

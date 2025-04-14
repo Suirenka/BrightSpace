@@ -1,5 +1,5 @@
 import * as React from "react";
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import BSBanner from "../components/BSBanner";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import ResourceImage from "../assets/images/home/Resource.png";
@@ -100,12 +100,13 @@ const useStyles = makeStyles({
     fontSize: "2.25rem",
     fontWeight: 800,
     marginBottom: "1.5rem",
+    color: tokens.colorNeutralForeground1, 
   },
   introParagraph: {
     fontSize: "1.125rem",
     lineHeight: "1.8",
     marginBottom: "1.5rem",
-    color: "#4b4b4b",
+    color: tokens.colorNeutralForeground2,
   },
 });
 

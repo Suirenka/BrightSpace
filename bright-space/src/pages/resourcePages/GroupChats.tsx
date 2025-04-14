@@ -131,7 +131,7 @@ const useStyles = makeStyles({
     marginTop: "1rem",
     textAlign: "center",
     maxWidth: "700px",
-    marginInline: "auto", // ✅ 水平居中容器
+    marginInline: "auto",
   },
 });
 

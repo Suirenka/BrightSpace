@@ -1,10 +1,8 @@
 import {
   makeStyles,
-  shorthands,
   tokens,
   Title1,
   Subtitle2,
-  Text,
 } from "@fluentui/react-components";
 import {
   ShieldCheckmark24Regular,
@@ -14,6 +12,7 @@ import {
 } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
+import ReportImage from "../assets/images/home/ReportImage.png";
 
 const useStyles = makeStyles({
   container: {
@@ -29,6 +28,11 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "2rem",
     marginBottom: "0.75rem",
+  },
+  subtitleNote: {
+    color: tokens.colorNeutralForeground3,
+    fontSize: "1rem",
+    lineHeight: "1.6",
   },
   description: {
     fontSize: "1.1rem",
@@ -77,6 +81,53 @@ const useStyles = makeStyles({
     marginTop: "3rem",
     textAlign: "center",
   },
+  reportSection: {
+    marginTop: "5rem",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "3rem",
+    flexWrap: "wrap",
+    maxWidth: "100%",
+    padding: "4rem",
+  },
+  reportImage: {
+    maxWidth: "500px",
+    width: "100%",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+  },
+  reportText: {
+    maxWidth: "480px",
+    textAlign: "left",
+  },
+  reportTitle: {
+    fontSize: "1.75rem",
+    fontWeight: 700,
+    marginBottom: "1rem",
+    color: tokens.colorNeutralForeground1,
+  },
+  reportDescription: {
+    fontSize: "1rem",
+    color: tokens.colorNeutralForeground3,
+    marginBottom: "1.5rem",
+    lineHeight: "1.6",
+  },
+  reportButton: {
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    backgroundColor: "#7B5EFF",
+    color: "#fff",
+    borderRadius: "9999px",
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.2s ease",
+    ":hover": {
+      backgroundColor: "#5d3ddb",
+    },
+  },
 });
 
 const resourceCards = [
@@ -114,10 +165,9 @@ const BSResource = () => {
     <div className={styles.container}>
       <Title1 className={styles.title}>Stay Safe Online</Title1>
 
-      <div className={styles.reportLineWrapper}>
+      <div className={styles.subtitleNote}>
         <Subtitle2>
-          Witnessed something harmful?{" "}
-          <BSNavLink text="Report it" route="/report" />
+          Try out the interactive scenarios and explore practical guides to help you stay safe online, speak up, and support others online.
         </Subtitle2>
       </div>
 
@@ -133,6 +183,27 @@ const BSResource = () => {
             <div className={styles.cardDesc}>{item.desc}</div>
           </div>
         ))}
+      </div>
+
+      <div className={styles.reportSection}>
+        <img
+          src={ReportImage}
+          alt="Report Illustration"
+          className={styles.reportImage}
+        />
+        <div className={styles.reportText}>
+          <h2 className={styles.reportTitle}>Report Harmful Behavior</h2>
+          <p className={styles.reportDescription}>
+            If you or someone you know has experienced online harm, speak up.
+            Your action can help create a safer space for everyone.
+          </p>
+          <button
+            className={styles.reportButton}
+            onClick={() => navigate("/report")}
+          >
+            Go to Report Page
+          </button>
+        </div>
       </div>
 
       <div className={styles.navWrapper}>
