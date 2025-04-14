@@ -1,10 +1,13 @@
+import React, { useRef } from "react";
 import {
   Subtitle1,
   Title1,
   makeStyles,
   shorthands,
   tokens,
+  Button,
 } from "@fluentui/react-components";
+import { ChevronDown24Regular } from "@fluentui/react-icons";
 import BannerImage from "../assets/images/home/Banner.jpg";
 
 const useStyles = makeStyles({
@@ -34,6 +37,10 @@ const useStyles = makeStyles({
     textAlign: "center",
     color: "white",
     ...shorthands.padding("20px"),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "1.5rem",
   },
   title: {
     fontSize: "3rem",
@@ -41,12 +48,25 @@ const useStyles = makeStyles({
     width: "100%",
     textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
   },
-  subtitle: {
-    textShadow: "1px 1px 4px rgba(0, 0, 0, 0.6)",
+  button: {
+    backgroundColor: "#7B5EFF",
+    color: "#fff",
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    borderRadius: "9999px",
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.2s ease",
+    width: "fit-content",
+  
+    ":hover": {
+      backgroundColor: "#1749cc",
+    },
   },
 });
 
-const BSBanner = () => {
+const BSBanner = ({ onExploreClick }: { onExploreClick: () => void }) => {
   const styles = useStyles();
 
   return (
@@ -56,6 +76,12 @@ const BSBanner = () => {
         <Title1 className={styles.title}>
           Your Daily Companion for Positive Digital Living
         </Title1>
+        <Button
+          onClick={onExploreClick}
+          className={styles.button}
+        >
+          Explore More
+        </Button>
       </div>
     </div>
   );

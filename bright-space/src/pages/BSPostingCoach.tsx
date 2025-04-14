@@ -16,12 +16,12 @@ import BSNavLink from "../components/BSLinks/BSNavLink";
 const useStyles = makeStyles({
   page: {
     backgroundColor: tokens.colorBrandBackground2Hover,
-    minHeight: "100vh",
-    padding: "2.5rem 1rem",
+    padding: "4rem 1rem 2rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     gap: "2rem",
+    minHeight: "65vh",
   },
   title: {
     fontSize: "2rem",

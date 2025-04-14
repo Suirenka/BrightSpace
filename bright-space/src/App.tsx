@@ -41,32 +41,36 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <FluentProvider theme={theme}>
-        <Header />
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+          <Header />
 
-        <Routes>
-          <Route path="/" element={<BSHome />} />
-          <Route path="bs-resource" element={<BSResource />} />
-          <Route path="bs-posting-coach" element={<BSPostingCoach />} />
-          <Route path="contact" element={<BSContact />} />
-          <Route
-            path="terms-and-condition"
-            element={<BSTermsAndConditions />}
-          />
-          <Route path="privacy" element={<BSPrivacy />} />
-          <Route
-            path="spotting-cyberbullying"
-            element={<SpottingCyberbullying />}
-          />
-          <Route
-            path="what-to-do-if-targeted"
-            element={<WhatToDoIfTargeted />}
-          />
-          <Route path="/help-friends" element={<HelpFriends />} />
-          <Route path="group-chat-guidance" element={<GroupChats />} />
-          <Route path="/report" element={<BSReport />} />
-        </Routes>
+          <div style={{ flexGrow: 1 }}>
+            <Routes>
+              <Route path="/" element={<BSHome />} />
+              <Route path="bs-resource" element={<BSResource />} />
+              <Route path="bs-posting-coach" element={<BSPostingCoach />} />
+              <Route path="contact" element={<BSContact />} />
+              <Route
+                path="terms-and-condition"
+                element={<BSTermsAndConditions />}
+              />
+              <Route path="privacy" element={<BSPrivacy />} />
+              <Route
+                path="spotting-cyberbullying"
+                element={<SpottingCyberbullying />}
+              />
+              <Route
+                path="what-to-do-if-targeted"
+                element={<WhatToDoIfTargeted />}
+              />
+              <Route path="/help-friends" element={<HelpFriends />} />
+              <Route path="group-chat-guidance" element={<GroupChats />} />
+              <Route path="/report" element={<BSReport />} />
+            </Routes>
+          </div>
 
-        <Footer />
+          <Footer />
+        </div>
       </FluentProvider>
     </ThemeContext.Provider>
   );
