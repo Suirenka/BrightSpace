@@ -210,6 +210,11 @@ const handleBack = () => {
             transition={{ duration: 0.5 }}
           >
             <Title1 className={styles.title}>What To Do If You’re Targeted</Title1>
+            {step === 0 && (
+              <div className={styles.introText}>
+                Let’s see how you'd handle a few real-life moments. You can try again if you pick the wrong option.
+              </div>
+            )}
             <div className={styles.question}>{current.text}</div>
 
             <div className={styles.optionButtons}>

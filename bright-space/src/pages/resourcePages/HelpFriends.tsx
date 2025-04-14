@@ -142,23 +142,31 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     lineHeight: "1.7",
   },
+  introText: {
+    fontSize: "1rem",
+    color: tokens.colorNeutralForeground3,
+    lineHeight: "1.6",
+    marginTop: "1rem",
+    textAlign: "center",
+    maxWidth: "700px",
+  },
 });
 
 const questions = [
   {
-    text: `🎯 Scenario 1\nYour friend keeps getting weird DMs from someone at school.\nThey tell you it’s fine — but you can tell it’s bothering them.\nWhat do you do?\n\nOption A: Let them deal with it on their own\nOption B: Offer to help them report it or talk to someone`,
+    text: `🎯 Scenario 1\nYour friend keeps getting weird DMs from someone at school. They tell you it’s fine — but you can tell it’s bothering them. What do you do?\n\nOption A: Let them deal with it on their own\nOption B: Offer to help them report it or talk to someone`,
     correct: "B",
     correctFeedback: `✅ You chose right!\nJust offering support shows you’ve got their back — even if they say they’re okay.`,
     wrongFeedback: `❌ Not quite.\nIt’s tempting to step back, but friends check in even when it's awkward.\nYou don’t have to fix it — just show up.`,
   },
   {
-    text: `🎯 Scenario 2\nYou see your friend getting roasted in a group chat.\nThey try to joke back, but they seem upset.\nWhat do you do?\n\nOption A: DM them privately and ask if they’re okay\nOption B: Drop a laughing emoji to go with the flow`,
+    text: `🎯 Scenario 2\nYou see your friend getting roasted in a group chat. They try to joke back, but they seem upset. What do you do?\n\nOption A: DM them privately and ask if they’re okay\nOption B: Drop a laughing emoji to go with the flow`,
     correct: "A",
     correctFeedback: `✅ You chose right!\nQuiet support can mean everything — even a quick “You okay?” shows you care.`,
     wrongFeedback: `❌ Not quite.\nGoing with the crowd might feel easier, but it can add to the harm.\nSupport privately if you’re not ready to speak up publicly.`,
   },
   {
-    text: `🎯 Scenario 3\nYour friend tells you they’re thinking of deleting all their socials.\nThey’ve been getting negative comments nonstop.\nWhat do you do?\n\nOption A: Say “Yeah maybe that’s best” and move on\nOption B: Ask them what’s been happening and if they want help reporting`,
+    text: `🎯 Scenario 3\nYour friend tells you they’re thinking of deleting all their socials. They’ve been getting negative comments nonstop. What do you do?\n\nOption A: Say “Yeah maybe that’s best” and move on\nOption B: Ask them what’s been happening and if they want help reporting`,
     correct: "B",
     correctFeedback: `✅ You chose right!\nListening comes first. Then you can support them in taking action — together.`,
     wrongFeedback: `❌ Not quite.\nBrushing it off might make them feel even more alone.\nTake a minute to listen. It matters more than you think.`,
@@ -214,6 +222,11 @@ const HelpFriends = () => {
             transition={{ duration: 0.5 }}
           >
             <Title1 className={styles.title}>Helping a Friend</Title1>
+            {step === 0 && (
+              <div className={styles.introText}>
+                Let’s see how you handle a few real-life moments. You can try again if you pick the wrong option.
+              </div>
+            )}
             <div className={styles.question}>{current.text}</div>
             <div className={styles.optionButtons}>
               {["A", "B"].map((opt) => (

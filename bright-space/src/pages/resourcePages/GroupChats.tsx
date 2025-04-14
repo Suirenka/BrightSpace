@@ -124,23 +124,32 @@ const useStyles = makeStyles({
     textAlign: "center",
     marginTop: "2.5rem",
   },
+  introText: {
+    fontSize: "1rem",
+    color: tokens.colorNeutralForeground3,
+    lineHeight: "1.6",
+    marginTop: "1rem",
+    textAlign: "center",
+    maxWidth: "700px",
+    marginInline: "auto", // ✅ 水平居中容器
+  },
 });
 
 const questions = [
   {
-    text: `🎯 Scenario 1\nA group chat you’re in starts joking about someone’s appearance.\nIt keeps going, and people are reacting with 💀 and 😂.\nWhat do you do?\n\nOption A: Say “Not cool guys” and leave the chat\nOption B: Stay quiet — you don’t want to ruin the vibe`,
+    text: `🎯 Scenario 1\nA group chat you’re in starts joking about someone’s appearance. It keeps going, and people are reacting with 💀 and 😂. What do you do?\n\nOption A: Say “Not cool guys” and leave the chat\nOption B: Stay quiet — you don’t want to ruin the vibe`,
     correct: "A",
     correctFeedback: `✅ You chose right!\nEven a short comment shows you don’t agree — and leaving sets a boundary.`,
     wrongFeedback: `❌ Not quite.\nIt’s okay to feel unsure, but silence can feel like approval.\nEven leaving the chat sends a message.`,
   },
   {
-    text: `🎯 Scenario 2\nSomeone in the chat gets left on read after standing up for someone.\nNow people are ignoring them completely.\nWhat do you do?\n\nOption A: DM them: “I saw what you said — I thought it was brave.”\nOption B: Stay silent — you don’t want attention on you`,
+    text: `🎯 Scenario 2\nSomeone in the chat gets left on read after standing up for someone. Now people are ignoring them completely. What do you do?\n\nOption A: DM them: “I saw what you said — I thought it was brave.”\nOption B: Stay silent — you don’t want attention on you`,
     correct: "A",
     correctFeedback: `✅ You chose right!\nOne message of support can undo a lot of silence. You don’t have to speak up in public to show respect.`,
     wrongFeedback: `❌ Not quite.\nIt’s normal to want to stay under the radar, but quiet support matters too.\nTry checking in privately.`,
   },
   {
-    text: `🎯 Scenario 3\nYou realize you’ve been laughing along in chats where someone keeps getting picked on.\nYou didn’t mean harm — but now you feel weird about it.\nWhat do you do?\n\nOption A: DM the person: “Hey, I’ve been thinking. That wasn’t cool. You okay?”\nOption B: Leave the chat quietly and never bring it up`,
+    text: `🎯 Scenario 3\nYou realize you’ve been laughing along in chats where someone keeps getting picked on. You didn’t mean harm — but now you feel weird about it. What do you do?\n\nOption A: DM the person: “Hey, I’ve been thinking. That wasn’t cool. You okay?”\nOption B: Leave the chat quietly and never bring it up`,
     correct: "A",
     correctFeedback: `✅ You chose right!\nIt takes real maturity to reflect and own up — even in a small way.`,
     wrongFeedback: `❌ Not quite.\nLeaving can be good, but reaching out shows you care and want to make things better.`,
@@ -196,6 +205,11 @@ const GroupChats = () => {
             transition={{ duration: 0.5 }}
           >
             <Title1 className={styles.title}>When it Happens in Group Chats</Title1>
+            {step === 0 && (
+              <div className={styles.introText}>
+                Let’s see how you'd handle a few real-life moments. You can try again if you pick the wrong option.
+              </div>
+            )}
             <div className={styles.question}>{current.text}</div>
             <div className={styles.optionButtons}>
               {["A", "B"].map((opt) => (

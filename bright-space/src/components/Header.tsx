@@ -58,8 +58,8 @@ const Header = () => {
         <nav className={styles.nav}>
           <BSNavLink text="Home" route="/" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
-          <BSNavLink text="Report It" route="/report" noArrow />
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
+          <BSNavLink text="Report It" route="/report" noArrow />
         </nav>
       </div>
     </header>
