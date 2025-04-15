@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     ...shorthands.padding("2rem"),
     minHeight: "60vh",
-    backgroundColor: "white",
+    backgroundColor: tokens.colorNeutralBackground1,
     textAlign: "center",
     gap: "2rem",
   },
@@ -84,11 +84,11 @@ const useStyles = makeStyles({
     textAlign: "left",
   },
   correctText: {
-    color: "#15803d",
+    color: tokens.colorStatusSuccessForeground1,
     fontStyle: "italic",
   },
   wrongText: {
-    color: "#b91c1c",
+    color: tokens.colorStatusDangerForeground1,
     fontStyle: "italic",
   },
   buttonRow: {
@@ -98,8 +98,8 @@ const useStyles = makeStyles({
     marginTop: "1rem",
   },
   nextButton: {
-    backgroundColor: "#a78bfa",
-    color: "white",
+    backgroundColor: tokens.colorPaletteLavenderBackground2,
+    color: tokens.colorNeutralForegroundInverted,
   },
   section: {
     backgroundColor: tokens.colorSubtleBackgroundHover,

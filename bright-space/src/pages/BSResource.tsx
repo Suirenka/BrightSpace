@@ -118,14 +118,14 @@ const useStyles = makeStyles({
     padding: "0.75rem 1.5rem",
     fontSize: "1rem",
     fontWeight: "bold",
-    backgroundColor: "#7B5EFF",
-    color: "#fff",
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
     borderRadius: "9999px",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
     ":hover": {
-      backgroundColor: "#5d3ddb",
+      backgroundColor: tokens.colorBrandBackgroundHover,
     },
   },
 });

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     minHeight: "480px",
     borderRadius: "16px",
     overflow: "hidden",
-    backgroundColor: "#fff",
+    backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: "0 8px 20px rgba(0, 0, 0, 0.08)",
 
     "@media (max-width: 900px)": {
@@ -47,18 +47,18 @@ const useStyles = makeStyles({
     fontWeight: 800,
     lineHeight: "1.3",
     marginBottom: "1.5rem",
-    color: "#2d2d2d",
+    color: tokens.colorNeutralForeground1,
     wordBreak: "break-word",
   },
   description: {
     fontSize: "1.125rem",
     lineHeight: "1.8",
-    color: "#555",
+    color: tokens.colorNeutralForeground2,
     marginBottom: "2rem",
   },
   button: {
-    backgroundColor: "#7B5EFF",
-    color: "#fff",
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
     padding: "0.75rem 1.5rem",
     fontSize: "1rem",
     fontWeight: "bold",
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
     width: "fit-content",
 
     ":hover": {
-      backgroundColor: "#1749cc",
+      backgroundColor: tokens.colorBrandBackgroundHover,
     },
   },
   imageSection: {
@@ -94,13 +94,13 @@ const useStyles = makeStyles({
     maxWidth: "960px",
     margin: "0 auto",
     textAlign: "center",
-    color: "#1c1c1c",
+    color: tokens.colorNeutralForeground1,
   },
   introTitle: {
     fontSize: "2.25rem",
     fontWeight: 800,
     marginBottom: "1.5rem",
-    color: tokens.colorNeutralForeground1, 
+    color: tokens.colorNeutralForeground1,
   },
   introParagraph: {
     fontSize: "1.125rem",
@@ -109,6 +109,7 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground2,
   },
 });
+
 
 const BSHome = () => {
   const styles = useStyles();
