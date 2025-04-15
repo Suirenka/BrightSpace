@@ -1,67 +1,81 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
-  Subtitle1,
-  Title1,
   makeStyles,
-  shorthands,
   tokens,
+  Title1,
+  Subtitle1,
   Button,
+  shorthands,
 } from "@fluentui/react-components";
-import { ChevronDown24Regular } from "@fluentui/react-icons";
 import BannerImage from "../assets/images/home/Banner.jpg";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
-  Banner: {
-    position: "relative",
-    width: "100%",
-    height: "90vh",
-    backgroundImage: `url(${BannerImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+  wrapper: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
+    minHeight: "88vh",
+    // borderRadius: "16px",
+    overflow: "hidden",
+    backgroundColor: tokens.colorNeutralBackground1,
+    // boxShadow: tokens.shadow64,
+
+    "@media (max-width: 900px)": {
+      flexDirection: "column",
+    },
   },
-  Overlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: "linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.1))",
-    zIndex: 1,
-  },
-  Container: {
-    position: "relative",
-    zIndex: 2,
-    textAlign: "center",
-    color: "white",
-    ...shorthands.padding("20px"),
+  textSection: {
+    flex: 0.9,
+    padding: "3rem 6rem 5rem",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    gap: "1.5rem",
+    justifyContent: "center",
+    backgroundColor: tokens.colorNeutralBackground1,
+
+    "@media (max-width: 900px)": {
+      textAlign: "center",
+      padding: "2rem 1.5rem",
+    },
   },
   title: {
     fontSize: "3rem",
-    marginBottom: "1rem",
-    width: "100%",
-    textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
+    fontWeight: 700,
+    color: tokens.colorNeutralForeground1,
+    lineHeight: "1.3",
+    marginBottom: "3rem",
+  },
+  subtitle: {
+    fontSize: "1.3rem",
+    color: tokens.colorNeutralForeground2,
+    lineHeight: "1.8",
+    marginBottom: "2rem",
   },
   button: {
-    backgroundColor: "#7B5EFF",
-    color: "#fff",
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundInverted,
     fontWeight: "bold",
+    fontSize: "1rem",
     borderRadius: "9999px",
+    padding: "0.75rem 1.5rem",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
     width: "fit-content",
-  
+
     ":hover": {
-      backgroundColor: "#1749cc",
+      backgroundColor: tokens.colorBrandBackgroundHover,
+    },
+  },
+  imageSection: {
+    flex: 1.1,
+    backgroundImage: `url(${BannerImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    clipPath: "polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%)",
+
+    "@media (max-width: 900px)": {
+      clipPath: "none",
+      height: "260px",
     },
   },
 });
@@ -70,20 +84,36 @@ const BSBanner = ({ onExploreClick }: { onExploreClick: () => void }) => {
   const styles = useStyles();
 
   return (
-    <div className={styles.Banner}>
-      <div className={styles.Overlay} />
-      <div className={styles.Container}>
-        <Title1 className={styles.title}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.div
+        className={styles.textSection}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <h1 className={styles.title}>
           Your Daily Companion for Positive Digital Living
-        </Title1>
-        <Button
-          onClick={onExploreClick}
-          className={styles.button}
-        >
+        </h1>
+        <p className={styles.subtitle}>
+          Become the digital citizen who makes the online world better — one choice, one voice, one moment at a time.
+        </p>
+        <Button className={styles.button} onClick={onExploreClick}>
           Explore More
         </Button>
-      </div>
-    </div>
+      </motion.div>
+
+      <motion.div
+        className={styles.imageSection}
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      />
+    </motion.div>
   );
 };
 
