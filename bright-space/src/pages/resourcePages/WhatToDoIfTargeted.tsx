@@ -264,7 +264,6 @@ export default function WhenTargeted() {
     <div className={styles.outerContainer}>
       {!showFinal && (
         <>
-          {/* ------------ 左侧（图片 + 进度条） ------------ */}
           <div className={styles.leftPanel}>
             <h2 className={styles.scenarioTitle}>{scenario.title}</h2>
             <img src={scenario.image} alt="Scenario" className={styles.scenarioImage} />
@@ -272,7 +271,6 @@ export default function WhenTargeted() {
               Scenario {step + 1}/{totalCount}
             </div>
 
-            {/* 进度条 */}
             <div style={{ width: "100%", maxWidth: "450px", marginBottom: "1rem" }}>
               <div
                 style={{
@@ -292,7 +290,6 @@ export default function WhenTargeted() {
               </div>
             </div>
 
-            {/* 圆点跳转 */}
             <div
               style={{
                 display: "flex",
@@ -326,7 +323,6 @@ export default function WhenTargeted() {
             </div>
           </div>
 
-          {/* ------------ 右侧（问答区域） ------------ */}
           <div className={styles.rightPanel}>
             <AnimatePresence mode="wait">
               {isTransitioning ? (
@@ -418,7 +414,6 @@ export default function WhenTargeted() {
         </>
       )}
 
-      {/* ------------ 完成页 ------------ */}
       {showFinal && (
         <motion.div
           key="final"
