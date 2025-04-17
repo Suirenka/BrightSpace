@@ -29,14 +29,23 @@ const userPromptTemplate = fs.readFileSync(
   "utf-8"
 );
 
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+app.get("/bs-resource", (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+});
+
+app.get("/report", (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+});
+
+app.get("/bs-posting-coach", (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
 
 // Intention Analysis API
 app.get(
   "/api/intention-analysis",
   async (req: Request, res: Response): Promise<void> => {
+    // console.log("Received request for intention analysis");
     const userInput = req.query.prompt as string;
     if (!userInput) {
       res.status(400).json({ error: "Please enter your posting content." });
