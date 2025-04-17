@@ -225,8 +225,6 @@ const BSHome = () => {
     </div>
   </div>
 </div>
-
-
   
       <div ref={sectionRef} className={styles.wrapper}>
         <motion.div

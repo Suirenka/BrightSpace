@@ -44,6 +44,7 @@ const useHeaderStyles = makeStyles({
   nav: {
     display: "flex",
     gap: "1.5rem",
+    fontSize: "1.2rem",
   },
 });
 
