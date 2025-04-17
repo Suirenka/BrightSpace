@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import ReportImage from "../assets/images/home/ReportImage.png";
+import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
   container: {
@@ -214,12 +215,14 @@ const BSResource = () => {
             Go to Report Page
           </button>
         </div>
+        <BackToTopButton />
       </div>
 
       <div className={styles.navWrapper}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
+    
   );
 };
 
