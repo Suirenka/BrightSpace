@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import ReportImage from "../assets/images/home/ReportImage.png";
+import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
   container: {
@@ -82,25 +83,35 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   reportSection: {
-    marginTop: "5rem",
+    marginTop: "10rem",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: "3rem",
-    flexWrap: "wrap",
+    gap: "2rem",
     maxWidth: "100%",
-    padding: "4rem",
+    padding: "4rem 2rem",
+
+    "@media (max-width: 900px)": {
+      flexDirection: "column",
+      textAlign: "center",
+    },
   },
   reportImage: {
-    maxWidth: "500px",
-    width: "100%",
-    borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    maxWidth: "100%",
+    width: "50%",
+    objectFit: "cover",
+    borderRadius: "0",
+    boxShadow: "none",
   },
   reportText: {
-    maxWidth: "480px",
-    textAlign: "left",
+    width: "50%",
+    padding: "0 2rem",
+
+    "@media (max-width: 900px)": {
+      width: "100%",
+      padding: 0,
+    },
   },
   reportTitle: {
     fontSize: "1.75rem",
@@ -118,14 +129,14 @@ const useStyles = makeStyles({
     padding: "0.75rem 1.5rem",
     fontSize: "1rem",
     fontWeight: "bold",
-    backgroundColor: "#7B5EFF",
-    color: "#fff",
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
     borderRadius: "9999px",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
     ":hover": {
-      backgroundColor: "#5d3ddb",
+      backgroundColor: tokens.colorBrandBackgroundHover,
     },
   },
 });
@@ -204,12 +215,14 @@ const BSResource = () => {
             Go to Report Page
           </button>
         </div>
+        <BackToTopButton />
       </div>
 
       <div className={styles.navWrapper}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
+    
   );
 };
 

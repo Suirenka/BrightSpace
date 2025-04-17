@@ -6,11 +6,15 @@ import {
   Image,
   tokens,
 } from "@fluentui/react-components";
+import { motion } from "framer-motion";
 import BSLogo from "../assets/images/logos/bright-space-round.png";
 import BSNavLink from "./BSLinks/BSNavLink";
 
 const useHeaderStyles = makeStyles({
   header: {
+    position: "sticky",
+    top: 0,
+    zIndex: 1000,
     backgroundColor: tokens.colorBrandBackground2,
     justifyItems: "center",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
@@ -40,6 +44,7 @@ const useHeaderStyles = makeStyles({
   nav: {
     display: "flex",
     gap: "1.5rem",
+    fontSize: "1.2rem",
   },
 });
 
@@ -48,7 +53,12 @@ const Header = () => {
   const styles = useHeaderStyles();
 
   return (
-    <header className={styles.header}>
+    <motion.header
+      className={styles.header}
+      initial={{ opacity: 0, y: -80 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+    >
       <div className={styles.headerContent}>
         <div className={styles.brand} onClick={() => navigate("/")}>
           <Image className={styles.logo} src={BSLogo} alt="Logo" />
@@ -62,7 +72,7 @@ const Header = () => {
           <BSNavLink text="Report It" route="/report" noArrow />
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
