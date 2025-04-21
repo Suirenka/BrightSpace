@@ -1,17 +1,22 @@
-// server/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql" // or "mysql" / "sqlite" — 取决于你用的数据库类型
+  provider = "postgresql" 
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  createdAt DateTime @default(now())
+
+model Record {
+  id          Int     @id @default(autoincrement())
+  year        Int?
+  lgaKey      Int?
+  lgaDesc     String
+  numerator   Int?
+  denominator Int?
+  indicator   Float?
+   isNdp       Boolean @default(false)
+
+  @@map("records") 
 }

@@ -1,14 +1,13 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
 const fs = require('fs');
 const csv = require('csv-parser');
+const prisma = require('../prisma/client');  // 引入 prisma 客户端
 
 const results = [];
 
-fs.createReadStream('/Users/tao/BrightSpace/bright-space/server/data/VCAMS_indicator_3_1.csv')
+fs.createReadStream('server/data/VCAMS_indicator_3_1.csv')
   .pipe(csv())
   .on('data', (data) => {
-    // 清理数据：去除数字中的逗号
+    // 清理数据，去除数字中的逗号
     if (data.Numerator && data.Numerator !== 'NDP') {
       data.Numerator = data.Numerator.replace(/,/g, '');
     }
@@ -16,29 +15,20 @@ fs.createReadStream('/Users/tao/BrightSpace/bright-space/server/data/VCAMS_indic
       data.Denominator = data.Denominator.replace(/,/g, '');
     }
     if (data.Indicator && data.Indicator !== 'NDP') {
-      // 去掉百分号再替换逗号
-      data.Indicator = data.Indicator.replace('%', '').replace(/,/g, '');
+      data.Indicator = data.Indicator.replace(/,/g, '');
     }
     results.push(data);
   })
   .on('end', async () => {
-    console.log('开始写入数据库...');
+    console.log(results);
 
     for (const row of results) {
       try {
-        const year = parseInt(row.Year);
-        const lgaKey = parseInt(row.LGA_KEY);
-
-        // 检查 year 和 lgaKey 是否为有效数字
-        if (isNaN(year) || isNaN(lgaKey)) {
-          console.warn('跳过无效行（Year 或 LGA_KEY 不合法）:', row);
-          continue;
-        }
-
+        // 将数据插入到正确的表（比如 "Record" 表）
         await prisma.record.create({
           data: {
-            year: year,
-            lgaKey: lgaKey,
+            year: parseInt(row.Year), // 确保year是有效数字
+            lgaKey: parseInt(row.LGA_KEY),
             lgaDesc: row.LGA_DESC,
             numerator: row.Numerator && row.Numerator !== 'NDP' ? parseInt(row.Numerator) : null,
             denominator: row.Denominator && row.Denominator !== 'NDP' ? parseInt(row.Denominator) : null,
@@ -46,11 +36,9 @@ fs.createReadStream('/Users/tao/BrightSpace/bright-space/server/data/VCAMS_indic
           },
         });
       } catch (error) {
-        console.error('插入数据出错:', error);
-        console.error('出错的数据行:', row);
+        console.error('Error inserting row:', error);
       }
     }
 
-    console.log('✅ CSV 数据已成功导入数据库！');
-    await prisma.$disconnect();
+    console.log('CSV data has been successfully imported!');
   });
