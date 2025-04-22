@@ -5,6 +5,7 @@ import BSNavLink from "../components/BSLinks/BSNavLink";
 import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
+import BoundaryImage from '../assets/images/home/Boundary.png';
 import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
@@ -272,6 +273,30 @@ const BSHome = () => {
               onClick={() => (window.location.href = "/bs-posting-coach")}
             >
               Try the Posting Coach
+            </button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className={styles.section}
+          initial={{ opacity: 0, x: -80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5 }}
+          viewport={{ once: true }}
+        >
+          <div className={styles.imageSection}>
+            <img src={BoundaryImage} className={styles.image} alt="Resource" />
+          </div>
+          <div className={styles.textSection}>
+            <h2 className={styles.title}>Build My Boundaries</h2>
+            <p className={styles.description}>
+            This interactive canvas helps teens define their personal digital values — one boundary at a time.
+            </p>
+            <button
+              className={styles.button}
+              onClick={() => (window.location.href = "/bs-boundaries-builder")}
+            >
+              Try Building Boundaries
             </button>
           </div>
         </motion.div>
