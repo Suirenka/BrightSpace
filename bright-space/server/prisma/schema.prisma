@@ -9,14 +9,17 @@ datasource db {
 
 
 model Record {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   year        Int?
   lgaKey      Int?
   lgaDesc     String
   numerator   Int?
   denominator Int?
   indicator   Float?
-   isNdp       Boolean @default(false)
+  isNdp       Boolean  @default(false)
 
-  @@map("records") 
+  indicatorCode String 
+  
+  @@map("records")
+  @@unique([year, lgaKey, indicatorCode]) // 防止同指标重复插入
 }

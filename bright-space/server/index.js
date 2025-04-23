@@ -1,56 +1,41 @@
+/**
+ * Express 服务器 + API
+ * 启动方式：node index.js
+ * 依赖：express、cors、@prisma/client
+ */
+
+const express = require('express');
+const cors    = require('cors');
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const fs = require('fs');
-const csv = require('csv-parser');
 
-const results = [];
+const app     = express();
+const prisma  = new PrismaClient();
 
-fs.createReadStream('/Users/tao/BrightSpace/bright-space/server/data/VCAMS_indicator_3_1.csv')
-  .pipe(csv())
-  .on('data', (data) => {
-    // 清理数据：去除数字中的逗号
-    if (data.Numerator && data.Numerator !== 'NDP') {
-      data.Numerator = data.Numerator.replace(/,/g, '');
-    }
-    if (data.Denominator && data.Denominator !== 'NDP') {
-      data.Denominator = data.Denominator.replace(/,/g, '');
-    }
-    if (data.Indicator && data.Indicator !== 'NDP') {
-      // 去掉百分号再替换逗号
-      data.Indicator = data.Indicator.replace('%', '').replace(/,/g, '');
-    }
-    results.push(data);
-  })
-  .on('end', async () => {
-    console.log('开始写入数据库...');
+app.use(cors());
+app.use(express.json());
 
-    for (const row of results) {
-      try {
-        const year = parseInt(row.Year);
-        const lgaKey = parseInt(row.LGA_KEY);
+/* ---------- API：按年份获取数据 ---------- */
+app.get('/api/chart-data', async (req, res) => {
+  const year = parseInt(req.query.year);
 
-        // 检查 year 和 lgaKey 是否为有效数字
-        if (isNaN(year) || isNaN(lgaKey)) {
-          console.warn('跳过无效行（Year 或 LGA_KEY 不合法）:', row);
-          continue;
-        }
+  if (!year) {
+    return res.status(400).json({ error: 'Missing query parameter: year' });
+  }
 
-        await prisma.record.create({
-          data: {
-            year: year,
-            lgaKey: lgaKey,
-            lgaDesc: row.LGA_DESC,
-            numerator: row.Numerator && row.Numerator !== 'NDP' ? parseInt(row.Numerator) : null,
-            denominator: row.Denominator && row.Denominator !== 'NDP' ? parseInt(row.Denominator) : null,
-            indicator: row.Indicator && row.Indicator !== 'NDP' ? parseFloat(row.Indicator) : null,
-          },
-        });
-      } catch (error) {
-        console.error('插入数据出错:', error);
-        console.error('出错的数据行:', row);
-      }
-    }
+  try {
+    const data = await prisma.record.findMany({
+      where: { year },
+      orderBy: { lgaKey: 'asc' },
+    });
+    res.json(data);
+  } catch (err) {
+    console.error('❌ 获取数据失败:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
-    console.log('✅ CSV 数据已成功导入数据库！');
-    await prisma.$disconnect();
-  });
+/* ---------- 启动服务器 ---------- */
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
