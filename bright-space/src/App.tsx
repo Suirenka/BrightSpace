@@ -18,6 +18,7 @@ import HelpFriends from "./pages/resourcePages/HelpFriends";
 import GroupChats from "./pages/resourcePages/GroupChats";
 import BSReport from "./pages/BSReport";
 import BSPostingCoach from "./pages/BSPostingCoach";
+import BSDailyChallenge from "./pages/BSDailyChallenge";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -41,7 +42,13 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <FluentProvider theme={theme}>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+          }}
+        >
           <Header />
 
           <div style={{ flexGrow: 1 }}>
@@ -66,6 +73,7 @@ function App() {
               <Route path="/help-friends" element={<HelpFriends />} />
               <Route path="group-chat-guidance" element={<GroupChats />} />
               <Route path="/report" element={<BSReport />} />
+              <Route path="bs-daily-challenge" element={<BSDailyChallenge />} />
             </Routes>
           </div>
 

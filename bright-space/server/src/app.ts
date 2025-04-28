@@ -37,7 +37,7 @@ app.get("/report", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
 
-app.get("/bs-posting-coach", (req: Request, res: Response) => {
+app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
 

@@ -16,7 +16,6 @@ import githubLogoWhiteSrc from "../assets/images/logos/github-mark-white.png";
 const useFooterStyles = makeStyles({
   footer: {
     backgroundColor: tokens.colorBrandBackground2,
-    width: "100%",
     padding: "2.5rem 1.5rem",
     display: "flex",
     flexDirection: "column",
@@ -84,7 +83,8 @@ const useFooterStyles = makeStyles({
 const Footer = () => {
   const styles = useFooterStyles();
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const githubLogo = theme === teamsLightTheme ? githubLogoSrc : githubLogoWhiteSrc;
+  const githubLogo =
+    theme === teamsLightTheme ? githubLogoSrc : githubLogoWhiteSrc;
 
   return (
     <footer className={styles.footer}>
@@ -92,7 +92,9 @@ const Footer = () => {
         <div className={styles.column}>
           <Text className={styles.columnTitle}>About Us</Text>
           <Text>
-            BrightSpace helps young people stay safe and confident online. Through interactive tools and real-life guidance, we support teens in handling cyberbullying and building healthy digital habits.
+            BrightSpace helps young people stay safe and confident online.
+            Through interactive tools and real-life guidance, we support teens
+            in handling cyberbullying and building healthy digital habits.
           </Text>
         </div>
 

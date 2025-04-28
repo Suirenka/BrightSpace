@@ -3,6 +3,7 @@ import {
   tokens,
   Title1,
   Subtitle2,
+  Divider,
 } from "@fluentui/react-components";
 import {
   ShieldCheckmark24Regular,
@@ -83,7 +84,6 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   reportSection: {
-    marginTop: "10rem",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -126,20 +126,22 @@ const useStyles = makeStyles({
     lineHeight: "1.6",
   },
   reportButton: {
-    backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundInverted,
-    fontWeight: "bold",
-    fontSize: "1rem",
-    borderRadius: "9999px",
     padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
+    borderRadius: "9999px",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
-    width: "fit-content",
-
     ":hover": {
       backgroundColor: tokens.colorBrandBackgroundHover,
     },
+  },
+  divider: {
+    marginTop: "2rem",
+    marginBottom: "2rem",
   },
 });
 
@@ -170,35 +172,21 @@ const resourceCards = [
   },
 ];
 
-const BSResource = () => {
+const BSDailyChallenge = () => {
   const styles = useStyles();
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
-      <Title1 className={styles.title}>Stay Safe Online</Title1>
+      <Title1 className={styles.title}>Daily Challenge</Title1>
 
       <div className={styles.subtitleNote}>
         <Subtitle2>
-          Try out the interactive scenarios and explore practical guides to help
-          you stay safe online, speak up, and support others online.
+          Your daily dose of online safety tips and resources. Take a moment to
+          learn something new today.
         </Subtitle2>
       </div>
-
-      <div className={styles.grid}>
-        {resourceCards.map((item, index) => (
-          <div
-            key={index}
-            className={styles.card}
-            onClick={() => navigate(item.route)}
-          >
-            <div className={styles.icon}>{item.icon}</div>
-            <div className={styles.cardTitle}>{item.title}</div>
-            <div className={styles.cardDesc}>{item.desc}</div>
-          </div>
-        ))}
-      </div>
-
+      <Divider className={styles.divider} />
       <div className={styles.reportSection}>
         <img
           src={ReportImage}
@@ -206,16 +194,17 @@ const BSResource = () => {
           className={styles.reportImage}
         />
         <div className={styles.reportText}>
-          <h2 className={styles.reportTitle}>Report Harmful Behavior</h2>
+          <h2 className={styles.reportTitle}>Daily Challenge Quiz</h2>
           <p className={styles.reportDescription}>
-            If you or someone you know has experienced online harm, speak up.
-            Your action can help create a safer space for everyone.
+            Test your knowledge and learn how to stay safe online with our
+            interactive quiz. It's a fun way to reinforce what you've learned
+            and discover new tips for navigating the digital world.
           </p>
           <button
             className={styles.reportButton}
             onClick={() => navigate("/report")}
           >
-            Go to Report Page
+            Try the Daily Challenge Quiz
           </button>
         </div>
         <BackToTopButton />
@@ -228,4 +217,4 @@ const BSResource = () => {
   );
 };
 
-export default BSResource;
+export default BSDailyChallenge;

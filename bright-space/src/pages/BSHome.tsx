@@ -6,6 +6,9 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import { motion } from "framer-motion";
+import DailyChallengeNotification from "../components/DailyChallengeNotification";
+import BSNavButton from "../components/BSLinks/BSNavButton";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles({
     minHeight: "480px",
     overflow: "hidden",
     backgroundColor: tokens.colorNeutralBackground1,
-  
+
     "@media (max-width: 900px)": {
       flexDirection: "column",
     },
@@ -56,11 +59,11 @@ const useStyles = makeStyles({
   },
   button: {
     backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
+    color: tokens.colorNeutralForegroundInverted,
     fontWeight: "bold",
+    fontSize: "1rem",
     borderRadius: "9999px",
+    padding: "0.75rem 1.5rem",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
@@ -76,14 +79,14 @@ const useStyles = makeStyles({
     overflow: "hidden",
     backgroundSize: "cover",
     backgroundPosition: "center",
-  
+
     "@media (max-width: 900px)": {
       height: "260px",
     },
   },
   reverse: {
     flexDirection: "row-reverse",
-  
+
     "@media (max-width: 900px)": {
       flexDirection: "column",
     },
@@ -116,6 +119,7 @@ const useStyles = makeStyles({
 
 const BSHome = () => {
   const styles = useStyles();
+  const navigate = useNavigate();
   const sectionRef = React.useRef<HTMLDivElement>(null);
 
   const handleExploreClick = () => {
@@ -126,106 +130,106 @@ const BSHome = () => {
     <>
       <BSBanner onExploreClick={handleExploreClick} />
       <div
-  style={{
-    backgroundColor: tokens.colorNeutralBackground3,
-    padding: "5rem 1rem",
-  }}
->
-  <div
-    style={{
-      maxWidth: "1200px",
-      margin: "0 auto",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      textAlign: "center",
-      gap: "2rem",
-    }}
-  >
-    <h2
-      style={{
-        fontSize: "2.25rem",
-        fontWeight: 800,
-        color: tokens.colorNeutralForeground1,
-      }}
-    >
-      The Heart Behind BrightSpace
-    </h2>
-    <p
-      style={{
-        fontSize: "1.125rem",
-        color: tokens.colorNeutralForeground2,
-        maxWidth: "700px",
-        lineHeight: "1.8",
-      }}
-    >
-      A safer digital space means more than just avoiding harm — it’s about building kindness, confidence, and empathy
-      in every click and conversation.
-    </p>
+        style={{
+          backgroundColor: tokens.colorNeutralBackground3,
+          padding: "5rem 1rem",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: "2rem",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "2.25rem",
+              fontWeight: 800,
+              color: tokens.colorNeutralForeground1,
+            }}
+          >
+            The Heart Behind BrightSpace
+          </h2>
+          <p
+            style={{
+              fontSize: "1.125rem",
+              color: tokens.colorNeutralForeground2,
+              maxWidth: "700px",
+              lineHeight: "1.8",
+            }}
+          >
+            A safer digital space means more than just avoiding harm — it’s
+            about building kindness, confidence, and empathy in every click and
+            conversation.
+          </p>
 
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        gap: "1.5rem",
-        marginTop: "2rem",
-      }}
-    >
-      {[
-  {
-    title: "Support",
-    desc: "Because no one should feel alone online. We're here to walk with you.",
-  },
-  {
-    title: "Skills",
-    desc: "Build the tools to navigate online spaces with care, courage, and clarity.",
-  },
-  {
-    title: "Confidence",
-    desc: "Grow your voice and feel proud of how you show up in the digital world.",
-  },
-].map((item, i) => (
-  <motion.div
-    key={i}
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 300 }}
-    style={{
-      flex: "1 1 260px",
-      backgroundColor: tokens.colorNeutralBackground1,
-      borderRadius: "16px",
-      padding: "2rem",
-      boxShadow: tokens.shadow28,
-      textAlign: "center",
-      cursor: "default",
-    }}
-  >
-    <h3
-      style={{
-        fontSize: "1.75rem",
-        fontWeight: 700,
-        color: tokens.colorBrandForeground1,
-        marginBottom: "0.5rem",
-      }}
-    >
-      {item.title}
-    </h3>
-    <p
-      style={{
-        fontSize: "1rem",
-        color: tokens.colorNeutralForeground2,
-        lineHeight: "1.6",
-      }}
-    >
-      {item.desc}
-    </p>
-  </motion.div>
-))}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "1.5rem",
+              marginTop: "2rem",
+            }}
+          >
+            {[
+              {
+                title: "Support",
+                desc: "Because no one should feel alone online. We're here to walk with you.",
+              },
+              {
+                title: "Skills",
+                desc: "Build the tools to navigate online spaces with care, courage, and clarity.",
+              },
+              {
+                title: "Confidence",
+                desc: "Grow your voice and feel proud of how you show up in the digital world.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                style={{
+                  flex: "1 1 260px",
+                  backgroundColor: tokens.colorNeutralBackground1,
+                  borderRadius: "16px",
+                  padding: "2rem",
+                  boxShadow: tokens.shadow28,
+                  textAlign: "center",
+                  cursor: "default",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.75rem",
+                    fontWeight: 700,
+                    color: tokens.colorBrandForeground1,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    color: tokens.colorNeutralForeground2,
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-    </div>
-  </div>
-</div>
-  
       <div ref={sectionRef} className={styles.wrapper}>
         <motion.div
           className={styles.section}
@@ -238,19 +242,22 @@ const BSHome = () => {
             <img src={ResourceImage} className={styles.image} alt="Resource" />
           </div>
           <div className={styles.textSection}>
-            <h2 className={styles.title}>Digital Citizenship Scenario and Guides</h2>
+            <h2 className={styles.title}>
+              Digital Citizenship Scenario and Guides
+            </h2>
             <p className={styles.description}>
-              Experience common online challenges, choose how to respond, and build real-life skills for digital wellbeing.
+              Experience common online challenges, choose how to respond, and
+              build real-life skills for digital wellbeing.
             </p>
             <button
               className={styles.button}
-              onClick={() => (window.location.href = "/bs-resource")}
+              onClick={() => navigate("/bs-resource")}
             >
               Learn More about the resources
             </button>
           </div>
         </motion.div>
-  
+
         <motion.div
           className={`${styles.section} ${styles.reverse}`}
           initial={{ opacity: 0, x: 80 }}
@@ -259,25 +266,31 @@ const BSHome = () => {
           viewport={{ once: true }}
         >
           <div className={styles.imageSection}>
-            <img src={PostingCoachImage} className={styles.image} alt="Posting Coach" />
+            <img
+              src={PostingCoachImage}
+              className={styles.image}
+              alt="Posting Coach"
+            />
           </div>
           <div className={styles.textSection}>
             <h2 className={styles.title}>Intentional Posting Coach</h2>
             <p className={styles.description}>
-              The Posting Coach helps teens navigate the complexities of online communication,
-              offering guidance on kind and respectful expression.
+              The Posting Coach helps teens navigate the complexities of online
+              communication, offering guidance on kind and respectful
+              expression.
             </p>
             <button
               className={styles.button}
-              onClick={() => (window.location.href = "/bs-posting-coach")}
+              onClick={() => navigate("/bs-posting-coach")}
             >
               Try the Posting Coach
             </button>
           </div>
         </motion.div>
       </div>
-  
+
       <BackToTopButton />
+      <DailyChallengeNotification />
     </>
   );
 };

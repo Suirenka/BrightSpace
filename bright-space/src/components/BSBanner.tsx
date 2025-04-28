@@ -1,12 +1,4 @@
-import React from "react";
-import {
-  makeStyles,
-  tokens,
-  Title1,
-  Subtitle1,
-  Button,
-  shorthands,
-} from "@fluentui/react-components";
+import { makeStyles, tokens, Button } from "@fluentui/react-components";
 import BannerImage from "../assets/images/home/Banner.jpg";
 import { motion } from "framer-motion";
 
@@ -15,10 +7,8 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "stretch",
     minHeight: "88vh",
-    // borderRadius: "16px",
     overflow: "hidden",
     backgroundColor: tokens.colorNeutralBackground1,
-    // boxShadow: tokens.shadow64,
 
     "@media (max-width: 900px)": {
       flexDirection: "column",
@@ -100,7 +90,8 @@ const BSBanner = ({ onExploreClick }: { onExploreClick: () => void }) => {
           Your Daily Companion for Positive Digital Living
         </h1>
         <p className={styles.subtitle}>
-          Become the digital citizen who makes the online world better — one choice, one voice, one moment at a time.
+          Become the digital citizen who makes the online world better — one
+          choice, one voice, one moment at a time.
         </p>
         <Button className={styles.button} onClick={onExploreClick}>
           Explore More
