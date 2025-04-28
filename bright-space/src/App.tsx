@@ -64,9 +64,9 @@ function App() {
                 path="what-to-do-if-targeted"
                 element={<WhatToDoIfTargeted />}
               />
-              <Route path="/help-friends" element={<HelpFriends />} />
+              <Route path="help-friends" element={<HelpFriends />} />
               <Route path="group-chat-guidance" element={<GroupChats />} />
-              <Route path="/report" element={<BSReport />} />
+              <Route path="report" element={<BSReport />} />
               <Route path="bs-daily-challenge" element={<BSDailyChallenge />} />
             </Routes>
           </div>
