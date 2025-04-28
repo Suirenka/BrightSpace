@@ -56,12 +56,6 @@ function App() {
               <Route path="/" element={<BSHome />} />
               <Route path="bs-resource" element={<BSResource />} />
               <Route path="bs-posting-coach" element={<BSPostingCoach />} />
-              <Route path="contact" element={<BSContact />} />
-              <Route
-                path="terms-and-condition"
-                element={<BSTermsAndConditions />}
-              />
-              <Route path="privacy" element={<BSPrivacy />} />
               <Route
                 path="spotting-cyberbullying"
                 element={<SpottingCyberbullying />}

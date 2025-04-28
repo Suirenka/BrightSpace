@@ -13,7 +13,7 @@ import {
 } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
-import ReportImage from "../assets/images/home/ReportImage.png";
+import QuizImage from "../assets/images/home/Quiz.jpg";
 import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
@@ -182,14 +182,14 @@ const BSDailyChallenge = () => {
 
       <div className={styles.subtitleNote}>
         <Subtitle2>
-          Your daily dose of online safety tips and resources. Take a moment to
-          learn something new today.
+          Your daily chanllenge of online safety tips and resources. Take a
+          moment to learn something new today.
         </Subtitle2>
       </div>
       <Divider className={styles.divider} />
       <div className={styles.reportSection}>
         <img
-          src={ReportImage}
+          src={QuizImage}
           alt="Report Illustration"
           className={styles.reportImage}
         />
