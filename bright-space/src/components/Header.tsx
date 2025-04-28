@@ -70,11 +70,6 @@ const Header = () => {
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
           <BSNavLink text="Report It" route="/report" noArrow />
-          <BSNavLink
-            text="Daily Challenge"
-            route="/bs-daily-challenge"
-            noArrow
-          />
         </nav>
       </div>
     </motion.header>

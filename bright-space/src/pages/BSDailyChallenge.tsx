@@ -202,7 +202,7 @@ const BSDailyChallenge = () => {
           </p>
           <button
             className={styles.reportButton}
-            onClick={() => navigate("/report")}
+            onClick={() => navigate("/spotting-cyberbullying")}
           >
             Try the Daily Challenge Quiz
           </button>
