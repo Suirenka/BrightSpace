@@ -127,105 +127,147 @@ const BSHome = () => {
     <>
       <BSBanner onExploreClick={handleExploreClick} />
       <div
-  style={{
-    backgroundColor: tokens.colorNeutralBackground3,
-    padding: "5rem 1rem",
-  }}
->
-  <div
-    style={{
-      maxWidth: "1200px",
-      margin: "0 auto",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      textAlign: "center",
-      gap: "2rem",
-    }}
-  >
-    <h2
-      style={{
-        fontSize: "2.25rem",
-        fontWeight: 800,
-        color: tokens.colorNeutralForeground1,
-      }}
-    >
-      The Heart Behind BrightSpace
-    </h2>
-    <p
-      style={{
-        fontSize: "1.125rem",
-        color: tokens.colorNeutralForeground2,
-        maxWidth: "700px",
-        lineHeight: "1.8",
-      }}
-    >
-      A safer digital space means more than just avoiding harm — it’s about building kindness, confidence, and empathy
-      in every click and conversation.
-    </p>
+        style={{
+          backgroundColor: tokens.colorNeutralBackground3,
+          padding: "5rem 1rem",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: "2rem",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "2.25rem",
+              fontWeight: 800,
+              color: tokens.colorNeutralForeground1,
+            }}
+          >
+            The Heart Behind BrightSpace
+          </h2>
+          <p
+            style={{
+              marginTop: "-1rem",
+              fontSize: "1.125rem",
+              color: tokens.colorNeutralForeground2,
+              maxWidth: "700px",
+              lineHeight: "1.8",
+            }}
+          >
+            A safer digital space means more than just avoiding harm — it’s about building kindness, confidence, and empathy
+            in every click and conversation.
+          </p>
+          <div
+            style={{
+              marginTop: "0rem",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "1.5rem",
+            }}
+          >
+            {[
+              {
+                title: "Support",
+                desc: "Because no one should feel alone online. We're here to walk with you.",
+              },
+              {
+                title: "Skills",
+                desc: "Build the tools to navigate online spaces with care, courage, and clarity.",
+              },
+              {
+                title: "Confidence",
+                desc: "Grow your voice and feel proud of how you show up in the digital world.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                style={{
+                  flex: "1 1 260px",
+                  backgroundColor: tokens.colorNeutralBackground1,
+                  borderRadius: "16px",
+                  padding: "2rem",
+                  boxShadow: tokens.shadow28,
+                  textAlign: "center",
+                  cursor: "default",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.5rem",
+                    fontWeight: 700,
+                    color: tokens.colorBrandForeground1,
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    color: tokens.colorNeutralForeground2,
+                    lineHeight: "1.6",
+                  }}
+                >
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
 
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        gap: "1.5rem",
-        marginTop: "2rem",
-      }}
-    >
-      {[
-  {
-    title: "Support",
-    desc: "Because no one should feel alone online. We're here to walk with you.",
-  },
-  {
-    title: "Skills",
-    desc: "Build the tools to navigate online spaces with care, courage, and clarity.",
-  },
-  {
-    title: "Confidence",
-    desc: "Grow your voice and feel proud of how you show up in the digital world.",
-  },
-].map((item, i) => (
-  <motion.div
-    key={i}
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 300 }}
-    style={{
-      flex: "1 1 260px",
-      backgroundColor: tokens.colorNeutralBackground1,
-      borderRadius: "16px",
-      padding: "2rem",
-      boxShadow: tokens.shadow28,
-      textAlign: "center",
-      cursor: "default",
-    }}
-  >
-    <h3
-      style={{
-        fontSize: "1.75rem",
-        fontWeight: 700,
-        color: tokens.colorBrandForeground1,
-        marginBottom: "0.5rem",
-      }}
-    >
-      {item.title}
-    </h3>
-    <p
-      style={{
-        fontSize: "1rem",
-        color: tokens.colorNeutralForeground2,
-        lineHeight: "1.6",
-      }}
-    >
-      {item.desc}
-    </p>
-  </motion.div>
-))}
+          <div
+            style={{
+              marginTop: "2rem",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1.5rem",
+            }}
+          >
+            <p
+              style={{
+                fontWeight: 900,
+                fontSize: "1.125rem",
+                color: tokens.colorNeutralForeground2,
+                maxWidth: "700px",
+                lineHeight: "1.8",
+                margin: 0,
+              }}
+            >
+              Discover real-world data about teen bullying:
+            </p>
 
-    </div>
-  </div>
-</div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              style={{
+                backgroundColor: tokens.colorBrandBackground,
+                color: tokens.colorNeutralForegroundOnBrand,
+                padding: "0.75rem 1.5rem",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                borderRadius: "9999px",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => (window.location.href = "/bs-data")}
+            >
+              Explore Visualization
+            </motion.button>
+          </div>
+        </div>
+      </div>
   
       <div ref={sectionRef} className={styles.wrapper}>
         <motion.div
@@ -300,7 +342,60 @@ const BSHome = () => {
             </button>
           </div>
         </motion.div>
+
+
       </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        style={{
+          minHeight: "600px",
+          backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "2rem",
+          margin: "0",
+        }}
+      >
+        <div style={{ textAlign: "center", color: "white" }}>
+          <h2 style={{
+            fontSize: "2.75rem",
+            fontWeight: 800,
+            marginBottom: "1rem",
+            textShadow: "0px 4px 20px rgba(0,0,0,0.7)",
+          }}>
+            Report Harmful Behavior
+          </h2>
+          <p style={{
+            fontSize: "1.25rem",
+            marginBottom: "2rem",
+            maxWidth: "700px",
+            lineHeight: "1.8",
+            marginInline: "auto",
+            textShadow: "0px 2px 12px rgba(0,0,0,0.6)",
+          }}>
+            If you or someone you know has experienced online harm, speak up. Your action can help create a safer space for everyone.
+          </p>
+          <button
+            className={styles.button}
+            onClick={() => (window.location.href = "/report")}
+            style={{
+              backgroundColor: "white",
+              color: "#1d4ed8",
+              marginTop: "1rem",
+            }}
+          >
+            Go to Report Page
+          </button>
+        </div>
+      </motion.div>
   
       <BackToTopButton />
     </>

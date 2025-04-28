@@ -6,8 +6,10 @@ import {
   DragEndEvent,
 } from '@dnd-kit/core';
 import { motion } from 'framer-motion';
+import html2canvas from 'html2canvas';
 import styles from '../components/BSBoundary.module.css';
-import CoachAvatar from '../assets/images/home/Coach.png';
+import BSNavLink from "../components/BSLinks/BSNavLink";
+import BackToTopButton from "../components/BackToTopButton";
 
 const categories: Record<string, string[]> = {
   Messaging: ['I turn off read receipts', 'I take my time to reply', 'I mute group chats'],
@@ -18,6 +20,17 @@ const categories: Record<string, string[]> = {
   TimeOnline: ['I unplug at least once a day', 'I don’t scroll before bed', 'I take breaks from socials'],
   Emotional: ['I don’t post when overwhelmed', 'I log off when I feel drained', 'I journal instead of ranting online'],
   MentalSpace: ['I say no to things that drain me', 'I give myself permission to not reply', 'I protect my peace, always'],
+};
+
+const categoryIcons: Record<string, string> = {
+  Messaging: '🗨',
+  Friends: '👥',
+  Posting: '📸',
+  Reactions: '💬',
+  Privacy: '🔒',
+  TimeOnline: '⏰',
+  Emotional: '💖',
+  MentalSpace: '🧘',
 };
 
 const walls = Array.from({ length: 8 }, (_, i) => `wall-${i + 1}`);
@@ -60,6 +73,18 @@ export default function BSBoundary(): JSX.Element {
 
   const isComplete = Object.keys(wallAssignments).length === walls.length;
 
+  const handleDownload = () => {
+    const element = document.getElementById('exportArea');
+    if (element) {
+      html2canvas(element).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'my-digital-boundaries.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  };
+
   return (
     <div className={styles.container}>
       <motion.div
@@ -75,7 +100,10 @@ export default function BSBoundary(): JSX.Element {
           The walls around you represent areas of your online life. You choose what protects you. Each wall gets
           stronger with a principle you believe in.
         </p>
-        <button onClick={() => document.getElementById('canvas')?.scrollIntoView({ behavior: 'smooth' })}>
+        <button
+          style={{ marginBottom: "5rem" }}
+          onClick={() => document.getElementById('canvas')?.scrollIntoView({ behavior: 'smooth' })}
+        >
           Start Building
         </button>
       </motion.div>
@@ -86,8 +114,6 @@ export default function BSBoundary(): JSX.Element {
         </p>
 
         <div className={styles.canvasArea}>
-          <img src={CoachAvatar} className={styles.avatar} alt="Child Avatar" />
-
           <DndContext onDragEnd={handleDragEnd}>
             <div className={styles.wallGrid}>
               {walls.map(wallId => (
@@ -123,11 +149,40 @@ export default function BSBoundary(): JSX.Element {
             <p>
               You’ve created a space that reflects you. Download your board as a reminder of what keeps you grounded and confident online.
             </p>
-            <button>Download My Board</button>
+
+            <div id="exportArea" className={styles.exportArea}>
+              <h3>My Digital Boundaries</h3>
+              {Object.keys(categories).map((cat) => {
+                const selectedItems = categories[cat].filter((val) =>
+                  Object.values(wallAssignments).includes(val)
+                );
+                if (selectedItems.length === 0) return null;
+                return (
+                  <div key={cat} style={{ width: "100%", marginBottom: "1.5rem" }}>
+                    <h4 style={{ fontSize: "1.25rem", color: "#1d4ed8", marginBottom: "0.5rem" }}>
+                      {categoryIcons[cat]} {cat}
+                    </h4>
+                    <ul style={{ paddingLeft: "1.5rem", margin: 0, listStyleType: "none", }}>
+                      {selectedItems.map((item) => (
+                        <li key={item} style={{ fontSize: "1rem", color: "#555", marginBottom: "0.25rem" }}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button onClick={handleDownload}>Download My Board</button>
             <button onClick={() => setWallAssignments({})}>Start Over</button>
           </div>
         )}
       </div>
+      <div className={styles.navWrapper}>
+        <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
+      </div>
+      <BackToTopButton />
     </div>
   );
 }
