@@ -17,6 +17,8 @@ import BSReport from "./pages/BSReport";
 import BSPostingCoach from "./pages/BSPostingCoach";
 import BSDailyChallenge from "./pages/BSDailyChallenge";
 import BSDailyQuiz from "./pages/BSDailyQuiz";
+import BSBoundary from "./pages/BSBoundary";
+import BSData from "./pages/BSData";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -67,6 +69,9 @@ function App() {
               <Route path="report" element={<BSReport />} />
               <Route path="bs-daily-challenge" element={<BSDailyChallenge />} />
               <Route path="bs-daily-quiz" element={<BSDailyQuiz />} />
+              <Route path="/report" element={<BSReport />} />
+              <Route path="bs-boundaries-builder" element={<BSBoundary />} />
+              <Route path="/bs-data" element={<BSData />} />
             </Routes>
           </div>
 

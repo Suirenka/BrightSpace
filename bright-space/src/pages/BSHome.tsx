@@ -4,6 +4,7 @@ import BSBanner from "../components/BSBanner";
 import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
+import BoundaryImage from "../assets/images/home/Boundary.png";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
 import { useNavigate } from "react-router-dom";
@@ -155,6 +156,7 @@ const BSHome = () => {
           </h2>
           <p
             style={{
+              marginTop: "-1rem",
               fontSize: "1.125rem",
               color: tokens.colorNeutralForeground2,
               maxWidth: "700px",
@@ -165,14 +167,13 @@ const BSHome = () => {
             about building kindness, confidence, and empathy in every click and
             conversation.
           </p>
-
           <div
             style={{
+              marginTop: "0rem",
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
               gap: "1.5rem",
-              marginTop: "2rem",
             }}
           >
             {[
@@ -205,10 +206,10 @@ const BSHome = () => {
               >
                 <h3
                   style={{
-                    fontSize: "1.75rem",
+                    fontSize: "1.5rem",
                     fontWeight: 700,
                     color: tokens.colorBrandForeground1,
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.75rem",
                   }}
                 >
                   {item.title}
@@ -224,6 +225,49 @@ const BSHome = () => {
                 </p>
               </motion.div>
             ))}
+          </div>
+
+          <div
+            style={{
+              marginTop: "2rem",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1.5rem",
+            }}
+          >
+            <p
+              style={{
+                fontWeight: 900,
+                fontSize: "1.125rem",
+                color: tokens.colorNeutralForeground2,
+                maxWidth: "700px",
+                lineHeight: "1.8",
+                margin: 0,
+              }}
+            >
+              Discover real-world data about teen bullying:
+            </p>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              style={{
+                backgroundColor: tokens.colorBrandBackground,
+                color: tokens.colorNeutralForegroundOnBrand,
+                padding: "0.75rem 1.5rem",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                borderRadius: "9999px",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => (window.location.href = "/bs-data")}
+            >
+              Explore Visualization
+            </motion.button>
           </div>
         </div>
       </div>
@@ -285,7 +329,88 @@ const BSHome = () => {
             </button>
           </div>
         </motion.div>
+
+        <motion.div
+          className={styles.section}
+          initial={{ opacity: 0, x: -80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5 }}
+          viewport={{ once: true }}
+        >
+          <div className={styles.imageSection}>
+            <img src={BoundaryImage} className={styles.image} alt="Resource" />
+          </div>
+          <div className={styles.textSection}>
+            <h2 className={styles.title}>Build My Boundaries</h2>
+            <p className={styles.description}>
+              This interactive canvas helps teens define their personal digital
+              values — one boundary at a time.
+            </p>
+            <button
+              className={styles.button}
+              onClick={() => (window.location.href = "/bs-boundaries-builder")}
+            >
+              Try Building Boundaries
+            </button>
+          </div>
+        </motion.div>
       </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        style={{
+          minHeight: "600px",
+          backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "2rem",
+          margin: "0",
+        }}
+      >
+        <div style={{ textAlign: "center", color: "white" }}>
+          <h2
+            style={{
+              fontSize: "2.75rem",
+              fontWeight: 800,
+              marginBottom: "1rem",
+              textShadow: "0px 4px 20px rgba(0,0,0,0.7)",
+            }}
+          >
+            Report Harmful Behavior
+          </h2>
+          <p
+            style={{
+              fontSize: "1.25rem",
+              marginBottom: "2rem",
+              maxWidth: "700px",
+              lineHeight: "1.8",
+              marginInline: "auto",
+              textShadow: "0px 2px 12px rgba(0,0,0,0.6)",
+            }}
+          >
+            If you or someone you know has experienced online harm, speak up.
+            Your action can help create a safer space for everyone.
+          </p>
+          <button
+            className={styles.button}
+            onClick={() => (window.location.href = "/report")}
+            style={{
+              backgroundColor: "white",
+              color: "#1d4ed8",
+              marginTop: "1rem",
+            }}
+          >
+            Go to Report Page
+          </button>
+        </div>
+      </motion.div>
 
       <BackToTopButton />
       <DailyChallengeNotification />
