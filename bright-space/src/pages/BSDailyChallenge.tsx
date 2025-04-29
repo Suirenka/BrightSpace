@@ -13,7 +13,7 @@ import {
 } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
-import QuizImage from "../assets/images/home/Quiz.jpg";
+import QuizImage from "../assets/images/Quiz.jpg";
 import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
@@ -202,7 +202,7 @@ const BSDailyChallenge = () => {
           </p>
           <button
             className={styles.reportButton}
-            onClick={() => navigate("/spotting-cyberbullying")}
+            onClick={() => navigate("/bs-daily-quiz")}
           >
             Try the Daily Challenge Quiz
           </button>

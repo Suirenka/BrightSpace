@@ -17,6 +17,9 @@ import { Edit16Regular } from "@fluentui/react-icons";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles({
+  notification: {
+    fontSize: "1rem",
+  },
   link: {
     textDecoration: "none",
     ":hover": {
@@ -33,7 +36,7 @@ export const DailyChallengeNotification = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatchToast(
-        <Toast>
+        <Toast className={style.notification}>
           <ToastTitle media={<Avatar icon={<Edit16Regular />} size={16} />}>
             Daily Kindness Challenge
           </ToastTitle>

@@ -1,17 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import BSHome from "./pages/BSHome";
-import BSContact from "./pages/footerPages/BSContact";
 import {
   FluentProvider,
   teamsLightTheme,
   teamsDarkTheme,
 } from "@fluentui/react-components";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BSResource from "./pages/BSResource";
-import BSTermsAndConditions from "./pages/footerPages/BSTermsAndConditions";
-import BSPrivacy from "./pages/footerPages/BSPrivacy";
 import SpottingCyberbullying from "./pages/resourcePages/SpottingCyberbullying";
 import WhatToDoIfTargeted from "./pages/resourcePages/WhatToDoIfTargeted";
 import HelpFriends from "./pages/resourcePages/HelpFriends";
@@ -19,6 +16,7 @@ import GroupChats from "./pages/resourcePages/GroupChats";
 import BSReport from "./pages/BSReport";
 import BSPostingCoach from "./pages/BSPostingCoach";
 import BSDailyChallenge from "./pages/BSDailyChallenge";
+import BSDailyQuiz from "./pages/BSDailyQuiz";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -68,6 +66,7 @@ function App() {
               <Route path="group-chat-guidance" element={<GroupChats />} />
               <Route path="report" element={<BSReport />} />
               <Route path="bs-daily-challenge" element={<BSDailyChallenge />} />
+              <Route path="bs-daily-quiz" element={<BSDailyQuiz />} />
             </Routes>
           </div>
 

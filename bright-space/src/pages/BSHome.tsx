@@ -1,13 +1,11 @@
 import * as React from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import BSBanner from "../components/BSBanner";
-import BSNavLink from "../components/BSLinks/BSNavLink";
 import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
-import BSNavButton from "../components/BSLinks/BSNavButton";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
