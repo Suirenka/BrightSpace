@@ -178,12 +178,12 @@ const BSDailyChallenge = () => {
 
   return (
     <div className={styles.container}>
-      <Title1 className={styles.title}>Daily Challenge</Title1>
+      <Title1 className={styles.title}>Kindness Challenge</Title1>
 
       <div className={styles.subtitleNote}>
         <Subtitle2>
-          Your daily chanllenge of online safety tips and resources. Take a
-          moment to learn something new today.
+          Your chanllenge of online safety tips and resources. Take a moment to
+          learn something new today.
         </Subtitle2>
       </div>
       <Divider className={styles.divider} />
@@ -204,7 +204,7 @@ const BSDailyChallenge = () => {
             className={styles.reportButton}
             onClick={() => navigate("/bs-daily-quiz")}
           >
-            Try the Daily Challenge Quiz
+            Start the Chanllenge
           </button>
         </div>
         <BackToTopButton />
