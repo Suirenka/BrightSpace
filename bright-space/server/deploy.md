@@ -18,6 +18,7 @@ aws s3 cp project.zip s3://bright-space/code-deploy-1/project.zip
 ### ssh
 cd ..
 ssh ubuntu@54.206.127.22 -i BrightSpace.pem
+# iteration 1 ssh ubuntu@3.107.181.166 -i BrightSpace.pem 
 
 ## In the server
 aws s3 cp s3://bright-space/code-deploy-1/project.zip project.zip
@@ -35,18 +36,32 @@ sudo lsof -i :8080
 kill -9 <PID>
 ## 
 
-node-api.service
+new instance w/ group
+add IAM with full S3 Access
 
-[Unit]
-Description=Nodejs hello world App
-Documentation=https://example.com
-After=network.target
+sudo apt update
+sudo apt install nginx
 
-[Service]
-Type=simple
-User=ubuntu
-ExecStart=/usr/bin/node /home/ubuntu/Code/express-codedeploy-1/dist/index.js
-Restart=on-failure
+sudo vim /etc/nginx/sites-available/default
 
-[Install]
-WantedBy=multi-user.target
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;   # matches any host
+
+    location / {
+        # transparently forward to your Express app
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection   "upgrade";
+        proxy_set_header Host         $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+sudo nginx -t
+sudo systemctl reload nginx

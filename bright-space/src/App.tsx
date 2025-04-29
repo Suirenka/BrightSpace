@@ -18,6 +18,8 @@ import HelpFriends from "./pages/resourcePages/HelpFriends";
 import GroupChats from "./pages/resourcePages/GroupChats";
 import BSReport from "./pages/BSReport";
 import BSPostingCoach from "./pages/BSPostingCoach";
+import BSBoundary from "./pages/BSBoundary";
+import BSData from "./pages/BSData"; 
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -66,6 +68,8 @@ function App() {
               <Route path="/help-friends" element={<HelpFriends />} />
               <Route path="group-chat-guidance" element={<GroupChats />} />
               <Route path="/report" element={<BSReport />} />
+              <Route path="bs-boundaries-builder" element={<BSBoundary />} />
+              <Route path="/bs-data" element={<BSData />} />
             </Routes>
           </div>
 

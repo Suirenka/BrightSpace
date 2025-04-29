@@ -1,339 +1,493 @@
 import React, { useState } from "react";
 import {
   makeStyles,
-  shorthands,
-  tokens,
-  Title1,
-  Subtitle1,
-  Text,
   Button,
+  tokens,
+  shorthands,
   ProgressBar,
 } from "@fluentui/react-components";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   CheckmarkCircle24Filled,
   DismissCircle24Filled,
 } from "@fluentui/react-icons";
-import BSNavLink from "../../components/BSLinks/BSNavLink";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import BSNavLink from "../../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
-  container: {
+  outerContainer: {
+    display: "flex",
+    width: "100%",
+    minHeight: "100vh",
+    backgroundColor: tokens.colorStrokeFocus1,
+    marginTop: "-2rem",
+  },
+  leftPanel: {
+    flex: "1 1 50%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    ...shorthands.padding("2rem"),
-    minHeight: "60vh",
-    backgroundColor: tokens.colorNeutralBackground1,
-    textAlign: "center",
-    gap: "2rem",
-  },
-  card: {
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: "20px",
-    border: `2px solid ${tokens.colorPaletteLavenderBorderActive}`,
-    boxShadow: tokens.shadow64,
-    maxWidth: "850px",
-    width: "100%",
-    ...shorthands.padding("2rem"),
-    marginBottom: "1rem",
-  },
-  progressBar: {
-    width: "100%",
-    maxWidth: "700px",
-  },
-  title: {
-    fontSize: "2.5rem",
-    fontWeight: "bold",
-    color: tokens.colorBrandBackground,
-    textAlign: "center",
-  },
-  introText: {
-    fontSize: "1rem",
-    color: tokens.colorNeutralForeground3,
-    lineHeight: "1.6",
-    marginTop: "1rem",
-    textAlign: "center",
-  },
-  question: {
-    fontSize: "1.2rem",
-    marginTop: "1rem",
-    lineHeight: "1.8",
-    whiteSpace: "pre-line",
-    textAlign: "left",
-  },
-  optionButtons: {
-    display: "flex",
     justifyContent: "center",
-    gap: "2rem",
-    flexWrap: "wrap",
-    marginTop: "1.5rem",
+    ...shorthands.padding("2rem"),
   },
-  answerButton: {
-    borderRadius: "12px",
-    fontWeight: 600,
-    fontSize: "1rem",
-  },
-  feedback: {
+  rightPanel: {
+    flex: "1 1 50%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    justifyContent: "center",
+    ...shorthands.padding("2rem"),
+    marginTop: "-3rem",
+  },
+  scenarioTitle: {
+    fontSize: "2.2rem",
+    fontWeight: 600,
+    marginBottom: "2rem",
+    color: tokens.colorNeutralForeground1,
+  },
+  scenarioImage: {
+    width: "100%",
+    height: "auto",
+    maxWidth: "550px",
+    borderRadius: "12px",
+    marginBottom: "6rem",
+    objectFit: "cover",
+  },
+  scenarioIndex: {
+    fontWeight: 600,
+    color: tokens.colorNeutralForeground1,
+    marginBottom: "0.5rem",
+    marginTop: "-4rem",
+  },
+  questionText: {
+    fontSize: "1.6rem",
+    fontWeight: 600,
+    marginBottom: "9rem",
+    lineHeight: "1.4",
+    color: tokens.colorStatusWarningForeground2,
+    whiteSpace: "pre-line",
+  },
+  optionList: {
+    display: "flex",
+    flexDirection: "column",
     gap: "1rem",
+    marginBottom: "4rem",
+    marginTop: "-5rem",
+  },
+  optionButton: {
+    justifyContent: "flex-start",
+    fontWeight: 500,
+    borderRadius: "12px",
+    padding: "1rem 1.25rem",
     fontSize: "1rem",
-    marginTop: "1.5rem",
-    textAlign: "left",
+    backgroundColor: tokens.colorPaletteLavenderBackground2,
+    color: tokens.colorNeutralForeground1,
+    border: `2px solid transparent`,
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+    ":hover": {
+      backgroundColor: tokens.colorPaletteLavenderBackground2,
+    },
   },
-  correctText: {
-    color: tokens.colorStatusSuccessForeground1,
-    fontStyle: "italic",
-  },
-  wrongText: {
-    color: tokens.colorStatusDangerForeground1,
-    fontStyle: "italic",
+  feedbackBox: {
+    lineHeight: "1.7",
+    backgroundColor: tokens.colorNeutralBackground2,
+    borderLeft: `4px solid ${tokens.colorStatusSuccessBorder1}`,
+    ...shorthands.padding("1.25rem"),
+    borderRadius: "10px",
+    color: tokens.colorNeutralForeground1,
+    fontSize: "1rem",
+    fontWeight: 600,
+    whiteSpace: "pre-line",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.75rem",
+    alignItems: "flex-start",
+    maxWidth: "600px",
+    width: "100%",
+    boxShadow: tokens.shadow4,
+    marginTop: "2rem",
   },
   buttonRow: {
+    marginTop: "1.5rem",
     display: "flex",
-    justifyContent: "center",
     gap: "1rem",
-    marginTop: "1rem",
-  },
-  nextButton: {
-    backgroundColor: tokens.colorPaletteLavenderBackground2,
-    color: tokens.colorNeutralForegroundInverted,
+    justifyContent: "center",
+    width: "100%",
   },
   section: {
-    backgroundColor: tokens.colorSubtleBackgroundHover,
+    backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: "10px",
-    padding: "1.5rem",
+    ...shorthands.padding("1.5rem"),
     marginBottom: "1.8rem",
     maxWidth: "750px",
     width: "100%",
     boxShadow: tokens.shadow4,
-    textAlign: "left",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    transition: "transform 0.3s ease",
+    cursor: "pointer",
+    marginLeft: "auto",
+    marginRight: "auto",
     ":hover": {
-      transform: "scale(1.03)",
-      boxShadow: tokens.shadow16,
-      cursor: "pointer",
+      transform: "translateY(-6px)",
+      boxShadow: tokens.shadow64,
     },
   },
-  sectionTitle: {
+  subtitle: {
     fontWeight: "600",
-    fontSize: "1.15rem",
-    marginBottom: "0.6rem",
+    fontSize: "1.2rem",
+    marginBottom: "0.75rem",
+  },
+  list: {
+    fontSize: "1rem",
+    lineHeight: "1.7",
+    margin: 0,
+    paddingLeft: "1.2rem",
   },
   paragraph: {
     fontSize: "1rem",
-    color: tokens.colorNeutralForeground1,
     lineHeight: "1.7",
   },
   backLink: {
-    textAlign: "center",
     marginTop: "2.5rem",
-  },
-  backButtonStyled: {
-    backgroundColor: "white",
-    color: tokens.colorBrandForeground1,
-    border: `1px solid ${tokens.colorBrandForeground1}`,
+    textAlign: "center",
   },
 });
 
-const questions = [
+const scenariosData = [
   {
-    text: `🎯 Scenario 1\nYou post a photo. Someone comments: “No one asked” and others like it. What do you do?\n\nOption A: Delete the post immediately and say nothing\nOption B: Screenshot it, report the comment, and block the person`,
-    correct: "B",
-    correctFeedback: `✅ You chose right!\nSaving the proof and reporting it protects you — and blocking keeps your space safe.\nYou don’t have to respond to stay strong.`,
-    wrongFeedback: `❌ Not quite.\nDeleting the post might seem easiest, but that lets the harm slide.\nTake control by reporting and blocking — you deserve a safe space.`,
+    title: "Scenario 1: When Targeted",
+    image: require("../../assets/images/home/WhenTargeted.png"),
+    question:
+      "You post a photo. Someone comments: “No one asked” and others like it. What do you do?",
+    options: [
+      "Delete the post immediately and say nothing",
+      "Screenshot it, report the comment, and block the person",
+    ],
+    correctIndex: 1,
+    correctFeedback: {
+      title: "You chose right!",
+      message:
+        "Saving the proof and reporting it protects you — and blocking keeps your space safe.\n\n🟣You don’t have to respond to stay strong.",
+    },
+    incorrectFeedback: {
+      title: "Not quite.",
+      message:
+        "Deleting the post might seem easiest, but that lets the harm slide.\nTake control by reporting and blocking — you deserve a safe space.",
+    },
   },
   {
-    text: `🎯 Scenario 2\nYou get a DM saying, “You should just quit trying.” It feels aggressive and personal. What do you do?\n\nOption A: Respond with “lol ok” to make it seem like you don’t care\nOption B: Don’t reply, block the sender, and tell someone you trust`,
-    correct: "B",
-    correctFeedback: `✅ You chose right!\nYou don’t owe anyone a response. Blocking + talking to someone builds real support.\nProtecting your peace is strength.`,
-    wrongFeedback: `❌ Not quite.\nTrying to play it cool can leave the door open for more.\nInstead, take action — and get support.`,
+    title: "Scenario 2: When Targeted",
+    image: require("../../assets/images/home/WhenTargeted.png"),
+    question:
+      "You get a DM saying, “You should just quit trying.” It feels aggressive and personal.\nWhat do you do?",
+    options: [
+      "Respond with “lol ok” to make it seem like you don’t care",
+      "Don’t reply, block the sender, and tell someone you trust",
+    ],
+    correctIndex: 1,
+    correctFeedback: {
+      title: "You chose right!",
+      message:
+        "You don’t owe anyone a response. Blocking + talking to someone builds real support.\n\n🟣Protecting your peace is strength.",
+    },
+    incorrectFeedback: {
+      title: "Not quite.",
+      message:
+        "Trying to play it cool can leave the door open for more.\nInstead, take action — and get support.",
+    },
   },
   {
-    text: `🎯 Scenario 3\nYou’ve been left out of a class group chat. When you ask about it, someone says “It’s not for everyone.” What do you do?\n\nOption A: Pretend it doesn’t bother you and try harder to fit in\nOption B: Talk to a teacher or counselor about what’s happening`,
-    correct: "B",
-    correctFeedback: `✅ You chose right!\nExclusion can be a form of bullying. It’s okay to speak up about how it’s affecting you.`,
-    wrongFeedback: `❌ Not quite.\nTrying to force yourself in doesn’t solve it.\nYou deserve to be included — asking for help is a strong move.`,
+    title: "Scenario 3: When Targeted",
+    image: require("../../assets/images/home/WhenTargeted.png"),
+    question:
+      "You’ve been left out of a class group chat. When you ask about it, someone says “It’s not for everyone.”\nWhat do you do?",
+    options: [
+      "Pretend it doesn’t bother you and try harder to fit in",
+      "Talk to a teacher or counselor about what’s happening",
+    ],
+    correctIndex: 1,
+    correctFeedback: {
+      title: "You chose right!",
+      message:
+        "Exclusion can be a form of bullying. It’s okay to speak up about how it’s affecting you.",
+    },
+    incorrectFeedback: {
+      title: "Not quite.",
+      message:
+        "Trying to force yourself in doesn’t solve it.\nYou deserve to be included — asking for help is a strong move.",
+    },
   },
 ];
 
-const WhatToDoIfTargeted = () => {
+export default function WhenTargeted() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const [selected, setSelected] = useState<"A" | "B" | null>(null);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
-  const current = questions[step];
-  const progress = ((step + (isCorrect ? 1 : 0)) / questions.length) * 100;
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const scenario = scenariosData[step];
+  const totalCount = scenariosData.length;
 
-  const handleSelect = (choice: "A" | "B") => {
-    setSelected(choice);
-    setIsCorrect(choice === current.correct);
+  const handleOptionSelect = (index: number) => {
+    setSelectedIndex(index);
+    setShowFeedback(true);
   };
 
-  const navigate = useNavigate();
-
-const handleBack = () => {
-  if (step === 0) {
-    navigate("/bs-resource");
-  } else {
-    setStep(step - 1);
-    setSelected(null);
-    setIsCorrect(null);
-  }
-};
-
   const handleNext = () => {
-    if (step < questions.length - 1) {
-      setStep(step + 1);
-      setSelected(null);
-      setIsCorrect(null);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      if (step < totalCount - 1) {
+        setStep(step + 1);
+        setSelectedIndex(null);
+        setShowFeedback(false);
+        setIsTransitioning(false);
+      } else {
+        setShowFinal(true);
+        setIsTransitioning(false);
+      }
+    }, 600);
+  };
+
+  const handleBack = () => {
+    if (step > 0) {
+      setStep(step - 1);
+      setSelectedIndex(null);
+      setShowFeedback(false);
     } else {
-      setShowFinal(true);
+      navigate("/bs-resource");
     }
   };
 
   return (
-    <div className={styles.container}>
-      <ProgressBar className={styles.progressBar} value={progress} color="brand" />
-
-      <AnimatePresence mode="wait">
-        {!showFinal && (
-          <motion.div
-            key={step}
-            className={styles.card}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Title1 className={styles.title}>What To Do If You’re Targeted</Title1>
-            {step === 0 && (
-              <div className={styles.introText}>
-                Let’s see how you'd handle a few real-life moments. You can try again if you pick the wrong option.
-              </div>
-            )}
-            <div className={styles.question}>{current.text}</div>
-
-            <div className={styles.optionButtons}>
-              {["A", "B"].map((opt) => (
-                <Button
-                  key={opt}
-                  className={styles.answerButton}
-                  appearance={selected === opt ? "primary" : "outline"}
-                  onClick={() => handleSelect(opt as "A" | "B")}
-                  disabled={selected !== null}
-                >
-                  {opt}
-                </Button>
-              ))}
+    <div className={styles.outerContainer}>
+      {!showFinal && (
+        <>
+          <div className={styles.leftPanel}>
+            <h2 className={styles.scenarioTitle}>{scenario.title}</h2>
+            <img src={scenario.image} alt="Scenario" className={styles.scenarioImage} />
+            <div className={styles.scenarioIndex}>
+              Scenario {step + 1}/{totalCount}
             </div>
 
-            {selected && (
-              <motion.div
-                className={styles.feedback}
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200 }}
+            <div style={{ width: "100%", maxWidth: "450px", marginBottom: "1rem" }}>
+              <div
+                style={{
+                  height: "6px",
+                  borderRadius: "3px",
+                  backgroundColor: tokens.colorNeutralStroke2,
+                  overflow: "hidden",
+                }}
               >
-                {isCorrect ? (
-                  <>
-                    <CheckmarkCircle24Filled style={{ color: "#15803d" }} />
-                    <div className={styles.correctText}>{current.correctFeedback}</div>
-                    <div className={styles.buttonRow}>
-                      <Button className={styles.backButtonStyled} onClick={handleBack}>Back</Button>
-                      <Button className={styles.nextButton} onClick={handleNext}>
-                        {step === questions.length - 1 ? "Finish" : "Next"}
-                      </Button>
-                    </div>
-                  </>
+                <div
+                  style={{
+                    height: "100%",
+                    width: `${((step + 1) / totalCount) * 100}%`,
+                    backgroundColor: tokens.colorBrandBackground,
+                  }}
+                />
+              </div>
+            </div>
 
-                ) : (
-                  <>
-                    <DismissCircle24Filled style={{ color: "#b91c1c" }} />
-                    <div className={styles.wrongText}>{current.wrongFeedback}</div>
-                    <div className={styles.buttonRow}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "0.75rem",
+                marginTop: "0.5rem",
+              }}
+            >
+              {[...Array(totalCount)].map((_, i) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    setStep(i);
+                    setSelectedIndex(null);
+                    setShowFeedback(false);
+                    setShowFinal(false);
+                  }}
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                    borderRadius: "50%",
+                    backgroundColor:
+                      i === step ? tokens.colorBrandBackground : tokens.colorNeutralStroke2,
+                    border: `1px solid ${tokens.colorNeutralStroke2}`,
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    boxShadow: i === step ? tokens.shadow4 : undefined,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.rightPanel}>
+            <AnimatePresence mode="wait">
+              {isTransitioning ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "300px",
+                  }}
+                >
+                  <ProgressBar thickness="medium" value={undefined} />
+                </motion.div>
+              ) : showFeedback && selectedIndex !== null ? (
+                <motion.div
+                  key="feedback"
+                  className={styles.feedbackBox}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {selectedIndex === scenario.correctIndex ? (
+                    <>
+                      <CheckmarkCircle24Filled
+                        style={{ color: tokens.colorStatusSuccessForeground1 }}
+                      />
+                      <p style={{ color: tokens.colorStatusSuccessForeground1 }}>
+                        {scenario.correctFeedback.title + "\n" + scenario.correctFeedback.message}
+                      </p>
+                      <div className={styles.buttonRow}>
+                        <Button onClick={handleBack}>Back</Button>
+                        <Button appearance="primary" onClick={handleNext}>
+                          {step === totalCount - 1 ? "Finish" : "Next"}
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <DismissCircle24Filled style={{ color: tokens.colorStatusDangerForeground1 }} />
+                      <p style={{ color: tokens.colorStatusDangerForeground1 }}>
+                        {scenario.incorrectFeedback.title + "\n" + scenario.incorrectFeedback.message}
+                      </p>
+                      <div className={styles.buttonRow}>
+                        <Button
+                          appearance="primary"
+                          onClick={() => {
+                            setSelectedIndex(null);
+                            setShowFeedback(false);
+                          }}
+                        >
+                          Try Again
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="question"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.4 }}
+                  style={{ marginTop: "2rem" }}
+                >
+                  <h3 className={styles.questionText}>{scenario.question}</h3>
+                  <div className={styles.optionList}>
+                    {scenario.options.map((opt, idx) => (
                       <Button
-                        onClick={() => {
-                          setSelected(null);
-                          setIsCorrect(null);
-                        }}
+                        key={idx}
+                        className={styles.optionButton}
+                        appearance={selectedIndex === idx ? "primary" : "outline"}
+                        onClick={() => handleOptionSelect(idx)}
                       >
-                        Try Again
+                        {opt}
                       </Button>
-                    </div>
-                  </>
-                )}
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </>
+      )}
 
       {showFinal && (
         <motion.div
           key="final"
-          className={styles.card}
+          className={styles.rightPanel}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Title1 className={styles.title}>Great Job 🎉</Title1>
-          <div style={{ lineHeight: "1.6", marginTop: "1rem", marginBottom: "2rem" }}>
+          <h2
+            style={{
+              fontSize: "1.8rem",
+              textAlign: "center",
+              marginTop: "6rem",
+              marginBottom: "2rem",
+            }}
+          >
+            Great Job 🎉
+          </h2>
+          <div style={{ lineHeight: "1.6", marginBottom: "2rem", textAlign: "center" }}>
             You've completed the scenarios! Here are some quick reminders to help you stay safe:
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>1. 🧘 Stay Calm: </Text>
-            <Text className={styles.paragraph}>
-              It's okay to feel upset. Take a deep breath — responding when emotional may make things worse.
-            </Text>
+            <h3 className={styles.subtitle}>🧘 Stay Calm</h3>
+            <p className={styles.paragraph}>
+              It's okay to feel upset. Take a deep breath — responding when emotional may make
+              things worse.
+            </p>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>2. 🚫 Don’t Engage: </Text>
-            <Text className={styles.paragraph}>
+            <h3 className={styles.subtitle}>🚫 Don’t Engage</h3>
+            <p className={styles.paragraph}>
               You don’t have to reply. Bullies often want a reaction — silence can be powerful.
-            </Text>
+            </p>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>3. 🚷 Block and Report: </Text>
-            <Text className={styles.paragraph}>
-              Use the platform’s tools to block the person and report the content. You have the right to feel safe online.
-            </Text>
+            <h3 className={styles.subtitle}>🚷 Block and Report</h3>
+            <p className={styles.paragraph}>
+              Use the platform’s tools to block the person and report the content. You have the
+              right to feel safe online.
+            </p>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>4. 📸 Save the Evidence: </Text>
-            <Text className={styles.paragraph}>
-              Take screenshots of mean messages, posts, or DMs. This helps if you need to report them later.
-            </Text>
+            <h3 className={styles.subtitle}>📸 Save the Evidence</h3>
+            <p className={styles.paragraph}>
+              Take screenshots of mean messages, posts, or DMs. This helps if you need to report
+              them later.
+            </p>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>5. 🗣️ Tell Someone You Trust: </Text>
-            <Text className={styles.paragraph}>
-              You’re not alone. Talk to a parent, teacher, friend, or counselor — support makes a big difference.
-            </Text>
+            <h3 className={styles.subtitle}>🗣️ Tell Someone You Trust</h3>
+            <p className={styles.paragraph}>
+              You’re not alone. Talk to a parent, teacher, friend, or counselor — support makes a
+              big difference.
+            </p>
           </div>
 
           <div className={styles.section}>
-            <Text className={styles.sectionTitle}>6. 🛡️ Get More Support if Needed: </Text>
-            <Text className={styles.paragraph}>
-              If things get serious or threatening, reach out to school staff or local authorities for help.
-            </Text>
+            <h3 className={styles.subtitle}>🛡️ Get More Support if Needed</h3>
+            <p className={styles.paragraph}>
+              If things get serious or threatening, reach out to school staff or local authorities
+              for help.
+            </p>
           </div>
 
           <div className={styles.backLink}>
-            <BSNavLink text="Go Back to Resources" route="/bs-resource" back={true} />
+            <BSNavLink text="Go Back to Resources" route="/bs-resource" back />
           </div>
         </motion.div>
       )}
     </div>
   );
-};
-
-export default WhatToDoIfTargeted;
+}

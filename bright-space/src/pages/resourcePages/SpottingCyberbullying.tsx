@@ -407,7 +407,7 @@ export default function SpottingCyberbullying() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 style={{ fontSize: "1.8rem", textAlign: "center", marginTop: "4rem", marginBottom: "2rem" }}>
+          <h2 style={{ fontSize: "1.8rem", textAlign: "center", marginTop: "6rem", marginBottom: "2rem" }}>
             Great Job 🎉
           </h2>
           <div style={{ lineHeight: "1.6", marginBottom: "2rem", textAlign: "center" }}>

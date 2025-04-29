@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import ReportImage from "../assets/images/home/ReportImage.png";
+import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
   container: {
@@ -195,31 +196,11 @@ const BSResource = () => {
         ))}
       </div>
 
-      <div className={styles.reportSection}>
-        <img
-          src={ReportImage}
-          alt="Report Illustration"
-          className={styles.reportImage}
-        />
-        <div className={styles.reportText}>
-          <h2 className={styles.reportTitle}>Report Harmful Behavior</h2>
-          <p className={styles.reportDescription}>
-            If you or someone you know has experienced online harm, speak up.
-            Your action can help create a safer space for everyone.
-          </p>
-          <button
-            className={styles.reportButton}
-            onClick={() => navigate("/report")}
-          >
-            Go to Report Page
-          </button>
-        </div>
-      </div>
-
       <div className={styles.navWrapper}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
+    
   );
 };
 
