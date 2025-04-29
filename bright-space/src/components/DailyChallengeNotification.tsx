@@ -38,10 +38,10 @@ export const DailyChallengeNotification = () => {
       dispatchToast(
         <Toast className={style.notification}>
           <ToastTitle media={<Avatar icon={<Edit16Regular />} size={16} />}>
-            Daily Kindness Challenge
+            Kindness Challenge
           </ToastTitle>
           <ToastBody subtitle="">
-            <Text>Do you want to try a daily kindness challenge? </Text>
+            <Text>Do you want to try a kindness challenge? </Text>
           </ToastBody>
           <ToastFooter>
             <RouterLink to={"/bs-daily-challenge"} className={style.link}>
