@@ -31,7 +31,7 @@ const userPromptTemplate = fs.readFileSync(
 
 const scenariosData = [
   {
-    title: "Scenario 1: When Targeted",
+    title: "Question 1: When Targeted",
     question:
       "You post a photo. Someone comments: “No one asked” and others like it. What do you do?",
     options: [

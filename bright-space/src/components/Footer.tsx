@@ -108,14 +108,14 @@ const Footer = () => {
           />
           <BSNavLink
             givenLinkStyle={styles.link}
-            text="Post Coach"
-            route="/bs-posting-coach"
+            text="Resources"
+            route="/bs-resource"
             noArrow
           />
           <BSNavLink
             givenLinkStyle={styles.link}
-            text="Resources"
-            route="/bs-resource"
+            text="Post Coach"
+            route="/bs-posting-coach"
             noArrow
           />
           <BSNavLink
@@ -127,7 +127,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
       <div className={styles.bottomRow}>
         <div className={styles.iconRow}>
           <BSThemeToggle currentTheme={theme} onToggle={toggleTheme} />

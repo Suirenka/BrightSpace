@@ -238,9 +238,6 @@ const ResponseContent = (apiResponse: {
         <div>
           <strong>{response}</strong> {apiResponse.suggestion}
         </div>
-        <div style={{ marginTop: "0.5rem", fontStyle: "italic" }}>
-          "{apiResponse.improvedPost}"
-        </div>
       </MessageBarBody>
     </MessageBar>
   );
