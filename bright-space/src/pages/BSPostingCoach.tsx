@@ -68,8 +68,6 @@ const useStyles = makeStyles({
     },
   },
   errorBar: {
-    backgroundColor: tokens.colorPaletteRedBackground3,
-    color: tokens.colorPaletteRedForeground1,
     borderLeft: `4px solid ${tokens.colorPaletteRedBorderActive}`,
     borderRadius: "12px",
     ...shorthands.padding("1rem"),
@@ -182,7 +180,7 @@ const BSPostingCoach = () => {
         </Button>
 
         {showErrorBar && error && (
-          <MessageBar className={styles.errorBar}>
+          <MessageBar className={styles.errorBar} intent="error">
             <MessageBarBody>{error}</MessageBarBody>
             <MessageBarActions
               containerAction={

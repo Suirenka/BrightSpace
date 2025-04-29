@@ -5,12 +5,6 @@ import {
   Subtitle2,
   Divider,
 } from "@fluentui/react-components";
-import {
-  ShieldCheckmark24Regular,
-  PeopleTeam24Regular,
-  Alert24Regular,
-  Chat24Regular,
-} from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
 import QuizImage from "../assets/images/Quiz.jpg";
@@ -144,33 +138,6 @@ const useStyles = makeStyles({
     marginBottom: "2rem",
   },
 });
-
-const resourceCards = [
-  {
-    icon: <Alert24Regular fontSize={32} />,
-    title: "Spotting Cyberbullying",
-    desc: "Know the signs before it gets worse.",
-    route: "/spotting-cyberbullying",
-  },
-  {
-    icon: <ShieldCheckmark24Regular fontSize={32} />,
-    title: "What to do if you’re Targeted",
-    desc: "Step-by-step actions to protect yourself.",
-    route: "/what-to-do-if-targeted",
-  },
-  {
-    icon: <PeopleTeam24Regular fontSize={32} />,
-    title: "Helping a Friend",
-    desc: "Be the reason someone feels safe again.",
-    route: "/help-friends",
-  },
-  {
-    icon: <Chat24Regular fontSize={32} />,
-    title: "When it Happens in Group Chats",
-    desc: "What to do when the whole vibe goes toxic.",
-    route: "/group-chat-guidance",
-  },
-];
 
 const BSDailyChallenge = () => {
   const styles = useStyles();
