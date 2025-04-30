@@ -76,7 +76,7 @@ export default function BSBoundary(): JSX.Element {
   const handleDownload = () => {
     const element = document.getElementById('exportArea');
     if (element) {
-      html2canvas(element).then(canvas => {
+      html2canvas(element).then((canvas: HTMLCanvasElement) => {
         const link = document.createElement('a');
         link.download = 'my-digital-boundaries.png';
         link.href = canvas.toDataURL();

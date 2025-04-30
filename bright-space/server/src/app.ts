@@ -1,8 +1,16 @@
-import express, { Request, Response } from "express";
+import express, {
+  Request,
+  Response,
+  RequestHandler
+} from "express";
+import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
+
+const prisma = new PrismaClient();
+
 
 dotenv.config();
 
@@ -29,9 +37,6 @@ const userPromptTemplate = fs.readFileSync(
   "utf-8"
 );
 
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
-});
 
 // Intention Analysis API
 app.get(
@@ -71,3 +76,70 @@ app.get(
     }
   }
 );
+
+/* ---------- /api/years ---------- */
+const yearsHandler: RequestHandler = async (_, res) => {
+  try {
+    const years = await prisma.record.groupBy({
+      by: ["year"],
+      _count: true,
+      orderBy: { year: "asc" }
+    });
+
+    const list = years
+      .map((y: { year: number | null }) => y.year)
+      .filter((y: number | null): y is number => y !== null);
+
+    res.json(list);
+  } catch (err) {
+    console.error("Failed to fetch years:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+app.get("/api/years", yearsHandler);
+
+/* ---------- /api/chart-data ---------- */
+const chartDataHandler: RequestHandler<
+  {},
+  any,
+  any,
+  { year: string; indicator?: string }
+> = async (req, res) => {
+  const year      = parseInt(req.query.year);
+  const indicator = req.query.indicator ?? "3_1";
+
+  if (isNaN(year)) {
+    res.status(400).json({ error: 'Query parameter "year" is required' });
+    return;
+  }
+
+  try {
+    const rows = await prisma.record.findMany({
+      where: { year, indicatorCode: indicator },
+      orderBy: { lgaKey: "asc" }
+    });
+
+    const data = rows.map(
+      (r: { lgaDesc: string; indicator: number | null }) => ({
+        lga:   r.lgaDesc,
+        value: r.indicator != null ? +(r.indicator * 100).toFixed(2) : null
+      })
+    );
+
+    res.json(data);
+    return;
+  } catch (err) {
+    console.error("Failed to fetch chart data:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+app.get("/api/chart-data", chartDataHandler);
+
+
+app.get("/api/chart-data", chartDataHandler);
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
