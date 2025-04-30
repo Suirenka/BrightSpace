@@ -37,8 +37,7 @@ const userPromptTemplate = fs.readFileSync(
   "utf-8"
 );
 
-<<<<<<< HEAD
-=======
+
 app.get("/bs-resource", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
@@ -50,48 +49,6 @@ app.get("/report", (req: Request, res: Response) => {
 app.get("/bs-posting-coach", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
->>>>>>> main
-
-// Intention Analysis API
-app.get(
-  "/api/intention-analysis",
-  async (req: Request, res: Response): Promise<void> => {
-    // console.log("Received request for intention analysis");
-    const userInput = req.query.prompt as string;
-    if (!userInput) {
-      res.status(400).json({ error: "Please enter your posting content." });
-      return;
-    }
-
-    const userPrompt = userPromptTemplate.replace("{{input}}", userInput);
-
-    try {
-      const url = `${azureEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
-
-      const payload = {
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
-      };
-
-      const headers = {
-        "Content-Type": "application/json",
-        "api-key": apiKey!,
-      };
-
-      const response = await axios.post(url, payload, { headers });
-
-      res.json(response.data.choices[0].message.content);
-    } catch (error: any) {
-      console.error("Error calling Azure OpenAI API:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while processing your request" });
-    }
-  }
-<<<<<<< HEAD
-);
 
 /* ---------- /api/years ---------- */
 const yearsHandler: RequestHandler = async (_, res) => {
@@ -154,11 +111,47 @@ const chartDataHandler: RequestHandler<
 app.get("/api/chart-data", chartDataHandler);
 
 
-app.get("/api/chart-data", chartDataHandler);
+// Intention Analysis API
+app.get(
+  "/api/intention-analysis",
+  async (req: Request, res: Response): Promise<void> => {
+    // console.log("Received request for intention analysis");
+    const userInput = req.query.prompt as string;
+    if (!userInput) {
+      res.status(400).json({ error: "Please enter your posting content." });
+      return;
+    }
+
+    const userPrompt = userPromptTemplate.replace("{{input}}", userInput);
+
+    try {
+      const url = `${azureEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+
+      const payload = {
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt },
+        ],
+      };
+
+      const headers = {
+        "Content-Type": "application/json",
+        "api-key": apiKey!,
+      };
+
+      const response = await axios.post(url, payload, { headers });
+
+      res.json(response.data.choices[0].message.content);
+    } catch (error: any) {
+      console.error("Error calling Azure OpenAI API:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while processing your request" });
+    }
+  }
+);
 
 app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
-=======
-);
->>>>>>> main
+

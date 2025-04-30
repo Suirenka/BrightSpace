@@ -353,6 +353,7 @@ const BSHome = () => {
         viewport={{ once: true }}
         style={{
           minHeight: "600px",
+          maxWidth: "1320px",
           backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -361,7 +362,7 @@ const BSHome = () => {
           alignItems: "center",
           justifyContent: "center",
           padding: "2rem",
-          margin: "0",
+          margin: "0 auto",
         }}
       >
         <div style={{ textAlign: "center", color: "white" }}>
