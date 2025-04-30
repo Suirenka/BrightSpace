@@ -15,7 +15,6 @@ import BSNavLink from "../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
   page: {
-    backgroundColor: tokens.colorBrandBackground2Hover,
     padding: "4rem 1rem 2rem",
     display: "flex",
     flexDirection: "column",
@@ -155,8 +154,10 @@ const BSPostingCoach = () => {
       <div>
         <h1 className={styles.title}>Post Coach</h1>
         <p className={styles.subtitle}>
-          Let’s make sure your post says what you mean, in a kind and confident
-          way.
+          Thinking of sharing something on social media? Let us help you! <br />
+          Get insights on how your post sounds like before you hit share.
+          <br />
+          Make every post contribute to a better world! 😊
         </p>
       </div>
 

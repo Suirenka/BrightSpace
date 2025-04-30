@@ -3,7 +3,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-import { challengeData } from '../challenges';
+import { challengeData } from "./challenges";
 
 dotenv.config();
 
@@ -29,7 +29,6 @@ const userPromptTemplate = fs.readFileSync(
   path.join(__dirname, "..", "prompt.md"),
   "utf-8"
 );
-
 
 app.get(
   "/api/daily-quiz",
