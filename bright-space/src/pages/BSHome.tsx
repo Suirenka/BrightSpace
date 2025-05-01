@@ -295,7 +295,7 @@ const BSHome = () => {
               className={styles.button}
               onClick={() => navigate("/bs-resource")}
             >
-              Learn More about the resources
+              Learn More about Stay Safe Online
             </button>
           </div>
         </motion.div>
@@ -317,7 +317,7 @@ const BSHome = () => {
           <div className={styles.textSection}>
             <h2 className={styles.title}>Intentional Posting Coach</h2>
             <p className={styles.description}>
-              The Posting Coach helps teens navigate the complexities of online
+              The Posting Coach helps you to navigate the complexities of online
               communication, offering guidance on kind and respectful
               expression.
             </p>
@@ -343,7 +343,7 @@ const BSHome = () => {
           <div className={styles.textSection}>
             <h2 className={styles.title}>Build My Boundaries</h2>
             <p className={styles.description}>
-              This interactive canvas helps teens define their personal digital
+              This interactive canvas helps you define the personal digital
               values — one boundary at a time.
             </p>
             <button
