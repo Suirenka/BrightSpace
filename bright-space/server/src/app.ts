@@ -34,27 +34,18 @@ const userPromptTemplate = fs.readFileSync(
 app.get(
   "/api/random-challenges",
   async (req: Request, res: Response): Promise<void> => {
-    // random choose 5 challenges from the challenge data
     // console.log("Received request for random challenges");
-    const randomChallenges = challengeData
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
-    const challenges = randomChallenges.map((challenge) => {
-      return {
-        question: challenge.question,
-        options: challenge.options,
-        correctIndex: challenge.correctIndex,
-        correctFeedback: {
-          title: challenge.correctFeedback.title,
-          message: challenge.correctFeedback.message,
-        },
-        incorrectFeedback: {
-          title: challenge.incorrectFeedback.title,
-          message: challenge.incorrectFeedback.message,
-        },
-      };
-    });
-    res.json(challenges);
+    // random choose 5 challenges from the challenge data
+    const randomIndices = new Set<number>();
+    while (randomIndices.size < 5) {
+      const randomIndex = Math.floor(Math.random() * challengeData.length);
+      randomIndices.add(randomIndex);
+    }
+    const randomChallenges = Array.from(randomIndices).map(
+      (index) => challengeData[index]
+    );
+
+    res.json(randomChallenges);
   }
 );
 

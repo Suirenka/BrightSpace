@@ -359,7 +359,7 @@ export default function BSDailyQuiz() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
   type Challenge = {
     question: string;
     options: string[];

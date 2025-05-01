@@ -26,9 +26,10 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   title: {
-    fontWeight: "bold",
     fontSize: "2rem",
-    marginBottom: "0.75rem",
+    fontWeight: 700,
+    color: tokens.colorCompoundBrandBackgroundHover,
+    textAlign: "center",
   },
   subtitleNote: {
     color: tokens.colorNeutralForeground3,

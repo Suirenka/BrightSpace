@@ -24,27 +24,15 @@ const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, ".
 const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "prompt.md"), "utf-8");
 // Random Challenge API
 app.get("/api/random-challenges", async (req, res) => {
-    // random choose 5 challenges from the challenge data
     // console.log("Received request for random challenges");
-    const randomChallenges = challenges_1.challengeData
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 5);
-    const challenges = randomChallenges.map((challenge) => {
-        return {
-            question: challenge.question,
-            options: challenge.options,
-            correctIndex: challenge.correctIndex,
-            correctFeedback: {
-                title: challenge.correctFeedback.title,
-                message: challenge.correctFeedback.message,
-            },
-            incorrectFeedback: {
-                title: challenge.incorrectFeedback.title,
-                message: challenge.incorrectFeedback.message,
-            },
-        };
-    });
-    res.json(challenges);
+    // random choose 5 challenges from the challenge data
+    const randomIndices = new Set();
+    while (randomIndices.size < 5) {
+        const randomIndex = Math.floor(Math.random() * challenges_1.challengeData.length);
+        randomIndices.add(randomIndex);
+    }
+    const randomChallenges = Array.from(randomIndices).map((index) => challenges_1.challengeData[index]);
+    res.json(randomChallenges);
 });
 // Intention Analysis API
 app.get("/api/intention-analysis", async (req, res) => {
