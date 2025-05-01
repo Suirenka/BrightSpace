@@ -210,7 +210,7 @@ const BSHome = () => {
                       style={{
                         fontSize: "2rem",
                         fontWeight: 800,
-                        color: tokens.colorNeutralForeground1,
+                        color: tokens.colorBrandBackground,
                         marginBottom: "0.5rem",
                       }}
                     >
