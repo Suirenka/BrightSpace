@@ -8,6 +8,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
+import { challengeData } from "./challenges";
 
 const prisma = new PrismaClient();
 
@@ -38,17 +39,24 @@ const userPromptTemplate = fs.readFileSync(
 );
 
 
-app.get("/bs-resource", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
-});
+// Random Challenge API
+app.get(
+  "/api/random-challenges",
+  async (req: Request, res: Response): Promise<void> => {
+    // console.log("Received request for random challenges");
+    // random choose 5 challenges from the challenge data
+    const randomIndices = new Set<number>();
+    while (randomIndices.size < 5) {
+      const randomIndex = Math.floor(Math.random() * challengeData.length);
+      randomIndices.add(randomIndex);
+    }
+    const randomChallenges = Array.from(randomIndices).map(
+      (index) => challengeData[index]
+    );
 
-app.get("/report", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
-});
-
-app.get("/bs-posting-coach", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
-});
+    res.json(randomChallenges);
+  }
+);
 
 const yearsHandler: RequestHandler<{}, any, any, { indicator?: string }> = async (req, res) => {
   const indicator = req.query.indicator ?? "3_1";
@@ -157,6 +165,5 @@ app.get(
 );
 
 app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
-

@@ -13,7 +13,9 @@ zip -r project.zip . -x "node_modules/*" "dist/*" ".git/*"
 aws configure
 
 ### upload to AWS
-aws s3 cp project.zip s3://bright-space/code-deploy-1/project.zip
+### iteration 1 aws s3 cp project.zip s3://bright-space/code-deploy-1/project.zip
+aws s3 cp project.zip s3://bright-space/server/project.zip
+
 
 ### ssh
 cd ..
@@ -21,7 +23,9 @@ ssh ubuntu@54.206.127.22 -i BrightSpace.pem
 # iteration 1 ssh ubuntu@3.107.181.166 -i BrightSpace.pem 
 
 ## In the server
-aws s3 cp s3://bright-space/code-deploy-1/project.zip project.zip
+### iteration 1 aws s3 cp s3://bright-space/code-deploy-1/project.zip project.zip
+aws s3 cp s3://bright-space/server/project.zip project.zip
+
 unzip -o project.zip -d Code/express-codedeploy-1/
 npm install --prefix Code/express-codedeploy-1/
 npm run build --prefix Code/express-codedeploy-1/

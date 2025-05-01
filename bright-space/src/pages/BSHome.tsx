@@ -1,13 +1,14 @@
 import * as React from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import BSBanner from "../components/BSBanner";
-import BSNavLink from "../components/BSLinks/BSNavLink";
 import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
-import BoundaryImage from '../assets/images/home/Boundary.png';
+import BoundaryImage from "../assets/images/home/Boundary.png";
 import BSData from "./BSData";
 import { motion } from "framer-motion";
+import DailyChallengeNotification from "../components/DailyChallengeNotification";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
     minHeight: "480px",
     overflow: "hidden",
     backgroundColor: tokens.colorNeutralBackground1,
-  
+
     "@media (max-width: 900px)": {
       flexDirection: "column",
     },
@@ -58,11 +59,11 @@ const useStyles = makeStyles({
   },
   button: {
     backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
+    color: tokens.colorNeutralForegroundInverted,
     fontWeight: "bold",
+    fontSize: "1rem",
     borderRadius: "9999px",
+    padding: "0.75rem 1.5rem",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
@@ -78,14 +79,14 @@ const useStyles = makeStyles({
     overflow: "hidden",
     backgroundSize: "cover",
     backgroundPosition: "center",
-  
+
     "@media (max-width: 900px)": {
       height: "260px",
     },
   },
   reverse: {
     flexDirection: "row-reverse",
-  
+
     "@media (max-width: 900px)": {
       flexDirection: "column",
     },
@@ -118,6 +119,7 @@ const useStyles = makeStyles({
 
 const BSHome = () => {
   const styles = useStyles();
+  const navigate = useNavigate();
   const sectionRef = React.useRef<HTMLDivElement>(null);
 
   const handleExploreClick = () => {
@@ -162,8 +164,9 @@ const BSHome = () => {
               lineHeight: "1.8",
             }}
           >
-            A safer digital space means more than just avoiding harm — it’s about building kindness, confidence, and empathy
-            in every click and conversation.
+            A safer digital space means more than just avoiding harm — it’s
+            about building kindness, confidence, and empathy in every click and
+            conversation.
           </p>
           {(() => {
             const stats = [
@@ -231,7 +234,6 @@ const BSHome = () => {
             );
           })()}
 
-
           <div
             style={{
               marginTop: "2rem",
@@ -243,12 +245,12 @@ const BSHome = () => {
             }}
           >
             <div style={{ marginTop: "1.5rem", width: "100%" }}>
-            <BSData />
-          </div>
+              <BSData />
+            </div>
           </div>
         </div>
       </div>
-  
+
       <div ref={sectionRef} className={styles.wrapper}>
         <motion.div
           className={styles.section}
@@ -261,19 +263,22 @@ const BSHome = () => {
             <img src={ResourceImage} className={styles.image} alt="Resource" />
           </div>
           <div className={styles.textSection}>
-            <h2 className={styles.title}>Digital Citizenship Scenario and Guides</h2>
+            <h2 className={styles.title}>
+              Digital Citizenship Scenario and Guides
+            </h2>
             <p className={styles.description}>
-              Experience common online challenges, choose how to respond, and build real-life skills for digital wellbeing.
+              Experience common online challenges, choose how to respond, and
+              build real-life skills for digital wellbeing.
             </p>
             <button
               className={styles.button}
-              onClick={() => (window.location.href = "/bs-resource")}
+              onClick={() => navigate("/bs-resource")}
             >
-              Learn More about the resources
+              Learn More about Stay Safe Online
             </button>
           </div>
         </motion.div>
-  
+
         <motion.div
           className={`${styles.section} ${styles.reverse}`}
           initial={{ opacity: 0, x: 80 }}
@@ -282,17 +287,22 @@ const BSHome = () => {
           viewport={{ once: true }}
         >
           <div className={styles.imageSection}>
-            <img src={PostingCoachImage} className={styles.image} alt="Posting Coach" />
+            <img
+              src={PostingCoachImage}
+              className={styles.image}
+              alt="Posting Coach"
+            />
           </div>
           <div className={styles.textSection}>
             <h2 className={styles.title}>Intentional Posting Coach</h2>
             <p className={styles.description}>
-              The Posting Coach helps teens navigate the complexities of online communication,
-              offering guidance on kind and respectful expression.
+              The Posting Coach helps you to navigate the complexities of online
+              communication, offering guidance on kind and respectful
+              expression.
             </p>
             <button
               className={styles.button}
-              onClick={() => (window.location.href = "/bs-posting-coach")}
+              onClick={() => navigate("/bs-posting-coach")}
             >
               Try the Posting Coach
             </button>
@@ -312,7 +322,8 @@ const BSHome = () => {
           <div className={styles.textSection}>
             <h2 className={styles.title}>Build My Boundaries</h2>
             <p className={styles.description}>
-            This interactive canvas helps teens define their personal digital values — one boundary at a time.
+              This interactive canvas helps you define the personal digital
+              values — one boundary at a time.
             </p>
             <button
               className={styles.button}
@@ -322,8 +333,6 @@ const BSHome = () => {
             </button>
           </div>
         </motion.div>
-
-
       </div>
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
@@ -346,23 +355,28 @@ const BSHome = () => {
         }}
       >
         <div style={{ textAlign: "center", color: "white" }}>
-          <h2 style={{
-            fontSize: "2.75rem",
-            fontWeight: 800,
-            marginBottom: "1rem",
-            textShadow: "0px 4px 20px rgba(0,0,0,0.7)",
-          }}>
+          <h2
+            style={{
+              fontSize: "2.75rem",
+              fontWeight: 800,
+              marginBottom: "1rem",
+              textShadow: "0px 4px 20px rgba(0,0,0,0.7)",
+            }}
+          >
             Report Harmful Behavior
           </h2>
-          <p style={{
-            fontSize: "1.25rem",
-            marginBottom: "2rem",
-            maxWidth: "700px",
-            lineHeight: "1.8",
-            marginInline: "auto",
-            textShadow: "0px 2px 12px rgba(0,0,0,0.6)",
-          }}>
-            If you or someone you know has experienced online harm, speak up. Your action can help create a safer space for everyone.
+          <p
+            style={{
+              fontSize: "1.25rem",
+              marginBottom: "2rem",
+              maxWidth: "700px",
+              lineHeight: "1.8",
+              marginInline: "auto",
+              textShadow: "0px 2px 12px rgba(0,0,0,0.6)",
+            }}
+          >
+            If you or someone you know has experienced online harm, speak up.
+            Your action can help create a safer space for everyone.
           </p>
           <button
             className={styles.button}
@@ -373,12 +387,13 @@ const BSHome = () => {
               marginTop: "1rem",
             }}
           >
-            Go to Report Page
+            Learn More about Reporting Method
           </button>
         </div>
       </motion.div>
-  
+
       <BackToTopButton />
+      <DailyChallengeNotification />
     </>
   );
 };

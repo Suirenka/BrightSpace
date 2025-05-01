@@ -15,7 +15,6 @@ import BSNavLink from "../components/BSLinks/BSNavLink";
 
 const useStyles = makeStyles({
   page: {
-    backgroundColor: tokens.colorBrandBackground2Hover,
     padding: "4rem 1rem 2rem",
     display: "flex",
     flexDirection: "column",
@@ -68,8 +67,6 @@ const useStyles = makeStyles({
     },
   },
   errorBar: {
-    backgroundColor: tokens.colorPaletteRedBackground3,
-    color: tokens.colorPaletteRedForeground1,
     borderLeft: `4px solid ${tokens.colorPaletteRedBorderActive}`,
     borderRadius: "12px",
     ...shorthands.padding("1rem"),
@@ -157,8 +154,10 @@ const BSPostingCoach = () => {
       <div>
         <h1 className={styles.title}>Post Coach</h1>
         <p className={styles.subtitle}>
-          Let’s make sure your post says what you mean, in a kind and confident
-          way.
+          Thinking of sharing something on social media? Let us help you! <br />
+          Get insights on how your post sounds like before you hit share.
+          <br />
+          Make every post contribute to a better world! 😊
         </p>
       </div>
 
@@ -182,7 +181,7 @@ const BSPostingCoach = () => {
         </Button>
 
         {showErrorBar && error && (
-          <MessageBar className={styles.errorBar}>
+          <MessageBar className={styles.errorBar} intent="error">
             <MessageBarBody>{error}</MessageBarBody>
             <MessageBarActions
               containerAction={
@@ -237,9 +236,6 @@ const ResponseContent = (apiResponse: {
       <MessageBarBody>
         <div>
           <strong>{response}</strong> {apiResponse.suggestion}
-        </div>
-        <div style={{ marginTop: "0.5rem", fontStyle: "italic" }}>
-          "{apiResponse.improvedPost}"
         </div>
       </MessageBarBody>
     </MessageBar>

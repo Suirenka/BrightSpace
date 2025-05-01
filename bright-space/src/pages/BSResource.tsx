@@ -26,9 +26,10 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   title: {
-    fontWeight: "bold",
     fontSize: "2rem",
-    marginBottom: "0.75rem",
+    fontWeight: 700,
+    color: tokens.colorCompoundBrandBackgroundHover,
+    textAlign: "center",
   },
   subtitleNote: {
     color: tokens.colorNeutralForeground3,
@@ -126,15 +127,17 @@ const useStyles = makeStyles({
     lineHeight: "1.6",
   },
   reportButton: {
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
-    fontWeight: "bold",
     backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
+    color: tokens.colorNeutralForegroundInverted,
+    fontWeight: "bold",
+    fontSize: "1rem",
     borderRadius: "9999px",
+    padding: "0.75rem 1.5rem",
     border: "none",
     cursor: "pointer",
     transition: "background-color 0.2s ease",
+    width: "fit-content",
+
     ":hover": {
       backgroundColor: tokens.colorBrandBackgroundHover,
     },
@@ -178,7 +181,8 @@ const BSResource = () => {
 
       <div className={styles.subtitleNote}>
         <Subtitle2>
-          Try out the interactive scenarios and explore practical guides to help you stay safe online, speak up, and support others online.
+          Try out the interactive scenarios and explore practical guides to help
+          you stay safe online, speak up, and support others online.
         </Subtitle2>
       </div>
 
@@ -200,7 +204,6 @@ const BSResource = () => {
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
     </div>
-    
   );
 };
 
