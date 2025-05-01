@@ -353,7 +353,7 @@ const BSHome = () => {
         viewport={{ once: true }}
         style={{
           minHeight: "600px",
-          maxWidth: "1320px",
+          maxWidth: "1310px",
           backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",

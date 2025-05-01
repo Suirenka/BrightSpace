@@ -1,8 +1,23 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { makeStyles, tokens, Select, Option, Button } from "@fluentui/react-components";
+import { Input } from "@fluentui/react-components";
+import {
+  makeStyles,
+  tokens,
+  Combobox,
+  Option,
+  Button,
+  Spinner,
+} from "@fluentui/react-components";
 import { motion } from "framer-motion";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 const useStyles = makeStyles({
   container: {
@@ -12,116 +27,175 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "2rem",
+    gap: "2.5rem",
   },
   title: {
-    fontSize: "2.5rem",
-    fontWeight: 800,
-    color: tokens.colorNeutralForeground1,
+    fontSize: "2.25rem",
+    fontWeight: 900,
     textAlign: "center",
+    color: tokens.colorNeutralForeground1,
   },
   description: {
-    fontSize: "1.125rem",
+    fontSize: "1rem",
     color: tokens.colorNeutralForeground2,
-    maxWidth: "700px",
+    maxWidth: "720px",
     textAlign: "center",
-    lineHeight: "1.8",
+    lineHeight: 1.7,
   },
   controls: {
     display: "flex",
-    gap: "1rem",
+    gap: "0.75rem",
     flexWrap: "wrap",
     justifyContent: "center",
   },
   chartWrapper: {
     width: "100%",
-    maxWidth: "1000px",
-    height: "500px",
-    backgroundColor: tokens.colorNeutralBackground1,
-    padding: "1rem",
-    borderRadius: "12px",
-    boxShadow: tokens.shadow8,
+    maxWidth: "1150px",
+    height: "520px",
+    background: tokens.colorNeutralBackground1,
+    borderRadius: "16px",
+    padding: "1.25rem",
+    boxShadow: tokens.shadow16,
+  },
+  hint: {
+    fontSize: "0.875rem",
+    color: tokens.colorNeutralForeground3,
+    marginTop: "0.5rem",
   },
 });
 
-const BSData = () => {
-  const styles = useStyles();
-  const [years, setYears] = useState<number[]>([]);
-  const [year, setYear] = useState<number | null>(null);
-  const [indicator, setIndicator] = useState("3_3");
-  const [data, setData] = useState([]);
+type ResultRow = { year: number; group: string; value: number | null };
 
-  const indicators = [
-    { code: "3_1", label: "Emotional / Behavioural difficulties" },
-    { code: "3_2a", label: "Children bullied" },
-    { code: "3_2c", label: "Youth bullied (most days)" },
-    { code: "3_3", label: "Cyber-bullying" },
-    { code: "3_4", label: "High psychological distress" },
-    { code: "3_7_0", label: "Emotional wellbeing (high)" },
-  ];
+const BSData: React.FC = () => {
+  const s = useStyles();
 
-  useEffect(() => {
-    fetch("/api/years")
-      .then((res) => res.json())
-      .then((yrs) => {
-        setYears(yrs);
-        setYear(yrs.at(-1));
-      });
-  }, []);
+  const [query, setQuery] = React.useState("");
+  const [rows, setRows] = React.useState<ResultRow[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
-  useEffect(() => {
-    if (!year) return;
-    fetch(`/api/chart-data?year=${year}&indicator=${indicator}`)
-      .then((res) => res.json())
-      .then((rows) => setData(rows));
-  }, [year, indicator]);
+  const handleSearch = async () => {
+    const q = query.trim();
+    if (!q) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/3_2a/search?query=${encodeURIComponent(q)}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ResultRow[] = await res.json();
+  
+      const qLower = q.toLowerCase();
+      const isYear = /^\d{4}$/.test(qLower);
+  
+      let result: ResultRow[] = [];
+  
+      if (isYear) {
+        result = data.filter((r) => r.year.toString() === q);
+      } else {
+        result = data.filter((r) => r.group.toLowerCase() === qLower);
+      }
+  
+      setRows(result);
+      if (result.length === 0) setError("No data found for this query.");
+    } catch (e: any) {
+      setError("Failed to fetch data.");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
+  const xKey =
+    rows.length > 0 && new Set(rows.map((r) => r.year)).size === 1
+      ? "group"
+      : "year";
 
   return (
-    <div className={styles.container}>
+    <div className={s.container}>
       <motion.h1
-        className={styles.title}
+        className={s.title}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.6 }}
       >
-        Real-World Bullying Data
+        Explore Bullying Data
       </motion.h1>
 
-      <motion.p
-        className={styles.description}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        Explore visualized insights on how teens experience bullying in real-world contexts.
-      </motion.p>
+        {/* ---------- Search Instruction (Always Show) ---------- */}
+        <p
+          style={{
+            fontSize: "1.125rem",
+            lineHeight: "1.8",
+            color: tokens.colorNeutralForeground2,
+            textAlign: "center",
+            maxWidth: "1200px",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <strong>Try searching by Region, Population Group, or Year:</strong><br />
+          <br />
+          <strong>Supported Population: </strong>Victoria, Victoria - Male, Victoria - Female, Victoria - Other Gender, Victoria - Aboriginal, Victoria - Non Aboriginal<br />
+          <strong>Supported regions: </strong>Monash (C),  Whitehorse (C), etc.<br />
+          <strong>Supported years: </strong>2017 – 2023<br />
+          
+        </p>
 
-      <div className={styles.controls}>
-        <Select value={year?.toString() ?? ""} onChange={(e, data) => setYear(+data.value)}>
-        {years
-          .filter((y): y is number => y !== null) // 先过滤掉 null
-          .map((y) => (
-            <Option key={y} value={y.toString()} text={y.toString()} />
-        ))}
-        </Select>
-
-        {indicators.map((ind) => (
-          <Button key={ind.code} appearance={indicator === ind.code ? "primary" : "outline"} onClick={() => setIndicator(ind.code)}>
-            {ind.label}
-          </Button>
-        ))}
+      {/* ---------- Controls ---------- */}
+      <div className={s.controls}>
+        <Input
+          placeholder="Type: 2023, Victoria, Monash (C)..."
+          value={query}
+          onChange={(_, data) => setQuery(data.value)}
+          onKeyDown={onKeyDown}
+          style={{ minWidth: "280px", maxWidth: "360px" }}
+        />
+        <Button appearance="primary" onClick={handleSearch}>
+          Search
+        </Button>
       </div>
 
-      <div className={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="lga" hide />
-            <YAxis tickFormatter={(v) => `${v}%`} />
-            <Tooltip formatter={(v) => `${v}%`} />
-            <Bar dataKey="value" fill="#4a89dc" name="% of population" />
-          </BarChart>
-        </ResponsiveContainer>
+      {/* ---------- Chart ---------- */}
+      <div className={s.chartWrapper}>
+        {loading ? (
+          <Spinner size="medium" label="Loading..." />
+        ) : error ? (
+          <p className={s.hint}>{error}</p>
+        ) : rows.length === 0 ? (
+          <p className={s.hint}>Enter a query and press Search…</p>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={rows.map((r) => ({
+                x: xKey === "group" ? r.group : r.year.toString(),
+                value: r.value,
+              }))}
+              margin={{ top: 10, right: 20, left: 0, bottom: 40 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis
+                dataKey="x"
+                tick={{ fontSize: 10 }}
+                angle={-40}
+                textAnchor="end"
+                interval={0}
+                height={80}
+              />
+              <YAxis tickFormatter={(v) => `${v}%`} />
+              <Tooltip formatter={(v: number) => `${v}%`} />
+              <Bar
+                dataKey="value"
+                name="% children bullied"
+                fill="#6a5acd"
+                maxBarSize={28}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );

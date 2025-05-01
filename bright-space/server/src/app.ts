@@ -50,66 +50,71 @@ app.get("/bs-posting-coach", (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
 });
 
-/* ---------- /api/years ---------- */
-const yearsHandler: RequestHandler = async (_, res) => {
+const yearsHandler: RequestHandler<{}, any, any, { indicator?: string }> = async (req, res) => {
+  const indicator = req.query.indicator ?? "3_1";
+
   try {
     const years = await prisma.record.groupBy({
       by: ["year"],
+      where: { indicatorCode: indicator },
       _count: true,
       orderBy: { year: "asc" }
     });
 
+
     const list = years
-      .map((y: { year: number | null }) => y.year)
-      .filter((y: number | null): y is number => y !== null);
+      .map((y) => y.year)
+      .filter((y): y is number => y !== null);
+
 
     res.json(list);
   } catch (err) {
-    console.error("Failed to fetch years:", err);
+    console.error("❌ Failed to fetch filtered years:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
 app.get("/api/years", yearsHandler);
 
-/* ---------- /api/chart-data ---------- */
-const chartDataHandler: RequestHandler<
-  {},
-  any,
-  any,
-  { year: string; indicator?: string }
-> = async (req, res) => {
-  const year      = parseInt(req.query.year);
-  const indicator = req.query.indicator ?? "3_1";
 
-  if (isNaN(year)) {
-    res.status(400).json({ error: 'Query parameter "year" is required' });
+app.get("/api/3_2a/search", async (req: Request, res: Response) => {
+  const query = (req.query.query as string)?.trim().toLowerCase();
+
+  if (!query) {
+    res.status(400).json({ error: "Missing 'query' parameter." });
     return;
   }
 
   try {
+    const isYear = /^\d{4}$/.test(query);
+
     const rows = await prisma.record.findMany({
-      where: { year, indicatorCode: indicator },
-      orderBy: { lgaKey: "asc" }
+      where: {
+        indicatorCode: "3_2a",
+        ...(isYear
+          ? { year: parseInt(query) }
+          : {
+              lgaDesc: {
+                contains: query,
+                mode: "insensitive",
+              },
+            }),
+      },
+      orderBy: { year: "asc" },
     });
 
-    const data = rows.map(
-      (r: { lgaDesc: string; indicator: number | null }) => ({
-        lga:   r.lgaDesc,
-        value: r.indicator != null ? +(r.indicator * 100).toFixed(2) : null
-      })
-    );
+    const result = rows.map((r) => ({
+      year: r.year,
+      group: r.lgaDesc,
+      value: r.indicator !== null ? +(r.indicator * 100).toFixed(2) : null,
+    }));
 
-    res.json(data);
-    return;
+    res.json(result);
   } catch (err) {
-    console.error("Failed to fetch chart data:", err);
+    console.error("❌ Failed to search 3_2a records:", err);
     res.status(500).json({ error: "Internal server error" });
   }
-};
-
-app.get("/api/chart-data", chartDataHandler);
-
+});
 
 // Intention Analysis API
 app.get(

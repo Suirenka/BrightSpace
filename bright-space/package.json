@@ -5,7 +5,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@fluentui/react": "^8.122.13",
-    "@fluentui/react-components": "^9.60.1",
+    "@fluentui/react-components": "^9.63.0",
     "@fluentui/react-icons": "^2.0.279",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
