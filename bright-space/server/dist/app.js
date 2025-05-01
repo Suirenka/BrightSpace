@@ -22,9 +22,10 @@ const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2023-03-15-preview";
 const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "systemRole.md"), "utf-8");
 const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "prompt.md"), "utf-8");
+// Random Challenge API
 app.get("/api/random-challenges", async (req, res) => {
     // random choose 5 challenges from the challenge data
-    console.log("Received request for random challenges");
+    // console.log("Received request for random challenges");
     const randomChallenges = challenges_1.challengeData
         .sort(() => 0.5 - Math.random())
         .slice(0, 5);
@@ -43,12 +44,11 @@ app.get("/api/random-challenges", async (req, res) => {
             },
         };
     });
-    console.log("Challenges:", challenges);
     res.json(challenges);
 });
 // Intention Analysis API
 app.get("/api/intention-analysis", async (req, res) => {
-    console.log("Received request for intention analysis");
+    // console.log("Received request for intention analysis");
     const userInput = req.query.prompt;
     if (!userInput) {
         res.status(400).json({ error: "Please enter your posting content." });

@@ -30,11 +30,12 @@ const userPromptTemplate = fs.readFileSync(
   "utf-8"
 );
 
+// Random Challenge API
 app.get(
   "/api/random-challenges",
   async (req: Request, res: Response): Promise<void> => {
     // random choose 5 challenges from the challenge data
-    console.log("Received request for random challenges");
+    // console.log("Received request for random challenges");
     const randomChallenges = challengeData
       .sort(() => 0.5 - Math.random())
       .slice(0, 5);
@@ -61,7 +62,7 @@ app.get(
 app.get(
   "/api/intention-analysis",
   async (req: Request, res: Response): Promise<void> => {
-    console.log("Received request for intention analysis");
+    // console.log("Received request for intention analysis");
     const userInput = req.query.prompt as string;
     if (!userInput) {
       res.status(400).json({ error: "Please enter your posting content." });
