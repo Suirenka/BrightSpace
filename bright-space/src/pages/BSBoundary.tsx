@@ -48,14 +48,35 @@ function DraggableItem({ id, children }: { id: string; children: React.ReactNode
   );
 }
 
-function DroppableWall({ id, value }: { id: string; value?: string }) {
+function DroppableWall({
+  id,
+  value,
+  onClear,
+}: {
+  id: string;
+  value?: string;
+  onClear: (id: string) => void;
+}) {
   const { setNodeRef } = useDroppable({ id });
   return (
     <div
       ref={setNodeRef}
       className={`${styles.wall} ${value ? styles.filled : styles.empty}`}
     >
-      {value || 'Drop here'}
+      {value ? (
+        <div className={styles.filledContent}>
+          <span className={styles.wallValue}>{value}</span>
+          <button
+            className={styles.clearButton}
+            onClick={() => onClear(id)}
+            aria-label="Remove"
+          >
+            ×
+          </button>
+        </div>
+      ) : (
+        'Drop here'
+      )}
     </div>
   );
 }
@@ -69,6 +90,14 @@ export default function BSBoundary(): JSX.Element {
     if (over) {
       setWallAssignments(prev => ({ ...prev, [over.id as string]: active.id as string }));
     }
+  };
+
+  const handleClear = (wallId: string) => {
+    setWallAssignments(prev => {
+      const next = { ...prev };
+      delete next[wallId];
+      return next;
+    });
   };
 
   const isComplete = Object.keys(wallAssignments).length === walls.length;
@@ -102,22 +131,29 @@ export default function BSBoundary(): JSX.Element {
         </p>
         <button
           style={{ marginBottom: "5rem" }}
-          onClick={() => document.getElementById('canvas')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() =>
+            document.getElementById('instruction')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
         >
           Start Building
         </button>
       </motion.div>
 
       <div id="canvas" className={styles.canvasSection}>
-        <p className={styles.instructions}>
-          Drag a principle from the categories below into each wall slot. Choose what matters to you — messaging, friends, privacy, and more.
-        </p>
+      <p id="instruction" className={styles.instructions}>
+        Drag a principle from the categories below into each wall slot. Choose what matters to you — messaging, friends, privacy, and more.
+      </p>
 
         <div className={styles.canvasArea}>
           <DndContext onDragEnd={handleDragEnd}>
             <div className={styles.wallGrid}>
               {walls.map(wallId => (
-                <DroppableWall key={wallId} id={wallId} value={wallAssignments[wallId]} />
+                <DroppableWall
+                  key={wallId}
+                  id={wallId}
+                  value={wallAssignments[wallId]}
+                  onClear={handleClear}
+                />
               ))}
             </div>
 
@@ -134,11 +170,14 @@ export default function BSBoundary(): JSX.Element {
             </div>
 
             <div className={styles.valuePool}>
-              {categories[selectedCategory].map(val => (
-                <DraggableItem key={val} id={val}>
-                  {val}
-                </DraggableItem>
-              ))}
+              {categories[selectedCategory]
+                .filter(val => !Object.values(wallAssignments).includes(val))
+                .map(val => (
+                  <DraggableItem key={val} id={val}>
+                    {val}
+                  </DraggableItem>
+                ))
+              }
             </div>
           </DndContext>
         </div>
@@ -152,8 +191,8 @@ export default function BSBoundary(): JSX.Element {
 
             <div id="exportArea" className={styles.exportArea}>
               <h3>My Digital Boundaries</h3>
-              {Object.keys(categories).map((cat) => {
-                const selectedItems = categories[cat].filter((val) =>
+              {Object.keys(categories).map(cat => {
+                const selectedItems = categories[cat].filter(val =>
                   Object.values(wallAssignments).includes(val)
                 );
                 if (selectedItems.length === 0) return null;
@@ -162,8 +201,8 @@ export default function BSBoundary(): JSX.Element {
                     <h4 style={{ fontSize: "1.25rem", color: "#1d4ed8", marginBottom: "0.5rem" }}>
                       {categoryIcons[cat]} {cat}
                     </h4>
-                    <ul style={{ paddingLeft: "1.5rem", margin: 0, listStyleType: "none", }}>
-                      {selectedItems.map((item) => (
+                    <ul style={{ paddingLeft: "1.5rem", margin: 0, listStyleType: "none" }}>
+                      {selectedItems.map(item => (
                         <li key={item} style={{ fontSize: "1rem", color: "#555", marginBottom: "0.25rem" }}>
                           {item}
                         </li>
@@ -179,6 +218,7 @@ export default function BSBoundary(): JSX.Element {
           </div>
         )}
       </div>
+
       <div className={styles.navWrapper}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
