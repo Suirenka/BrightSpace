@@ -161,7 +161,7 @@ const BSDailyChallenge = () => {
           className={styles.reportImage}
         />
         <div className={styles.reportText}>
-          <h2 className={styles.reportTitle}>Daily Challenge Quiz</h2>
+          <h2 className={styles.reportTitle}>Challenge Quiz</h2>
           <p className={styles.reportDescription}>
             Test your knowledge and learn how to stay safe online with our
             interactive quiz. It's a fun way to reinforce what you've learned
@@ -171,7 +171,7 @@ const BSDailyChallenge = () => {
             className={styles.reportButton}
             onClick={() => navigate("/bs-daily-quiz")}
           >
-            Start the Chanllenge
+            Start the Challenge
           </button>
         </div>
         <BackToTopButton />

@@ -31,12 +31,29 @@ const userPromptTemplate = fs.readFileSync(
 );
 
 app.get(
-  "/api/daily-quiz",
+  "/api/random-challenges",
   async (req: Request, res: Response): Promise<void> => {
-    // random choose one challenge from the challenge data
-    const randomIndex = Math.floor(Math.random() * challengeData.length);
-    const challenge = challengeData[randomIndex];
-    res.json(challenge);
+    // random choose 5 challenges from the challenge data
+    console.log("Received request for random challenges");
+    const randomChallenges = challengeData
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 5);
+    const challenges = randomChallenges.map((challenge) => {
+      return {
+        question: challenge.question,
+        options: challenge.options,
+        correctIndex: challenge.correctIndex,
+        correctFeedback: {
+          title: challenge.correctFeedback.title,
+          message: challenge.correctFeedback.message,
+        },
+        incorrectFeedback: {
+          title: challenge.incorrectFeedback.title,
+          message: challenge.incorrectFeedback.message,
+        },
+      };
+    });
+    res.json(challenges);
   }
 );
 
@@ -44,7 +61,7 @@ app.get(
 app.get(
   "/api/intention-analysis",
   async (req: Request, res: Response): Promise<void> => {
-    // console.log("Received request for intention analysis");
+    console.log("Received request for intention analysis");
     const userInput = req.query.prompt as string;
     if (!userInput) {
       res.status(400).json({ error: "Please enter your posting content." });
