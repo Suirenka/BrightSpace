@@ -6,6 +6,7 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import BoundaryImage from '../assets/images/home/Boundary.png';
+import BSData from "./BSData";
 import { motion } from "framer-motion";
 
 const useStyles = makeStyles({
@@ -164,65 +165,72 @@ const BSHome = () => {
             A safer digital space means more than just avoiding harm — it’s about building kindness, confidence, and empathy
             in every click and conversation.
           </p>
-          <div
-            style={{
-              marginTop: "0rem",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: "1.5rem",
-            }}
-          >
-            {[
+          {(() => {
+            const stats = [
               {
-                title: "Support",
-                desc: "Because no one should feel alone online. We're here to walk with you.",
+                value: "18,300",
+                label: "Estimated cyber incidents in Victoria (2028)",
               },
               {
-                title: "Skills",
-                desc: "Build the tools to navigate online spaces with care, courage, and clarity.",
+                value: "2,383",
+                label: "eSafety reports of cyberbullying in AU (2023)",
               },
               {
-                title: "Confidence",
-                desc: "Grow your voice and feel proud of how you show up in the digital world.",
+                value: "748",
+                label: "eSafety reports of cyberbullying in VIC (2022)",
               },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
+            ];
+
+            return (
+              <div
                 style={{
-                  flex: "1 1 260px",
-                  backgroundColor: tokens.colorNeutralBackground1,
-                  borderRadius: "16px",
-                  padding: "2rem",
-                  boxShadow: tokens.shadow28,
-                  textAlign: "center",
-                  cursor: "default",
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "1.5rem",
+                  flexWrap: "wrap",
+                  marginTop: "1rem",
                 }}
               >
-                <h3
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: tokens.colorBrandForeground1,
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "1rem",
-                    color: tokens.colorNeutralForeground2,
-                    lineHeight: "1.6",
-                  }}
-                >
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+                {stats.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    style={{
+                      flex: "1 1 260px",
+                      backgroundColor: tokens.colorNeutralBackground1,
+                      borderRadius: "16px",
+                      padding: "2rem",
+                      boxShadow: tokens.shadow28,
+                      textAlign: "center",
+                      cursor: "default",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "2rem",
+                        fontWeight: 800,
+                        color: tokens.colorNeutralForeground1,
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {item.value}
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "1rem",
+                        color: tokens.colorNeutralForeground2,
+                        lineHeight: "1.6",
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            );
+          })()}
+
 
           <div
             style={{
@@ -234,37 +242,9 @@ const BSHome = () => {
               gap: "1.5rem",
             }}
           >
-            <p
-              style={{
-                fontWeight: 900,
-                fontSize: "1.125rem",
-                color: tokens.colorNeutralForeground2,
-                maxWidth: "700px",
-                lineHeight: "1.8",
-                margin: 0,
-              }}
-            >
-              Discover real-world data about teen bullying:
-            </p>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              style={{
-                backgroundColor: tokens.colorBrandBackground,
-                color: tokens.colorNeutralForegroundOnBrand,
-                padding: "0.75rem 1.5rem",
-                fontSize: "1rem",
-                fontWeight: "bold",
-                borderRadius: "9999px",
-                border: "none",
-                cursor: "pointer",
-              }}
-              onClick={() => (window.location.href = "/bs-data")}
-            >
-              Explore Visualization
-            </motion.button>
+            <div style={{ marginTop: "1.5rem", width: "100%" }}>
+            <BSData />
+          </div>
           </div>
         </div>
       </div>

@@ -21,13 +21,12 @@ import {
 
 const useStyles = makeStyles({
   container: {
-    minHeight: "100vh",
-    padding: "4rem 2rem",
+    padding: "1.5rem 1rem 3rem",
     backgroundColor: tokens.colorNeutralBackground3,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "2.5rem",
+    gap: "2rem",
   },
   title: {
     fontSize: "2.25rem",
@@ -50,7 +49,7 @@ const useStyles = makeStyles({
   },
   chartWrapper: {
     width: "100%",
-    maxWidth: "1150px",
+    maxWidth: "1800px",
     height: "520px",
     background: tokens.colorNeutralBackground1,
     borderRadius: "16px",
@@ -65,10 +64,9 @@ const useStyles = makeStyles({
 });
 
 type ResultRow = { year: number; group: string; value: number | null };
-
 const BSData: React.FC = () => {
   const s = useStyles();
-
+  const [hasSearched, setHasSearched] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [rows, setRows] = React.useState<ResultRow[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -77,6 +75,7 @@ const BSData: React.FC = () => {
   const handleSearch = async () => {
     const q = query.trim();
     if (!q) return;
+    setHasSearched(true);
     setLoading(true);
     setError(null);
     try {
@@ -104,7 +103,6 @@ const BSData: React.FC = () => {
       setLoading(false);
     }
   };
-  
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleSearch();
@@ -133,12 +131,11 @@ const BSData: React.FC = () => {
             lineHeight: "1.8",
             color: tokens.colorNeutralForeground2,
             textAlign: "center",
-            maxWidth: "1200px",
+            maxWidth: "600px",
             marginBottom: "0.5rem",
           }}
         >
           <strong>Try searching by Region, Population Group, or Year:</strong><br />
-          <br />
           <strong>Supported Population: </strong>Victoria, Victoria - Male, Victoria - Female, Victoria - Other Gender, Victoria - Aboriginal, Victoria - Non Aboriginal<br />
           <strong>Supported regions: </strong>Monash (C),  Whitehorse (C), etc.<br />
           <strong>Supported years: </strong>2017 – 2023<br />
@@ -152,7 +149,7 @@ const BSData: React.FC = () => {
           value={query}
           onChange={(_, data) => setQuery(data.value)}
           onKeyDown={onKeyDown}
-          style={{ minWidth: "280px", maxWidth: "360px" }}
+          style={{ minWidth: "300px", maxWidth: "800px" }}
         />
         <Button appearance="primary" onClick={handleSearch}>
           Search
@@ -160,13 +157,14 @@ const BSData: React.FC = () => {
       </div>
 
       {/* ---------- Chart ---------- */}
+      {hasSearched && (
       <div className={s.chartWrapper}>
         {loading ? (
           <Spinner size="medium" label="Loading..." />
         ) : error ? (
           <p className={s.hint}>{error}</p>
         ) : rows.length === 0 ? (
-          <p className={s.hint}>Enter a query and press Search…</p>
+          <p className={s.hint}>No data found for this query.</p>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -197,6 +195,7 @@ const BSData: React.FC = () => {
           </ResponsiveContainer>
         )}
       </div>
+    )}
     </div>
   );
 };
