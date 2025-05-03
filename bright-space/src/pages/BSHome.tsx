@@ -127,7 +127,6 @@ const BSHome = () => {
   };
 
   return (
-    <div style={{ overflowX: "hidden" }}>
     <>
       <BSBanner onExploreClick={handleExploreClick} />
       <div
@@ -290,7 +289,7 @@ const BSHome = () => {
         </div>
       </div>
 
-      <div ref={sectionRef} className={styles.wrapper}>
+      <div className={styles.wrapper}>
         <motion.div
           className={styles.section}
           initial={{ opacity: 0, x: -80 }}
@@ -428,7 +427,6 @@ const BSHome = () => {
       <BackToTopButton />
       <DailyChallengeNotification />
     </>
-  </div>
   );
 };
 
