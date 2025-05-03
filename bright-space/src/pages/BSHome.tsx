@@ -183,7 +183,7 @@ const BSHome = () => {
             },
             {
               icon: "🛡️",
-              title: "Rising Need for Online Safety",
+              title: "Need for Online Safety",
               desc: (
                 <>
                   Estimated 18,300 cases in Victoria by 2028.
@@ -381,7 +381,7 @@ const BSHome = () => {
         style={{
           minHeight: "600px",
           maxWidth: "1310px",
-          backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

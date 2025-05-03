@@ -91,7 +91,6 @@ const CombinedChart: React.FC = () => {
     <div
       style={{
         padding: "2rem",
-        background: "#f9fafb",
         borderRadius: "12px",
         maxWidth: "56 rem",
         margin: "0 auto",
