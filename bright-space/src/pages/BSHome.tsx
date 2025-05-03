@@ -183,7 +183,6 @@ const BSHome = () => {
                 label: "eSafety reports of cyberbullying in VIC (2022)",
               },
             ];
-
             return (
               <div
                 style={{
@@ -233,6 +232,23 @@ const BSHome = () => {
               </div>
             );
           })()}
+          <div
+          style={{
+            marginTop: "2rem",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "1.5rem",
+          }}
+        >
+          <button
+            className={styles.button}
+            onClick={() => navigate("/bs-data")}
+          >
+            View Full Data Insights
+          </button>
+        </div>
 
           <div
             style={{
@@ -244,9 +260,6 @@ const BSHome = () => {
               gap: "1.5rem",
             }}
           >
-            <div style={{ marginTop: "1.5rem", width: "100%" }}>
-              <BSData />
-            </div>
           </div>
         </div>
       </div>

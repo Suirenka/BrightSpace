@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Input } from "@fluentui/react-components";
+import CombinedChart from "../components/CyberBullyingBarChart";
 import {
   makeStyles,
   tokens,
@@ -155,6 +156,10 @@ const BSData: React.FC = () => {
           Search
         </Button>
       </div>
+
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <CombinedChart />
+    </div>
 
       {/* ---------- Chart ---------- */}
       {hasSearched && (
