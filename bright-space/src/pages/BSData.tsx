@@ -1,11 +1,16 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { Combobox, Option, Spinner, Button, makeStyles, tokens } from "@fluentui/react-components";
 import CombinedChart from "../components/CyberBullyingBarChart";
 import DataBanner from "../assets/images/home/Databanner.jpg";
+import BSNavLink from "../components/BSLinks/BSNavLink";
+import BackToTopButton from "../components/BackToTopButton";
 import { motion } from "framer-motion";
 import {
   ResponsiveContainer,
   BarChart,
+  LineChart,
+  Line,
   Bar,
   CartesianGrid,
   XAxis,
@@ -15,8 +20,9 @@ import {
 
 const useStyles = makeStyles({
   container: {
-    padding: "0 1rem 3rem",
+    padding: "0",
     backgroundColor: tokens.colorNeutralBackground3,
+    margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -45,7 +51,7 @@ const useStyles = makeStyles({
     fontSize: "1.5rem",
     fontWeight: 700,
     marginBottom: "0.75rem",
-    color: tokens.colorNeutralForeground1,
+    color: tokens.colorBrandForeground1,
   },
   chartWrapper: {
     flex: "2 1 600px",
@@ -90,7 +96,15 @@ const ChartSection: React.FC<ChartSectionProps> = ({
   reverse = false,
 }) => {
   const s = useStyles();
-  const [selected, setSelected] = React.useState<string>("");
+  const defaultValue =
+  queryKey === "group"
+    ? "Victoria"
+    : queryKey === "year"
+    ? "2023"
+    : queryKey === "region"
+    ? "Monash (C)"
+    : "";
+  const [selected, setSelected] = React.useState<string>(defaultValue);
   const [rows, setRows] = React.useState<ResultRow[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -136,25 +150,6 @@ const ChartSection: React.FC<ChartSectionProps> = ({
 
   return (
     <section className={s.section} style={layoutStyle}>
-      <div className={s.textBlock}>
-        <h3 className={s.sectionHeading}>{title}</h3>
-        {description}
-        <div className={s.controls}>
-          <Combobox
-            placeholder={dropdownLabel}
-            value={selected}
-            onOptionSelect={(_, d) => setSelected(d.optionValue ?? "")}
-          >
-            {options.map((opt) => (
-              <Option key={opt} value={opt}>
-                {opt}
-              </Option>
-            ))}
-          </Combobox>
-        </div>
-        {error && <p className={s.hint}>{error}</p>}
-      </div>
-
       <div className={s.chartWrapper}>
         {loading ? (
           <Spinner label="Loading..." />
@@ -185,12 +180,161 @@ const ChartSection: React.FC<ChartSectionProps> = ({
           </ResponsiveContainer>
         )}
       </div>
+  
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "480px",
+          flex: "1 1 320px",
+          minWidth: "280px",
+          gap: "2rem",
+        }}
+      >
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={s.textBlock}
+          style={{
+            borderLeft: `6px solid ${tokens.colorBrandStroke1}`,
+            backgroundColor: tokens.colorNeutralBackground1,
+          }}
+        >
+          <h3 style={{ color: tokens.colorBrandForeground1, marginBottom: "0.5rem" }}>
+            🎯 {title}
+          </h3>
+          {description}
+          <div className={s.controls}>
+            <Combobox
+              placeholder="Select a population group"
+              value={selected}
+              onOptionSelect={(_, d) => setSelected(d.optionValue ?? "")}
+              style={{
+                borderRadius: "8px",
+                border: "1px solid black",
+                backgroundColor: tokens.colorNeutralBackground2,
+                color: tokens.colorNeutralForeground1,
+                minWidth: "240px",
+                boxShadow: tokens.shadow8,
+              }}
+            >
+              {options.map((opt) => (
+                <Option key={opt} value={opt}>
+                  {opt}
+                </Option>
+              ))}
+            </Combobox>
+          </div>
+          {error && <p className={s.hint}>{error}</p>}
+        </motion.div>
+
+
+        {queryKey === "group" && (
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={s.textBlock}
+          style={{
+            borderLeft: `6px solid ${tokens.colorPaletteSeafoamBorderActive}`,
+            backgroundColor: tokens.colorNeutralBackground1,
+          }}
+        >
+          <h3
+            style={{
+              color: tokens.colorPaletteSeafoamForeground2,
+              marginBottom: "0.5rem",
+            }}
+          >
+            🧬 Differences Between Groups
+          </h3>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+              color: tokens.colorNeutralForeground2,
+            }}
+          >
+            Different groups face different risks — comparing cohorts reveals how identity and background affect experiences.
+          </p>
+        </motion.div>
+      )}
+
+      {queryKey === "year" && (
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={s.textBlock}
+          style={{
+            borderLeft: `6px solid ${tokens.colorPaletteCranberryBorderActive}`,
+            backgroundColor: tokens.colorNeutralBackground1,
+          }}
+        >
+          <h3
+            style={{
+              color: tokens.colorPaletteCranberryForeground2,
+              marginBottom: "0.5rem",
+            }}
+          >
+            📅 What Trends Over Time Reveal
+          </h3>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+              color: tokens.colorNeutralForeground2,
+            }}
+          >
+            Year-by-year comparison shows how interventions, awareness, and policies impact bullying rates — data tells us what’s working and where more focus is needed.
+          </p>
+        </motion.div>
+      )}
+
+      {queryKey === "region" && (
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={s.textBlock}
+          style={{
+            borderLeft: `6px solid ${tokens.colorPaletteRoyalBlueBorderActive}`,
+            backgroundColor: tokens.colorNeutralBackground1,
+          }}
+        >
+          <h3
+            style={{
+              color: tokens.colorPaletteCornflowerForeground2,
+              marginBottom: "0.5rem",
+            }}
+          >
+            🌍 Why Region Matters
+          </h3>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+              color: tokens.colorNeutralForeground2,
+            }}
+          >
+            Regional differences highlight environmental, cultural, and social factors impacting bullying — helping us identify local needs and develop place-based support.
+          </p>
+        </motion.div>
+      )}
+      </div>
     </section>
   );
 };
 
-const BSDataUpdated: React.FC = () => {
+const BSData: React.FC = () => {
   const s = useStyles();
+  const navigate = useNavigate();
 
   const populationOptions = [
     "Victoria",
@@ -201,13 +345,27 @@ const BSDataUpdated: React.FC = () => {
     "Victoria - Non Aboriginal",
   ];
 
-  const yearOptions = ["2017", "2018", "2019", "2020", "2021", "2022", "2023"];
+  const yearOptions = ["2017", "2018", "2019", "2021", "2022", "2023"];
 
   const regionOptions = [
-    "Monash (C)",
-    "Whitehorse (C)",
-    // Add more regions here as data becomes available
+    "Alpine (S)", "Ararat (RC)", "Ballarat (C)", "Banyule (C)", "Bass Coast (S)", "Baw Baw (S)",
+    "Bayside (C)", "Benalla (RC)", "Boroondara (C)", "Brimbank (C)", "Buloke (S)", "Campaspe (S)",
+    "Cardinia (S)", "Casey (C)", "Central Goldfields (S)", "Colac-Otway (S)", "Corangamite (S)",
+    "Darebin (C)", "East Gippsland (S)", "Frankston (C)", "Gannawarra (S)", "Glen Eira (C)",
+    "Glenelg (S)", "Golden Plains (S)", "Greater Bendigo (C)", "Greater Dandenong (C)",
+    "Greater Geelong (C)", "Greater Shepparton (C)", "Hepburn (S)", "Hindmarsh (S)",
+    "Hobsons Bay (C)", "Horsham (RC)", "Hume (C)", "Indigo (S)", "Kingston (C)", "Knox (C)",
+    "Latrobe (C)", "Loddon (S)", "Macedon Ranges (S)", "Manningham (C)", "Mansfield (S)",
+    "Maribyrnong (C)", "Maroondah (C)", "Melbourne (C)", "Melton (C)", "Merri-bek (C)",
+    "Mildura (RC)", "Mitchell (S)", "Moira (S)", "Monash (C)", "Moonee Valley (C)",
+    "Moorabool (S)", "Mornington Peninsula (S)", "Mount Alexander (S)", "Moyne (S)",
+    "Murrindindi (S)", "Nillumbik (S)", "Northern Grampians (S)", "Port Phillip (C)",
+    "Pyrenees (S)", "South Gippsland (S)", "Southern Grampians (S)", "Stonnington (C)",
+    "Strathbogie (S)", "Surf Coast (S)", "Swan Hill (RC)", "Towong (S)", "Wangaratta (RC)",
+    "Warrnambool (C)", "Wellington (S)", "West Wimmera (S)", "Whitehorse (C)", "Whittlesea (C)",
+    "Wodonga (C)", "Wyndham (C)", "Yarra (C)", "Yarra Ranges (S)", "Yarriambiack (S)"
   ];
+  
 
   return (
     <div className={s.container}>
@@ -432,53 +590,262 @@ const BSDataUpdated: React.FC = () => {
         </div>
       </div>
 
-
       {/* Section 1 – Population Group */}
-      <ChartSection
-        title="Bullying by Population Group"
-        description={
-          <p>
-            Compare Victoria-wide data and specific population groups. Select a group from the dropdown to
-            visualise the percentage of students experiencing bullying in the chosen cohort.
-          </p>
-        }
-        dropdownLabel="Select a population group"
-        options={populationOptions}
-        queryKey="group"
-        reverse={true}
-      />
+      <div
+        style={{
+          backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
+          padding: "2.5rem 1.5rem",
+          borderRadius: "0",
+          marginTop: "1rem",
+        }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 800,
+            textAlign: "center",
+            color: tokens.colorBrandForeground1,
+            marginBottom: "4rem",
+          }}
+        >
+          📊 Who Is Most at Risk? Explore Bullying by Group.
+        </motion.h2>
+
+        <ChartSection
+          title="Bullying by Population Group"
+          description={
+            <p>
+              Compare Victoria-wide data and specific population groups. Select a group from the dropdown to
+              visualise the percentage of people experiencing bullying in the chosen cohort.
+            </p>
+          }
+          dropdownLabel="Select a population group"
+          options={populationOptions}
+          queryKey="group"
+        />
+      </div>
+
 
       {/* Section 2 – Year */}
-      <ChartSection
-        title="Bullying Trend by Year"
-        description={
-          <p>
-            Examine how bullying rates have changed over time. Choose a year between 2017 and 2023 to see the
-            distribution across different groups for that specific year.
-          </p>
-        }
-        dropdownLabel="Select a year"
-        options={yearOptions}
-        queryKey="year"
-        reverse={false}
-      />
+      <div
+        style={{
+          backgroundColor: tokens.colorNeutralBackground3,
+          padding: "2.5rem 1.5rem",
+          borderRadius: "0",
+          marginTop: "1rem",
+        }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            fontSize: "2rem",
+            fontWeight: 800,
+            textAlign: "center",
+            color: tokens.colorBrandForeground1,
+            marginTop: "1rem",
+            marginBottom: "3rem",
+          }}
+        >
+          🗺️ Where Does It Happen? Discover Region Bullying by Year.
+        </motion.h2>
 
-      {/* Section 3 – Region */}
-      <ChartSection
-        title="Bullying by Region"
-        description={
-          <p>
-            Explore localised data by selecting a Local Government Area (LGA). This helps identify hotspots and areas
-            where targeted interventions might be needed.
-          </p>
-        }
-        dropdownLabel="Select a region"
-        options={regionOptions}
-        queryKey="region"
-        reverse={true}
-      />
+        <ChartSection
+          title="Bullying Trend by Year"
+          description={
+            <p>
+              Examine how bullying rates have changed over time. Choose a year between 2017 and 2023 to see the
+              distribution across different groups for that specific year.
+            </p>
+          }
+          dropdownLabel="Select a year"
+          options={yearOptions}
+          queryKey="year"
+          reverse={true}
+        />
+      </div>
+
+      {/*  Section 3 – Region  */}
+      <div
+        style={{
+          backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
+          padding: "3rem 1.5rem",
+          marginTop: "1rem",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "1400px",
+          }}
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              fontSize: "2rem",
+              fontWeight: 800,
+              textAlign: "center",
+              color: tokens.colorBrandForeground1,
+              marginBottom: "4rem",
+            }}
+          >
+            🌍 Place Matters — See Bullying Trends Across Regions.
+          </motion.h2>
+
+          <ChartSection
+            title="Bullying by Region"
+            description={
+              <p>
+                Explore localised data by selecting a Local Government Area (LGA). This helps
+                identify hotspots and areas where targeted interventions might be needed.
+              </p>
+            }
+            dropdownLabel="Select a region"
+            options={regionOptions}
+            queryKey="region"
+          />
+        </div>
+      </div>
+      
+      {/* 👇 Explore More Section */}
+      <div
+        style={{
+          padding: "4rem 1rem",
+          backgroundColor: tokens.colorNeutralBackground3,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "2rem",
+          marginTop: "1rem",
+          minHeight: "350px",
+        }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            fontSize: "2.5rem",
+            fontWeight: 800,
+            textAlign: "center",
+            marginTop: "0.1rem",
+            color: tokens.colorBrandForeground1,
+          }}
+        >
+          ✨ Explore More Tools to Help You Take Action
+        </motion.h2>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "2rem",
+            maxWidth: "1200px",
+            width: "100%",
+          }}
+        >
+          {/* 1. Resources */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              flex: "1 1 280px",
+              backgroundColor: tokens.colorNeutralBackground1,
+              borderLeft: `6px solid ${tokens.colorBrandStroke1}`,
+              padding: "1.5rem",
+              borderRadius: "16px",
+              boxShadow: tokens.shadow16,
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/bs-resource")}
+          >
+            <h3 style={{ color: tokens.colorBrandForeground1, marginBottom: "0.5rem" }}>
+              🔍 Resource Library
+            </h3>
+            <p style={{ color: tokens.colorNeutralForeground2, fontSize: "0.95rem", lineHeight: 1.6 }}>
+              Browse tips, guides and scenarios to better understand how to recognise and respond to online bullying.
+            </p>
+          </motion.div>
+
+          {/* 2. Tone Checker */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            style={{
+              flex: "1 1 280px",
+              backgroundColor: tokens.colorNeutralBackground1,
+              borderLeft: `6px solid ${tokens.colorPaletteSeafoamBorderActive}`,
+              padding: "1.5rem",
+              borderRadius: "16px",
+              boxShadow: tokens.shadow16,
+              cursor: "pointer",
+            }}
+            onClick={() => (window.location.href = "/bs-posting-coach")}
+          >
+            <h3 style={{ color: tokens.colorPaletteSeafoamForeground2, marginBottom: "0.5rem" }}>
+              🗣️ Check Your Tone
+            </h3>
+            <p style={{ color: tokens.colorNeutralForeground2, fontSize: "0.95rem", lineHeight: 1.6 }}>
+              Get feedback on your message tone — ensure you're communicating positively online.
+            </p>
+          </motion.div>
+
+          {/* 3. Report Page */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            style={{
+              flex: "1 1 280px",
+              backgroundColor: tokens.colorNeutralBackground1,
+              borderLeft: `6px solid ${tokens.colorPaletteCranberryBorderActive}`,
+              padding: "1.5rem",
+              borderRadius: "16px",
+              boxShadow: tokens.shadow16,
+              cursor: "pointer",
+            }}
+            onClick={() => (window.location.href = "/report")}
+          >
+            <h3 style={{ color: tokens.colorPaletteCranberryForeground2, marginBottom: "0.5rem" }}>
+              📋 Report a Case
+            </h3>
+            <p style={{ color: tokens.colorNeutralForeground2, fontSize: "0.95rem", lineHeight: 1.6 }}>
+              Know something serious? Let’s make it count. Submit a report and help make digital spaces safer.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+      <div
+        style={{
+          marginTop: "1rem",
+          marginBottom: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1.5rem",
+        }}
+      >
+        <BSNavLink text="Go Back to Home" route="/" back />
+        <BackToTopButton />
+      </div>
     </div>
+    
   );
 };
 
-export default BSDataUpdated;
+export default BSData;
