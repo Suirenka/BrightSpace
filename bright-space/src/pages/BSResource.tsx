@@ -17,6 +17,7 @@ import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
   container: {
+    minHeight: "500px",
     maxWidth: "1200px",
     margin: "0 auto",
     paddingTop: "3rem",
@@ -108,7 +109,6 @@ const useStyles = makeStyles({
   reportText: {
     width: "50%",
     padding: "0 2rem",
-
     "@media (max-width: 900px)": {
       width: "100%",
       padding: 0,

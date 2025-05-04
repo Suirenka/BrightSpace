@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   wrapper: {
-    maxWidth: "1600px",
+    maxWidth: "1400px",
     margin: "0 auto",
     padding: "3rem 1rem",
     display: "flex",
@@ -380,7 +380,8 @@ const BSHome = () => {
         viewport={{ once: true }}
         style={{
           minHeight: "600px",
-          maxWidth: "1310px",
+          width: "100%",
+          maxWidth: "1300px",
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",

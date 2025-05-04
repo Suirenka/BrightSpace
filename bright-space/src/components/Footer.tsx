@@ -100,30 +100,12 @@ const Footer = () => {
 
         <div className={styles.column}>
           <Text className={styles.columnTitle}>Quick Links</Text>
-          <BSNavLink
-            givenLinkStyle={styles.link}
-            text="Home"
-            route="/"
-            noArrow
-          />
-          <BSNavLink
-            givenLinkStyle={styles.link}
-            text="Resources"
-            route="/bs-resource"
-            noArrow
-          />
-          <BSNavLink
-            givenLinkStyle={styles.link}
-            text="Post Coach"
-            route="/bs-posting-coach"
-            noArrow
-          />
-          <BSNavLink
-            givenLinkStyle={styles.link}
-            text="Report It"
-            route="/report"
-            noArrow
-          />
+          <BSNavLink text="Home" route="/" noArrow />
+          <BSNavLink text="Insights" route="/bs-data" noArrow />
+          <BSNavLink text="Resources" route="/bs-resource" noArrow />
+          <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
+          <BSNavLink text="Build Boundary" route="/bs-boundaries-builder" noArrow/>
+          <BSNavLink text="Report It" route="/report" noArrow/>
         </div>
       </div>
 
