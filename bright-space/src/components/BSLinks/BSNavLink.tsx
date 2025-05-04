@@ -12,6 +12,7 @@ const useStyles = makeStyles({
     fontWeight: 600,
     fontSize: "16px",
     ":hover": {
+      color: tokens.colorBrandForeground1,
       textDecoration: "underline",
     },
     display: "inline-flex",
