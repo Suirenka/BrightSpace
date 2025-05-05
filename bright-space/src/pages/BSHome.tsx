@@ -380,7 +380,7 @@ const BSHome = () => {
         style={{
           minHeight: "600px",
           width: "100%",
-          maxWidth: "1300px",
+          maxWidth: "1330px",
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
