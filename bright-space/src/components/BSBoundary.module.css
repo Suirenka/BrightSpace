@@ -62,19 +62,14 @@
   color: #333;
 }
 
-.canvasArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
-
 .wallGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 0 auto 2rem;
   width: 100%;
+  max-width: 900px;
+  justify-content: center;
 }
 
 .wall {
@@ -98,50 +93,23 @@
   background-color: #f0f0f0;
 }
 
-.categoryTabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.categoryTabs button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: white;
-  font-size: 0.95rem;
+.dropdownSelect {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 9999px;
+  border: 2px solid #4f46e5;
+  background-color: #ffffff;
+  appearance: none;
+  box-sizing: border-box;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
-.categoryTabs .activeTab {
-  background: #4f46e5;
-  color: white;
-  border-color: #4f46e5;
-}
-
-.valuePool {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-.draggableItem {
-  background-color: #e0e7ff;
-  border: 1px solid #6366f1;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  cursor: grab;
-  transition: background 0.2s ease;
-}
-
-.draggableItem:hover {
-  background-color: #c7d2fe;
+.dropdownSelect:hover,
+.dropdownSelect:focus {
+  border-color: #4338ca;
+  outline: none;
 }
 
 .finalStep {
@@ -179,8 +147,6 @@
 .finalStep button:hover {
   background: #22c55e;
 }
-
-/* 新增：填充墙内容及清除按钮 */
 
 .filledContent {
   position: relative;
