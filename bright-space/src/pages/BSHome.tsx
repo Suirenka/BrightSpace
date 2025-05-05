@@ -5,7 +5,6 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import BoundaryImage from "../assets/images/home/Boundary.png";
-import BSData from "./BSData";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
 import { useNavigate } from "react-router-dom";

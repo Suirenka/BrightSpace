@@ -594,7 +594,7 @@ const BSData: React.FC = () => {
       <div
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
-          padding: "2.5rem 1.5rem",
+          padding: "2rem 3rem",
           borderRadius: "0",
           marginTop: "1rem",
         }}
@@ -669,13 +669,17 @@ const BSData: React.FC = () => {
         />
       </div>
 
-      {/*  Section 3 – Region  */}
+       {/* Section 3 – Region  */}
       <div
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "3rem 1.5rem",
           marginTop: "1rem",
           display: "flex",
+          width: "100vw",
+          position: "relative",
+          marginLeft: "-50vw",
+          marginRight: "-50vw",
           justifyContent: "center",
         }}
       >
@@ -697,7 +701,7 @@ const BSData: React.FC = () => {
               marginBottom: "4rem",
             }}
           >
-            🌍 Place Matters — See Bullying Trends Across Regions.
+            🌍 Place Matters — See Bullying Trends Across Regions.
           </motion.h2>
 
           <ChartSection
