@@ -5,14 +5,13 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import BoundaryImage from "../assets/images/home/Boundary.png";
-import BSData from "./BSData";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   wrapper: {
-    maxWidth: "1600px",
+    maxWidth: "1400px",
     margin: "0 auto",
     padding: "3rem 1rem",
     display: "flex",
@@ -130,6 +129,7 @@ const BSHome = () => {
     <>
       <BSBanner onExploreClick={handleExploreClick} />
       <div
+        ref={sectionRef}
         style={{
           backgroundColor: tokens.colorNeutralBackground3,
           padding: "5rem 1rem",
@@ -148,12 +148,13 @@ const BSHome = () => {
         >
           <h2
             style={{
-              fontSize: "2.25rem",
+              fontSize: "3.25rem",
               fontWeight: 800,
               color: tokens.colorNeutralForeground1,
             }}
           >
-            The Heart Behind BrightSpace
+            The Heart Behind{" "}
+            <span style={{ color: tokens.colorBrandForeground1 }}>BrightSpace</span>
           </h2>
           <p
             style={{
@@ -169,70 +170,109 @@ const BSHome = () => {
             conversation.
           </p>
           {(() => {
-            const stats = [
-              {
-                value: "18,300",
-                label: "Estimated cyber incidents in Victoria (2028)",
-              },
-              {
-                value: "2,383",
-                label: "eSafety reports of cyberbullying in AU (2023)",
-              },
-              {
-                value: "748",
-                label: "eSafety reports of cyberbullying in VIC (2022)",
-              },
-            ];
+          const stats = [
+            {
+              icon: "📊",
+              title: "Cyberbullying Still Hurts",
+              desc: (
+                <>
+                  2,383 cases reported by eSafety in Australia in 2023.
+                </>
+              ),
+            },
+            {
+              icon: "🛡️",
+              title: "Need for Online Safety",
+              desc: (
+                <>
+                  Estimated 18,300 cases in Victoria by 2028.
+                </>
+              ),
+            },
+            {
+              icon: "📩",
+              
+              title: "Real Stories from Victoria",
+              desc: (
+                <>
+                  748 eSafety reports in Victoria in 2022.
+                </>
+              ),
+            },
+          ];
 
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "1.5rem",
-                  flexWrap: "wrap",
-                  marginTop: "1rem",
-                }}
-              >
-                {stats.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    style={{
-                      flex: "1 1 260px",
-                      backgroundColor: tokens.colorNeutralBackground1,
-                      borderRadius: "16px",
-                      padding: "2rem",
-                      boxShadow: tokens.shadow28,
-                      textAlign: "center",
-                      cursor: "default",
-                    }}
-                  >
+          return (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                gap: "1.5rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              {stats.map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  style={{
+                    flex: "1 1 280px",
+                    backgroundColor: tokens.colorNeutralBackground1,
+                    borderRadius: "16px",
+                    padding: "2rem",
+                    boxShadow: tokens.shadow28,
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "left",
+                    gap: "1rem",
+                  }}
+                >
+                  <div style={{ fontSize: "2rem" }}>{item.icon}</div>
+                  <div>
                     <div
                       style={{
-                        fontSize: "2rem",
+                        fontSize: "1.25rem",
                         fontWeight: 800,
-                        color: tokens.colorBrandBackground,
+                        color: tokens.colorNeutralForeground1,
                         marginBottom: "0.5rem",
                       }}
                     >
-                      {item.value}
+                    {item.title}
                     </div>
-                    <p
+                    <div
                       style={{
                         fontSize: "1rem",
                         color: tokens.colorNeutralForeground2,
                         lineHeight: "1.6",
                       }}
                     >
-                      {item.label}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-            );
-          })()}
+                      {item.desc}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          );
+        })()}
+
+          <div
+          style={{
+            marginTop: "2rem",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "1.5rem",
+          }}
+        >
+          <button
+            className={styles.button}
+            onClick={() => navigate("/bs-data")}
+          >
+            View Full Data Insights
+          </button>
+        </div>
 
           <div
             style={{
@@ -244,14 +284,11 @@ const BSHome = () => {
               gap: "1.5rem",
             }}
           >
-            <div style={{ marginTop: "1.5rem", width: "100%" }}>
-              <BSData />
-            </div>
           </div>
         </div>
       </div>
 
-      <div ref={sectionRef} className={styles.wrapper}>
+      <div className={styles.wrapper}>
         <motion.div
           className={styles.section}
           initial={{ opacity: 0, x: -80 }}
@@ -342,8 +379,9 @@ const BSHome = () => {
         viewport={{ once: true }}
         style={{
           minHeight: "600px",
-          maxWidth: "1310px",
-          backgroundImage: `url(${require("../assets/images/home/ReportImage.png")})`,
+          width: "100%",
+          maxWidth: "1330px",
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${require("../assets/images/home/ReportImage.png")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -381,17 +419,11 @@ const BSHome = () => {
           <button
             className={styles.button}
             onClick={() => (window.location.href = "/report")}
-            style={{
-              backgroundColor: "white",
-              color: "#1d4ed8",
-              marginTop: "1rem",
-            }}
           >
             Learn More about Reporting Method
           </button>
         </div>
       </motion.div>
-
       <BackToTopButton />
       <DailyChallengeNotification />
     </>

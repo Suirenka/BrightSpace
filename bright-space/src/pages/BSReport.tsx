@@ -95,9 +95,15 @@ const useStyles = makeStyles({
   },
 });
 
+const handleExternalLinkClick = (url: string) => {
+  const confirmed = window.confirm("You're about to leave BrightSpace and visit an external site. Continue?");
+  if (confirmed) {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+};
 const BSReport = () => {
   const styles = useStyles();
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.headerWrapper}>
@@ -108,20 +114,16 @@ const BSReport = () => {
 
       <div className={styles.grid}>
         {/* Instagram */}
-        <a
+        <div
           className={styles.card}
-          href="https://help.instagram.com/"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://help.instagram.com/")}
         >
           <div className={styles.icon}>
             <InstagramIcon style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>Instagram</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://help.instagram.com/" target="_blank">
-              Report on Instagram
-            </Link>
+            <span className={styles.link}>Report on Instagram</span>
           </div>
           <div className={styles.cardContent}>
             Report private DMs, comments, posts, or Stories that break rules.
@@ -130,23 +132,19 @@ const BSReport = () => {
               <li>Instagram reviews each case</li>
             </ul>
           </div>
-        </a>
+        </div>
 
         {/* TikTok */}
-        <a
+        <div
           className={styles.card}
-          href="https://support.tiktok.com/"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://support.tiktok.com/")}
         >
           <div className={styles.icon}>
             <TiktokIcon style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>TikTok</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://support.tiktok.com/" target="_blank">
-              Report on TikTok
-            </Link>
+            <span className={styles.link}>Report on TikTok</span>
           </div>
           <div className={styles.cardContent}>
             Flag videos, comments, or profiles that feel harmful or unsafe.
@@ -155,23 +153,19 @@ const BSReport = () => {
               <li>TikTok may remove content</li>
             </ul>
           </div>
-        </a>
+        </div>
 
         {/* Snapchat */}
-        <a
+        <div
           className={styles.card}
-          href="https://support.snapchat.com/"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://support.snapchat.com/")}
         >
           <div className={styles.icon}>
             <SnapchatIcon style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>Snapchat</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://support.snapchat.com/" target="_blank">
-              Report on Snapchat
-            </Link>
+            <span className={styles.link}>Report on Snapchat</span>
           </div>
           <div className={styles.cardContent}>
             Report snaps, chats, or stories directly from the app.
@@ -180,23 +174,19 @@ const BSReport = () => {
               <li>Serious cases may involve legal action</li>
             </ul>
           </div>
-        </a>
+        </div>
 
         {/* Discord */}
-        <a
+        <div
           className={styles.card}
-          href="https://discord.com/safety"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://discord.com/safety")}
         >
           <div className={styles.icon}>
             <DiscordIcon style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>Discord</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://discord.com/safety" target="_blank">
-              Get help via eSafety
-            </Link>
+            <span className={styles.link}>Get help via eSafety</span>
           </div>
           <div className={styles.cardContent}>
             Report abusive messages or servers directly to Discord Trust & Safety.
@@ -205,23 +195,19 @@ const BSReport = () => {
               <li>Legal reporting tools for serious cases</li>
             </ul>
           </div>
-        </a>
+        </div>
 
         {/* Kids Helpline */}
-        <a
+        <div
           className={styles.card}
-          href="https://kidshelpline.com.au"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://kidshelpline.com.au")}
         >
           <div className={styles.icon}>
             <Call24Regular style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>Kids Helpline</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://kidshelpline.com.au" target="_blank">
-              kidshelpline.com.au
-            </Link>
+            <span className={styles.link}>kidshelpline.com.au</span>
           </div>
           <div className={styles.cardContent}>
             Free, private, and 100% for kids and young people
@@ -230,23 +216,19 @@ const BSReport = () => {
               <li>Chat: kidshelpline.com.au</li>
             </ul>
           </div>
-        </a>
+        </div>
 
         {/* Safety Commissioner */}
-        <a
+        <div
           className={styles.card}
-          href="https://esafety.gov.au"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => handleExternalLinkClick("https://esafety.gov.au")}
         >
           <div className={styles.icon}>
             <Mail24Regular style={{ width: 32, height: 32 }} />
           </div>
           <div className={styles.cardTitle}>Safety Commissioner</div>
           <div className={styles.reportLink}>
-            <Link className={styles.link} href="https://esafety.gov.au" target="_blank">
-              esafety.gov.au
-            </Link>
+            <span className={styles.link}>esafety.gov.au</span>
           </div>
           <div className={styles.cardContent}>
             Support, investigate, and respond to online cyberbullying incidents.
@@ -255,7 +237,7 @@ const BSReport = () => {
               <li>Legal tools for serious cases</li>
             </ul>
           </div>
-        </a>
+        </div>
       </div>
 
       <div className={styles.backWrapper}>

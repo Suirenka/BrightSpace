@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     alignItems: "stretch",
     minHeight: "88vh",
     overflow: "hidden",
+    
     backgroundColor: tokens.colorNeutralBackground1,
 
     "@media (max-width: 900px)": {
@@ -90,8 +91,7 @@ const BSBanner = ({ onExploreClick }: { onExploreClick: () => void }) => {
           Your Daily Companion for Positive Digital Living
         </h1>
         <p className={styles.subtitle}>
-          Become the digital citizen who makes the online world better — one
-          choice, one voice, one moment at a time.
+          Helping teens and families build safer, kinder, and more confident digital spaces together.
         </p>
         <Button className={styles.button} onClick={onExploreClick}>
           Explore More

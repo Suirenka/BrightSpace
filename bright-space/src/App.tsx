@@ -6,6 +6,7 @@ import {
   teamsDarkTheme,
 } from "@fluentui/react-components";
 import { createContext, useState } from "react";
+import ScrollToTop from "./components/ScrollToTop";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BSResource from "./pages/BSResource";
@@ -52,6 +53,7 @@ function App() {
           <Header />
 
           <div style={{ flexGrow: 1 }}>
+          <ScrollToTop />
             <Routes>
               <Route path="/" element={<BSHome />} />
               <Route path="bs-resource" element={<BSResource />} />

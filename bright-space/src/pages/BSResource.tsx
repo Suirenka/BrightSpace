@@ -17,23 +17,24 @@ import BackToTopButton from "../components/BackToTopButton";
 
 const useStyles = makeStyles({
   container: {
+    minHeight: "500px",
     maxWidth: "1200px",
     margin: "0 auto",
     paddingTop: "3rem",
-    paddingBottom: "3rem",
+    paddingBottom: "8rem",
     paddingLeft: "1.5rem",
     paddingRight: "1.5rem",
     textAlign: "center",
   },
   title: {
-    fontSize: "2rem",
+    fontSize: "2.5rem",
     fontWeight: 700,
     color: tokens.colorCompoundBrandBackgroundHover,
     textAlign: "center",
   },
   subtitleNote: {
     color: tokens.colorNeutralForeground3,
-    fontSize: "1rem",
+    fontSize: "2rem",
     lineHeight: "1.6",
   },
   description: {
@@ -50,7 +51,7 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
     gap: "1.5rem",
-    marginTop: "4rem",
+    marginTop: "6rem",
   },
   card: {
     padding: "1.5rem",
@@ -108,7 +109,6 @@ const useStyles = makeStyles({
   reportText: {
     width: "50%",
     padding: "0 2rem",
-
     "@media (max-width: 900px)": {
       width: "100%",
       padding: 0,

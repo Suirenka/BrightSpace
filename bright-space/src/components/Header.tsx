@@ -67,6 +67,7 @@ const Header = () => {
 
         <nav className={styles.nav}>
           <BSNavLink text="Home" route="/" noArrow />
+          <BSNavLink text="Insights" route="/bs-data" noArrow />
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
           <BSNavLink
