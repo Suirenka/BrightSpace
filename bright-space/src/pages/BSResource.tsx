@@ -3,6 +3,7 @@ import {
   tokens,
   Title1,
   Subtitle2,
+  Divider,
 } from "@fluentui/react-components";
 import {
   ShieldCheckmark24Regular,
@@ -12,8 +13,8 @@ import {
 } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 import BSNavLink from "../components/BSLinks/BSNavLink";
-import ReportImage from "../assets/images/home/ReportImage.png";
 import BackToTopButton from "../components/BackToTopButton";
+import QuizImage from "../assets/images/Quiz.jpg";
 
 const useStyles = makeStyles({
   container: {
@@ -85,7 +86,6 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   reportSection: {
-    marginTop: "10rem",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -141,6 +141,10 @@ const useStyles = makeStyles({
     ":hover": {
       backgroundColor: tokens.colorBrandBackgroundHover,
     },
+  },
+  divider: {
+    marginTop: "5rem",
+    marginBottom: "4rem",
   },
 });
 
@@ -198,6 +202,32 @@ const BSResource = () => {
             <div className={styles.cardDesc}>{item.desc}</div>
           </div>
         ))}
+      </div>
+      <Divider className={styles.divider} />
+      <Subtitle2>
+        Want to check your knowledge? Try the challenge quiz!
+      </Subtitle2>
+      <div className={styles.reportSection}>
+        <img
+          src={QuizImage}
+          alt="Report Illustration"
+          className={styles.reportImage}
+        />
+        <div className={styles.reportText}>
+          <h2 className={styles.reportTitle}>Challenge Quiz</h2>
+          <p className={styles.reportDescription}>
+            Test your knowledge and learn how to stay safe online with our
+            interactive quiz. It's a fun way to reinforce what you've learned
+            and discover new tips for navigating the digital world.
+          </p>
+          <button
+            className={styles.reportButton}
+            onClick={() => navigate("/bs-daily-quiz")}
+          >
+            Start the Challenge
+          </button>
+        </div>
+        <BackToTopButton />
       </div>
 
       <div className={styles.navWrapper}>
