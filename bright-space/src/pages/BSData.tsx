@@ -503,7 +503,7 @@ const BSData: React.FC = () => {
                   marginBottom: "0.5rem",
                 }}
               >
-                Key Insight
+                Key Insight (What can be seen?)
               </h3>
               <p
                 style={{
@@ -512,8 +512,8 @@ const BSData: React.FC = () => {
                   lineHeight: 1.6,
                 }}
               >
-                Bullying cases in regional areas have shown a noticeable rise since 2020,
-                especially among secondary students.
+                Victoria state data revealed that students who experienced higher levels of cyberbullying 
+                reported lower levels of emotional wellbeing and confidence.
               </p>
             </motion.div>
 
@@ -543,12 +543,13 @@ const BSData: React.FC = () => {
               </h3>
               <p
                 style={{
-                  color: tokens.colorNeutralForeground2,
+                  color: tokens.colorBrandForeground2,
                   fontSize: "0.95rem",
                   lineHeight: 1.6,
                 }}
               >
-                Grouped visualisation helps us reveal gaps and patterns inform better interventions and student wellbeing support strategies.
+                This trend underscores a pressing need for effective support systems 
+                to help young people navigate online challenges.
               </p>
             </motion.div>
 
@@ -559,7 +560,7 @@ const BSData: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               style={{
-                backgroundColor: tokens.colorNeutralBackground1,
+                backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
                 borderLeft: `6px solid ${tokens.colorPaletteDarkOrangeBorderActive ?? "#ea580c"}`,
                 padding: "1rem",
                 borderRadius: "8px",
@@ -578,12 +579,13 @@ const BSData: React.FC = () => {
               </h3>
               <p
                 style={{
-                  color: tokens.colorNeutralForeground2,
+                  color: tokens.colorPaletteDarkOrangeBackground3,
                   fontSize: "0.95rem",
                   lineHeight: 1.6,
                 }}
               >
-                You're not alone — explore real data, see shared struggles, and find the support you deserve in a safe, understanding space.
+                You're not alone. Explore real data, see shared experiences, and find support in a safe, understanding space. 
+                BrightSpace helps you build resilience, emotional intelligence, and confidence through interactive, real-life scenarios.
               </p>
             </motion.div>
           </div>
