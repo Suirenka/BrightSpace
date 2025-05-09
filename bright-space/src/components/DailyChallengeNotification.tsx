@@ -44,7 +44,7 @@ export const DailyChallengeNotification = () => {
             <Text>Do you want to try a kindness challenge? </Text>
           </ToastBody>
           <ToastFooter>
-            <RouterLink to={"/bs-daily-challenge"} className={style.link}>
+            <RouterLink to={"/bs-daily-quiz"} className={style.link}>
               <Link>Learn More</Link>
             </RouterLink>
             <ToastTrigger>
