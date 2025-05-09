@@ -16,6 +16,8 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  ComposedChart,
+  Legend,
 } from "recharts";
 
 const useStyles = makeStyles({
@@ -336,14 +338,43 @@ const BSData: React.FC = () => {
   const s = useStyles();
   const navigate = useNavigate();
 
-  const populationOptions = [
-    "Victoria",
-    "Victoria - Male",
-    "Victoria - Female",
-    "Victoria - Other Gender",
-    "Victoria - Aboriginal",
-    "Victoria - Non Aboriginal",
-  ];
+  const getLineColorForKey = (key: string): string => {
+    if (key === "Victoria - Non Aboriginal") return tokens.colorStatusDangerBackground3;
+    if (key === "Victoria - Aboriginal") return tokens.colorStatusWarningBorderActive;
+    if (key.includes("Female")) return tokens.colorStatusDangerBackground3;
+    if (key.includes("Male")) return tokens.colorStatusWarningBorderActive;
+    if (key.includes("Other")) return tokens.colorStatusSuccessForeground3;
+    return tokens.colorBrandForeground1;
+  };
+  
+
+  const dimensions = {
+
+    
+    Gender: ["Victoria - Male", "Victoria - Female", "Victoria - Other Gender"],
+    "Aboriginal Status": ["Victoria - Aboriginal", "Victoria - Non Aboriginal"],
+  };
+  
+  const [dimensionKey, setDimensionKey] = React.useState<"Gender" | "Aboriginal Status">("Gender");
+  const [chartData, setChartData] = React.useState<any[]>([]);
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/3_2a/search?query=Victoria");
+      const rawData: ResultRow[] = await res.json();
+  
+      const grouped: { [year: string]: any } = {};
+      rawData.forEach(({ year, group, value }) => {
+        if (!grouped[year]) grouped[year] = { year: year.toString() };
+        grouped[year][group] = value;
+      });
+  
+      const reshaped = Object.values(grouped);
+      setChartData(reshaped);
+    };
+  
+    fetchData();
+  }, []);
 
   const yearOptions = ["2017", "2018", "2019", "2021", "2022", "2023"];
 
@@ -597,10 +628,15 @@ const BSData: React.FC = () => {
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "2rem 3rem",
-          borderRadius: "0",
           marginTop: "1rem",
         }}
       >
+        <div
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+          }}
+        >
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -615,21 +651,124 @@ const BSData: React.FC = () => {
         >
           📊 Who Is Most at Risk? Explore Bullying by Group.
         </motion.h2>
+        <section className={s.section}>
+          <div className={s.chartWrapper}>
+            <ResponsiveContainer width="100%" height="90%">
+              <ComposedChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis tickFormatter={(v) => `${v}%`} />
+                <Tooltip
+                  formatter={(value: number, name: string) => [`${value?.toFixed(2)}%`, name]}
+                  labelFormatter={(label: string) => `${label} — Proportion of bullied children`}
+                />
+                <Legend />
+                <Bar
+                  dataKey="Victoria"
+                  barSize={28}
+                  fill={tokens.colorBrandForeground1 }
+                  name="Victoria"
+                />
+                {dimensions[dimensionKey].map((key, index) => (
+                  <Line
+                    key={key}
+                    type="monotone"
+                    dataKey={key}
+                    name={key}
+                    stroke={getLineColorForKey(key)}
+                    dot={{ r: 3 }}
+                  />
+                ))}
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
 
-        <ChartSection
-          title="Bullying by Population Group"
-          description={
-            <p>
-              Compare Victoria-wide data and specific population groups. Select a group from the dropdown to
-              visualise the percentage of people experiencing bullying in the chosen cohort.
-            </p>
-          }
-          dropdownLabel="Select a population group"
-          options={populationOptions}
-          queryKey="group"
-        />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "480px",
+              flex: "1 1 320px",
+              minWidth: "280px",
+              gap: "2rem",
+            }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={s.textBlock}
+              style={{
+                borderLeft: `6px solid ${tokens.colorBrandStroke1}`,
+                backgroundColor: tokens.colorNeutralBackground1,
+              }}
+            >
+              <h3 style={{ color: tokens.colorBrandForeground1, marginBottom: "0.5rem" }}>
+                🎯 Bullying by Population Group
+              </h3>
+              <p style={{ marginBottom: "1rem" }}>
+                Compare Victoria-wide data and specific population groups. Use the filter below to explore bullying across cohorts.
+              </p>
+
+                <div className={s.controls}>
+                <Combobox
+                  placeholder="Select a dimension"
+                  value={dimensionKey}
+                  onOptionSelect={(_, data) => setDimensionKey(data.optionValue as any)}
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid black",
+                    backgroundColor: tokens.colorNeutralBackground2,
+                    color: tokens.colorNeutralForeground1,
+                    minWidth: "240px",
+                    boxShadow: tokens.shadow8,
+                  }}
+                >
+                  {Object.keys(dimensions).map((dim) => (
+                    <Option key={dim} value={dim}>
+                      {dim}
+                    </Option>
+                  ))}
+                </Combobox>
+              </div>
+
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={s.textBlock}
+              style={{
+                borderLeft: `6px solid ${tokens.colorPaletteSeafoamBorderActive}`,
+                backgroundColor: tokens.colorNeutralBackground1,
+              }}
+            >
+              <h3
+                style={{
+                  color: tokens.colorPaletteSeafoamForeground2,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                🧬 Differences Between Groups
+              </h3>
+              <p
+                style={{
+                  fontSize: "0.95rem",
+                  lineHeight: 1.6,
+                  color: tokens.colorNeutralForeground2,
+                }}
+              >
+                Different groups face different risks — comparing cohorts reveals how identity and background affect experiences.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+        </div> 
       </div>
-
 
       {/* Section 2 – Year */}
       <div
