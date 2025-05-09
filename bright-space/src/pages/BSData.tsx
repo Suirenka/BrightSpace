@@ -339,11 +339,11 @@ const BSData: React.FC = () => {
   const navigate = useNavigate();
 
   const getLineColorForKey = (key: string): string => {
-    if (key === "Victoria - Non Aboriginal") return tokens.colorStatusDangerBackground3;
-    if (key === "Victoria - Aboriginal") return tokens.colorStatusWarningBorderActive;
-    if (key.includes("Female")) return tokens.colorStatusDangerBackground3;
-    if (key.includes("Male")) return tokens.colorStatusWarningBorderActive;
-    if (key.includes("Other")) return tokens.colorStatusSuccessForeground3;
+    if (key === "Victoria - Non Aboriginal") return tokens.colorStatusWarningBorderActive;
+    if (key === "Victoria - Aboriginal") return tokens.colorStatusDangerBackground3;
+    if (key.includes("Female")) return tokens.colorStatusWarningBorderActive;
+    if (key.includes("Male")) return tokens.colorStatusDangerBackground3;
+    if (key.includes("Other")) return tokens.colorStatusSuccessForeground1;
     return tokens.colorBrandForeground1;
   };
   
