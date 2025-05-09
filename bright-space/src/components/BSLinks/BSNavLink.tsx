@@ -7,57 +7,58 @@ import {
 
 const useStyles = makeStyles({
   navLink: {
-    color: tokens.colorBrandForegroundLinkHover,
-    textDecoration: "none",
+    position: "relative",
+    color: tokens.colorNeutralForeground1,
     fontWeight: 600,
     fontSize: "16px",
-    ":hover": {
-      color: tokens.colorBrandForeground1,
-      textDecoration: "underline",
-    },
+    textDecoration: "none",
     display: "inline-flex",
     alignItems: "center",
-    ...shorthands.gap("4px"),
+    ...shorthands.gap("6px"),
+    transition: "color .25s ease",
+
+    ":hover": { color: tokens.colorBrandForeground1 },
+
+    "::after": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      bottom: "-4px",
+      width: "100%",
+      height: "3px",
+      backgroundColor: tokens.colorBrandForeground1,
+      transform: "scaleX(0)",
+      transformOrigin: "left",
+      transition: "transform .25s ease",
+      borderRadius: "2px",
+    },
+    ":hover::after": { transform: "scaleX(1)" },
   },
 });
 
-interface BSNavLinkProps {
+export interface BSNavLinkProps {
   text: string;
   route: string;
-  givenLinkStyle?: string;
   back?: boolean;
   noArrow?: boolean;
+  className?: string;
 }
 
-const BSNavLink = ({
+const BSNavLink: React.FC<BSNavLinkProps> = ({
   text,
   route,
-  givenLinkStyle,
-  back = false,
-  noArrow = false,
-}: BSNavLinkProps) => {
-  const defaultCardStyles = useStyles();
-  const linkStyle = givenLinkStyle ? givenLinkStyle : defaultCardStyles.navLink;
-  if (noArrow) {
-    return !back ? (
-      <RouterLink className={linkStyle} to={route}>
-        {text}
-      </RouterLink>
-    ) : (
-      <RouterLink className={linkStyle} to={route}>
-        {text}
-      </RouterLink>
-    );
-  }
-  return !back ? (
-    <RouterLink className={linkStyle} to={route}>
+  back,
+  noArrow,
+  className = "",
+}) => {
+  const s = useStyles();
+  const combined = `${s.navLink} ${className}`.trim();
+
+  return (
+    <RouterLink to={route} className={combined}>
+      {back && !noArrow && <ArrowCircleLeft20Regular />}
       {text}
-      <ArrowCircleRight20Regular />
-    </RouterLink>
-  ) : (
-    <RouterLink className={linkStyle} to={route}>
-      <ArrowCircleLeft20Regular />
-      {text}
+      {!back && !noArrow && <ArrowCircleRight20Regular />}
     </RouterLink>
   );
 };
