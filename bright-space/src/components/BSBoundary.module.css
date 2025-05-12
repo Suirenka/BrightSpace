@@ -64,7 +64,8 @@
 
 .wallGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 1.25rem;
   margin: 0 auto 2rem;
   width: 100%;
@@ -187,4 +188,11 @@
 .clearButton:hover {
   background-color: #dc2626;
   transform: translate(50%, -50%) scale(1.1);
+}
+
+.wallCategory {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-bottom: 0.5rem;
 }

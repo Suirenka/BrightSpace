@@ -7,13 +7,13 @@ import html2canvas from 'html2canvas';
 
 const categories: Record<string, string[]> = {
   Messaging: ['I turn off read receipts', 'I take my time to reply', 'I mute group chats'],
-  Friends: ['I don’t follow people who make me feel small', 'I block drama accounts', 'I don’t compare my life to theirs'],
-  Posting: ['I pause before posting when I’m upset', 'I don’t post to impress', 'I double-check how it might come across'],
-  Reactions: ['I don’t clap back when I’m angry', 'I pause before replying in arguments', 'I don’t respond to bait'],
-  Privacy: ['I don’t share my location', 'I limit my story to close friends', 'I don’t share private screenshots'],
-  TimeOnline: ['I unplug at least once a day', 'I don’t scroll before bed', 'I take breaks from socials'],
-  Emotional: ['I don’t post when overwhelmed', 'I log off when I feel drained', 'I journal instead of ranting online'],
-  MentalSpace: ['I say no to things that drain me', 'I give myself permission to not reply', 'I protect my peace, always'],
+  Friends: ["I don't follow people who make me feel small", 'I block drama accounts', "I don't compare my life to theirs"],
+  Posting: ["I pause before posting when I'm upset", "I don't post to impress", "I double-check how it might come across"],
+  Reactions: ["I don't clap back when I'm angry", "I pause before replying in arguments", "I don't respond to bait"],
+  Privacy: ["I don't share my location", "I limit my story to close friends", "I don't share private screenshots"],
+  TimeOnline: ["I unplug at least once a day", "I don't scroll before bed", "I take breaks from socials"],
+  Emotional: ["I don't post when overwhelmed", "I log off when I feel drained", "I journal instead of ranting online"],
+  MentalSpace: ["I say no to things that drain me", "I give myself permission to not reply", "I protect my peace, always"]
 };
 
 const categoryIcons: Record<string, string> = {
@@ -84,6 +84,9 @@ export default function BSBoundary(): JSX.Element {
             const options = categories[category].filter(item => !assignedValues.includes(item));
             return (
               <div key={wallId} className={`${styles.wall} ${wallAssignments[wallId] ? styles.filled : styles.empty}`}>
+                <div className={styles.wallCategory}>
+                  {categoryIcons[category]} {category}
+                </div>
                 {wallAssignments[wallId] ? (
                   <div className={styles.filledContent}>
                     <span className={styles.wallValue}>{wallAssignments[wallId]}</span>
@@ -111,7 +114,7 @@ export default function BSBoundary(): JSX.Element {
         {isComplete && (
           <div className={styles.finalStep}>
             <h2>Your Boundaries Are Set</h2>
-            <p>You’ve created a space that reflects you. Download your board as a reminder of what keeps you grounded and confident online.</p>
+            <p>You&apos;ve created a space that reflects you. Download your board as a reminder of what keeps you grounded and confident online.</p>
 
             <div id="exportArea" className={styles.exportArea}>
               <h3>My Digital Boundaries</h3>
