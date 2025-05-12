@@ -18,6 +18,7 @@ import {
   Tooltip,
   ComposedChart,
   Legend,
+  LabelList
 } from "recharts";
 
 const useStyles = makeStyles({
@@ -177,7 +178,13 @@ const ChartSection: React.FC<ChartSectionProps> = ({
               />
               <YAxis tickFormatter={(v) => `${v}%`} />
               <Tooltip formatter={(v: number) => `${v}%`} />
-              <Bar dataKey="value" name="% children bullied" fill="#6a5acd" maxBarSize={28} />
+              <Bar dataKey="value" name="% children bullied" fill="#6a5acd" maxBarSize={28}>
+                <LabelList 
+                  dataKey="value" 
+                  position="top" 
+                  formatter={(value: number) => `${value}%`} 
+                />
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         )}
@@ -414,7 +421,7 @@ const BSData: React.FC = () => {
           alignItems: "center",
           textAlign: "center",
           padding: "2rem",
-          color: "white",
+          color: "tokens.colorNeutralBackground1",
           textShadow: "0 2px 6px rgba(0,0,0,0.6)",
         }}
       >
@@ -437,7 +444,7 @@ const BSData: React.FC = () => {
             lineHeight: 1.6,
             textShadow: "0 1px 4px rgba(0,0,0,0.5)",
             textAlign: "center",
-            color: "white",
+            color: "tokens.colorNeutralBackground1",
           }}
         >
           Discover how bullying evolves across groups, years, and regions — and where interventions matter most.
@@ -628,7 +635,7 @@ const BSData: React.FC = () => {
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "2rem 3rem",
-          marginTop: "1rem",
+          // marginTop: "1rem",
         }}
       >
         <div
@@ -668,7 +675,14 @@ const BSData: React.FC = () => {
                   barSize={28}
                   fill={tokens.colorBrandForeground1 }
                   name="Victoria"
-                />
+                  >
+                  <LabelList 
+                  dataKey="Victoria" 
+                  position="top" 
+                  formatter={(value: number) => `${value}%`} 
+                  />
+                </Bar>
+
                 {dimensions[dimensionKey].map((key, index) => (
                   <Line
                     key={key}
@@ -771,7 +785,7 @@ const BSData: React.FC = () => {
       </div>
 
       {/* Section 2 – Year */}
-      <div
+      {/* <div
         style={{
           backgroundColor: tokens.colorNeutralBackground3,
           padding: "2.5rem 1.5rem",
@@ -808,14 +822,14 @@ const BSData: React.FC = () => {
           queryKey="year"
           reverse={true}
         />
-      </div>
+      </div> */}
 
        {/* Section 3 – Region  */}
       <div
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "3rem 1.5rem",
-          marginTop: "1rem",
+          marginTop: "-3rem",
           display: "flex",
           width: "100vw",
           position: "relative",
@@ -856,6 +870,7 @@ const BSData: React.FC = () => {
             dropdownLabel="Select a region"
             options={regionOptions}
             queryKey="region"
+            reverse={true}
           />
         </div>
       </div>
