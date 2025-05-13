@@ -20,6 +20,7 @@ import BSDailyChallenge from "./pages/BSDailyChallenge";
 import BSDailyQuiz from "./pages/BSDailyQuiz";
 import BSBoundary from "./pages/BSBoundary";
 import BSData from "./pages/BSData";
+import BSReflectiveTwin from "./pages/BSReflectiveTwin";
 
 interface IThemeContext {
   theme: typeof teamsLightTheme | typeof teamsDarkTheme;
@@ -53,7 +54,7 @@ function App() {
           <Header />
 
           <div style={{ flexGrow: 1 }}>
-          <ScrollToTop />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<BSHome />} />
               <Route path="bs-resource" element={<BSResource />} />
@@ -74,6 +75,7 @@ function App() {
               <Route path="/report" element={<BSReport />} />
               <Route path="bs-boundaries-builder" element={<BSBoundary />} />
               <Route path="/bs-data" element={<BSData />} />
+              <Route path="bs-reflective-twin" element={<BSReflectiveTwin />} />
             </Routes>
           </div>
 

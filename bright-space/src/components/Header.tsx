@@ -71,6 +71,11 @@ const Header = () => {
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
           <BSNavLink
+            text="Reflective Twin"
+            route="/bs-reflective-twin"
+            noArrow
+          />
+          <BSNavLink
             text="Build Boundary"
             route="/bs-boundaries-builder"
             noArrow
