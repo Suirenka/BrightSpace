@@ -232,8 +232,8 @@ const BSReflectiveTwin = () => {
       </div>
 
       <div className={styles.card}>
-        <div className={styles.inputBox}>
-          <Field label="Tell us your feelings..." className={styles.label}>
+        <Field label="Tell us your feelings..." className={styles.label}>
+          <div className={styles.inputBox}>
             <Textarea
               placeholder="Type what's on your mind..."
               value={prompt}
@@ -241,9 +241,9 @@ const BSReflectiveTwin = () => {
               className={styles.textarea}
               style={{ height: "100px", width: "100%" }}
             />
-          </Field>
-          <Button className={styles.recordButton}>Record</Button>
-        </div>
+            <Button className={styles.recordButton}>Record</Button>
+          </div>
+        </Field>
 
         <Button
           onClick={handleSubmit}
