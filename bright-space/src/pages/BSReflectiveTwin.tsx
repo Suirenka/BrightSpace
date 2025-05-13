@@ -309,7 +309,7 @@ const ResponseContent = (apiResponse: {
       <Card className={styles.resCard}>placeholder for visualisation</Card>
       <Card className={styles.resCard}>
         <CardHeader
-          image={<img src={RTAvatar} alt="Elvia Atkins avatar picture" />}
+          image={<img src={RTAvatar} alt="Reflective Twin avatar picture" />}
           header={
             <Body1>
               <b>Reflective Twin</b>
