@@ -9,6 +9,10 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { challengeData } from "./challenges";
+import multer from "multer";
+
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 
 const prisma = new PrismaClient();
@@ -211,6 +215,19 @@ app.get(
         .status(500)
         .json({ error: "An error occurred while processing your request" });
     }
+  }
+);
+
+app.post(
+  "/api/speech-to-text",
+  upload.single("audio"),
+  async (req: Request, res: Response): Promise<void> => {
+    if (!req.file) {
+      res.status(400).json({ error: "No audio file uploaded." });
+      return;
+    }
+
+    res.json({ message: "not implemented yet" });
   }
 );
 
