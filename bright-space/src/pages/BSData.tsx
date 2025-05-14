@@ -421,7 +421,7 @@ const BSData: React.FC = () => {
           alignItems: "center",
           textAlign: "center",
           padding: "2rem",
-          color: "tokens.colorNeutralBackground1",
+          color: "white",
           textShadow: "0 2px 6px rgba(0,0,0,0.6)",
         }}
       >
@@ -444,7 +444,7 @@ const BSData: React.FC = () => {
             lineHeight: 1.6,
             textShadow: "0 1px 4px rgba(0,0,0,0.5)",
             textAlign: "center",
-            color: "tokens.colorNeutralBackground1",
+            color: "white",
           }}
         >
           Discover how bullying evolves across groups, years, and regions — and where interventions matter most.
