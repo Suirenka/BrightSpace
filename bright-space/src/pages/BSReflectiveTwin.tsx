@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   makeStyles,
   Textarea,
@@ -13,6 +13,7 @@ import {
   Card,
   CardHeader,
   Body1,
+  Divider,
 } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import BSNavLink from "../components/BSLinks/BSNavLink";
@@ -24,6 +25,8 @@ import {
   MicProhibited24Regular,
   MicSparkle24Regular,
 } from "@fluentui/react-icons";
+import WordCloud from "wordcloud";
+
 const useStyles = makeStyles({
   page: {
     padding: "0",
@@ -49,7 +52,7 @@ const useStyles = makeStyles({
     padding: "2rem",
     borderRadius: "24px",
     boxShadow: tokens.shadow16,
-    maxWidth: "550px",
+    maxWidth: "60vw",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -361,7 +364,7 @@ const BSReflectiveTwin = () => {
           </MessageBar>
         )}
 
-        {apiResponse && <ResponseContent {...apiResponse} />}
+        {apiResponse && <ResponseContent {...apiResponse} prompt={prompt} />}
 
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <BSNavLink text="Go Back to Home" route="/" back />
@@ -371,24 +374,32 @@ const BSReflectiveTwin = () => {
   );
 };
 
-const ResponseContent = (apiResponse: {
+interface ResponseContentProps {
   level: string;
   suggestion: string;
   improvedPost: string;
+  prompt: string;
+}
+
+const ResponseContent: React.FC<ResponseContentProps> = ({
+  level,
+  suggestion,
+  improvedPost,
+  prompt,
 }) => {
   const styles = useStyles();
-  if (!apiResponse) return null;
+  const wordCloudRef = useRef<HTMLCanvasElement | null>(null);
 
+  // determine response style (unchanged) …
   let response = "";
   let responseStyle = styles.neutralResponse;
-
-  if (apiResponse.level === "0") {
+  if (level === "0") {
     response = "Mood: Angry";
     responseStyle = styles.harshResponse;
-  } else if (apiResponse.level === "1") {
+  } else if (level === "1") {
     response = "Mood: Sad";
     responseStyle = styles.negativeResponse;
-  } else if (apiResponse.level === "2") {
+  } else if (level === "2") {
     response = "Mood: Neutral";
     responseStyle = styles.neutralResponse;
   } else {
@@ -396,19 +407,71 @@ const ResponseContent = (apiResponse: {
     responseStyle = styles.positiveResponse;
   }
 
+  // generate word cloud when prompt changes
+  useEffect(() => {
+    if (!wordCloudRef.current || !prompt) return;
+
+    const words = prompt
+      .split(/\s+/)
+      .map((w) => w.toLowerCase().replace(/[^a-z0-9]/g, ""))
+      .filter(
+        (w) =>
+          w.length > 0 &&
+          ![
+            "i",
+            "me",
+            "my",
+            "you",
+            "your",
+            "he",
+            "him",
+            "his",
+            "she",
+            "her",
+            "it",
+            "its",
+          ].includes(w)
+      );
+    const freq: Record<string, number> = {};
+    words.forEach((w) => (freq[w] = (freq[w] || 0) + 1));
+    const list: [string, number][] = Object.entries(freq);
+
+    WordCloud(wordCloudRef.current, {
+      list,
+      gridSize: 5,
+      weightFactor: 60,
+      fontFamily: "sans-serif",
+      color: () => {
+        const colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"];
+        return colors[Math.floor(Math.random() * colors.length)];
+      },
+      rotateRatio: 0,
+      backgroundColor: "transparent",
+    });
+  }, [prompt]);
+
   return (
     <div className={styles.responseContent}>
-      <Card className={styles.resCard}>placeholder for visualisation</Card>
+      <Card className={styles.resCard} style={{ height: "400px" }}>
+        The most common word in your words are: {freq[0]}
+        <Divider />
+        <canvas
+          ref={wordCloudRef}
+          width={800}
+          height={800}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </Card>
       <Card className={styles.resCard}>
         <CardHeader
-          image={<img src={RTAvatar} alt="Reflective Twin avatar picture" />}
+          image={<img src={RTAvatar} alt="Reflective Twin avatar" />}
           header={
             <Body1>
               <b>Reflective Twin</b>
             </Body1>
           }
         />
-        {apiResponse.suggestion}
+        {suggestion}
       </Card>
     </div>
   );
