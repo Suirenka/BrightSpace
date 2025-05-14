@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const axios_1 = __importDefault(require("axios"));
@@ -10,6 +11,10 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const challenges_1 = require("./challenges");
+const multer_1 = __importDefault(require("multer"));
+const openai_1 = require("openai");
+const fs_2 = require("fs");
+const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 const prisma = new client_1.PrismaClient();
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -22,10 +27,22 @@ const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
 const deploymentName = process.env.AZURE_OPENAI_DEPLOYMENT_NAME;
 const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2023-03-15-preview";
+const whisperEndpoint = process.env.WHISPER_ENDPOINT;
+const whisperApiKey = process.env.WHISPER_API_KEY;
+const whisperApiVersion = process.env.WHISPER_API_VERSION || "2024-06-01";
+const whisperDeploymentName = process.env.WHISPER_DEPLOYMENT_NAME || "whisper";
 const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "systemRole.md"), "utf-8");
 const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "prompt.md"), "utf-8");
 const rt_systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "rt_systemRole.md"), "utf-8");
 const rt_moodAnalyze = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "rt_moodAnalyze.md"), "utf-8");
+function getClient() {
+    return new openai_1.AzureOpenAI({
+        endpoint: whisperEndpoint,
+        apiKey: whisperApiKey,
+        apiVersion: whisperApiVersion,
+        deployment: whisperDeploymentName,
+    });
+}
 // Random Challenge API
 app.get("/api/random-challenges", async (req, res) => {
     // console.log("Received request for random challenges");
@@ -152,6 +169,29 @@ app.get("/api/reflective-twin", async (req, res) => {
         res
             .status(500)
             .json({ error: "An error occurred while processing your request" });
+    }
+});
+app.post("/api/speech-to-text", upload.single("audio"), async (req, res) => {
+    if (!req.file) {
+        res.status(400).json({ error: "No audio file uploaded." });
+        return;
+    }
+    try {
+        const client = getClient();
+        // Turn the in-memory buffer into a readable stream
+        const tempFilePath = path_1.default.join(__dirname, "temp_audio_file.webm");
+        fs_1.default.writeFileSync(tempFilePath, req.file.buffer);
+        const audioStream = fs_1.default.createReadStream(tempFilePath);
+        const result = await client.audio.transcriptions.create({
+            model: "",
+            file: (0, fs_2.createReadStream)("./dist/temp_audio_file.webm"),
+        });
+        fs_1.default.unlinkSync(tempFilePath); // Clean up the temporary file
+        res.json({ transcription: result.text });
+    }
+    catch (err) {
+        console.error("❌ Error transcribing audio:", err);
+        res.status(500).json({ error: "Error transcribing audio." });
     }
 });
 app.get("*", (req, res) => {

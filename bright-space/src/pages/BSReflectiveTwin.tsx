@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   makeStyles,
   Textarea,
@@ -19,7 +19,11 @@ import BSNavLink from "../components/BSLinks/BSNavLink";
 import { motion } from "framer-motion";
 import RTBanner from "../assets/images/ReflectiveTwin.jpg";
 import RTAvatar from "../assets/images/RT/ReflectiveTwin_avatar.png";
-
+import {
+  Mic24Regular,
+  MicProhibited24Regular,
+  MicSparkle24Regular,
+} from "@fluentui/react-icons";
 const useStyles = makeStyles({
   page: {
     padding: "0",
@@ -28,7 +32,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "3rem",
   },
   title: {
     fontSize: "2rem",
@@ -51,6 +54,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "1.5rem",
+    margin: "2rem auto",
   },
   label: {
     fontSize: "1.1rem",
@@ -124,14 +128,17 @@ const useStyles = makeStyles({
     width: "100%",
   },
   recordButton: {
-    backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    color: tokens.colorNeutralForeground2,
     fontWeight: 600,
     fontSize: "1rem",
     borderRadius: "12px",
-    height: "",
+    height: "100%",
+    width: "20%",
+    marginLeft: "0.5rem",
+    alignSelf: "center",
     ":hover": {
-      backgroundColor: tokens.colorBrandBackgroundHover,
+      backgroundColor: tokens.colorNeutralBackground1Pressed,
     },
   },
 });
@@ -141,8 +148,24 @@ const BSReflectiveTwin = () => {
   const [prompt, setPrompt] = useState("");
   const [apiResponse, setApiResponse] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showErrorBar, setShowErrorBar] = useState(false);
+  const [transcription, setTranscription] = useState<string | null>(null);
+
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  const onChange = (
+    ev: React.ChangeEvent<HTMLTextAreaElement>,
+    data: { value: string }
+  ) => {
+    if (data.value.length <= 1000) {
+      setPrompt(data.value);
+    }
+  };
 
   const handleSubmit = async () => {
     setApiResponse(null);
@@ -175,12 +198,62 @@ const BSReflectiveTwin = () => {
     }
   };
 
-  const onChange = (
-    ev: React.ChangeEvent<HTMLTextAreaElement>,
-    data: { value: string }
-  ) => {
-    if (data.value.length <= 1000) {
-      setPrompt(data.value);
+  const handleRecord = async () => {
+    setError(null);
+    setShowErrorBar(false);
+
+    if (!isRecording) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        streamRef.current = stream; // Assign the stream to streamRef
+        const recorder = new MediaRecorder(stream);
+        audioChunksRef.current = [];
+
+        recorder.ondataavailable = (e) => {
+          if (e.data.size > 0) audioChunksRef.current.push(e.data);
+        };
+
+        recorder.onstop = async () => {
+          setTranscribing(true);
+          const blob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+          const form = new FormData();
+          form.append("audio", blob, "recording.webm");
+
+          try {
+            const res = await fetch("/api/speech-to-text", {
+              method: "POST",
+              body: form,
+            });
+            if (!res.ok) {
+              const err = await res.json();
+              throw new Error(err.error || "Transcription failed");
+            }
+            const data = await res.json();
+            setTranscription(data.transcription);
+            setPrompt(data.transcription);
+          } catch (err: any) {
+            setError(err.message);
+            setShowErrorBar(true);
+          } finally {
+            setTranscribing(false);
+          }
+        };
+
+        mediaRecorderRef.current = recorder;
+        recorder.start();
+        setIsRecording(true);
+      } catch (err: any) {
+        setError("Microphone access denied");
+        setShowErrorBar(true);
+      }
+    } else {
+      mediaRecorderRef.current?.stop();
+      streamRef.current?.getTracks().forEach((t) => t.stop()); // Stop all tracks
+      mediaRecorderRef.current = null;
+      streamRef.current = null;
+      setIsRecording(false);
     }
   };
 
@@ -235,13 +308,32 @@ const BSReflectiveTwin = () => {
         <Field label="Tell us your feelings..." className={styles.label}>
           <div className={styles.inputBox}>
             <Textarea
-              placeholder="Type what's on your mind..."
+              placeholder={
+                transcribing
+                  ? "Transcribing..."
+                  : isRecording
+                  ? "Press the mic again to stop recording..."
+                  : "Type what's on your mind ... or click on the mic to transcribe your voice into text."
+              }
               value={prompt}
               onChange={onChange}
               className={styles.textarea}
               style={{ height: "100px", width: "100%" }}
             />
-            <Button className={styles.recordButton}>Record</Button>
+            <Button
+              className={styles.recordButton}
+              onClick={handleRecord}
+              disabled={transcribing}
+              icon={
+                transcribing ? (
+                  <MicSparkle24Regular />
+                ) : isRecording ? (
+                  <MicProhibited24Regular />
+                ) : (
+                  <Mic24Regular />
+                )
+              }
+            ></Button>
           </div>
         </Field>
 

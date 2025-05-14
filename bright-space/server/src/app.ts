@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express, {
   Request,
   Response,
@@ -10,13 +11,13 @@ import fs from "fs";
 import path from "path";
 import { challengeData } from "./challenges";
 import multer from "multer";
+import { AzureOpenAI } from "openai";
+import { Readable } from "stream";
+import { createReadStream } from "fs";
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-
-
 const prisma = new PrismaClient();
-
 
 dotenv.config();
 
@@ -33,6 +34,11 @@ const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
 const deploymentName = process.env.AZURE_OPENAI_DEPLOYMENT_NAME;
 const apiKey = process.env.AZURE_OPENAI_API_KEY;
 const apiVersion = process.env.AZURE_OPENAI_API_VERSION || "2023-03-15-preview";
+
+const whisperEndpoint = process.env.WHISPER_ENDPOINT;
+const whisperApiKey = process.env.WHISPER_API_KEY;
+const whisperApiVersion = process.env.WHISPER_API_VERSION || "2024-06-01";
+const whisperDeploymentName = process.env.WHISPER_DEPLOYMENT_NAME || "whisper";
 
 const systemPrompt = fs.readFileSync(
   path.join(__dirname, "..", "systemRole.md"),
@@ -52,6 +58,14 @@ const rt_moodAnalyze = fs.readFileSync(
   "utf-8"
 );
 
+function getClient(): AzureOpenAI {
+  return new AzureOpenAI({
+    endpoint: whisperEndpoint,
+    apiKey: whisperApiKey,
+    apiVersion: whisperApiVersion,
+    deployment: whisperDeploymentName,
+  });
+}
 
 // Random Challenge API
 app.get(
@@ -226,8 +240,27 @@ app.post(
       res.status(400).json({ error: "No audio file uploaded." });
       return;
     }
+    
+    try {
+      const client = getClient();
+      // Turn the in-memory buffer into a readable stream
+      const tempFilePath = path.join(__dirname, "temp_audio_file.webm");
+      fs.writeFileSync(tempFilePath, req.file.buffer);
 
-    res.json({ message: "not implemented yet" });
+      const audioStream = fs.createReadStream(tempFilePath);
+
+      const result = await client.audio.transcriptions.create({
+        model: "",
+        file: createReadStream("./dist/temp_audio_file.webm"),
+      });
+
+      fs.unlinkSync(tempFilePath); // Clean up the temporary file
+
+      res.json({ transcription: result.text });
+    } catch (err: any) {
+      console.error("❌ Error transcribing audio:", err);
+      res.status(500).json({ error: "Error transcribing audio." });
+    }
   }
 );
 
