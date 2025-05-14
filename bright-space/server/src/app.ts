@@ -9,6 +9,11 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { challengeData } from "./challenges";
+import multer from "multer";
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+
 
 const prisma = new PrismaClient();
 
@@ -35,6 +40,15 @@ const systemPrompt = fs.readFileSync(
 );
 const userPromptTemplate = fs.readFileSync(
   path.join(__dirname, "..", "prompt.md"),
+  "utf-8"
+);
+
+const rt_systemPrompt = fs.readFileSync(
+  path.join(__dirname, "..", "rt_systemRole.md"),
+  "utf-8"
+);
+const rt_moodAnalyze = fs.readFileSync(
+  path.join(__dirname, "..", "rt_moodAnalyze.md"),
   "utf-8"
 );
 
@@ -161,6 +175,59 @@ app.get(
         .status(500)
         .json({ error: "An error occurred while processing your request" });
     }
+  }
+);
+
+// Reflective Twin API
+app.get(
+  "/api/reflective-twin",
+  async (req: Request, res: Response): Promise<void> => {
+    // console.log("Received request for intention analysis");
+    const userInput = req.query.prompt as string;
+    if (!userInput) {
+      res.status(400).json({ error: "Please enter your feelings." });
+      return;
+    }
+
+    const userPrompt = rt_moodAnalyze.replace("{{input}}", userInput);
+
+    try {
+      const url = `${azureEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+
+      const payload = {
+        messages: [
+          { role: "system", content: rt_systemPrompt },
+          { role: "user", content: userPrompt },
+        ],
+      };
+
+      const headers = {
+        "Content-Type": "application/json",
+        "api-key": apiKey!,
+      };
+
+      const response = await axios.post(url, payload, { headers });
+
+      res.json(response.data.choices[0].message.content);
+    } catch (error: any) {
+      console.error("Error calling Azure OpenAI API:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while processing your request" });
+    }
+  }
+);
+
+app.post(
+  "/api/speech-to-text",
+  upload.single("audio"),
+  async (req: Request, res: Response): Promise<void> => {
+    if (!req.file) {
+      res.status(400).json({ error: "No audio file uploaded." });
+      return;
+    }
+
+    res.json({ message: "not implemented yet" });
   }
 );
 
