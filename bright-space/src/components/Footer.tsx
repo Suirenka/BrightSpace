@@ -104,6 +104,7 @@ const Footer = () => {
           <BSNavLink text="Insights" route="/bs-data" noArrow />
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
+          <BSNavLink text="Reflective Twin" route="/bs-reflective-twin" noArrow/>
           <BSNavLink text="Build Boundary" route="/bs-boundaries-builder" noArrow/>
           <BSNavLink text="Report It" route="/report" noArrow/>
         </div>
