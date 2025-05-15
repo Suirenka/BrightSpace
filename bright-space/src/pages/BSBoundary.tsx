@@ -62,11 +62,16 @@ export default function BSBoundary(): JSX.Element {
 
   return (
     <div className={styles.container}>
-      <motion.div className={styles.introSection} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+      <motion.div
+        className={styles.introSection}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
         <h1>Build My Boundaries</h1>
         <h3>Your online life, your values.</h3>
         <p>
-          In a world full of noise, boundaries bring peace. Imagine this is your digital space — you're at the center.
+          In a world full of noise, boundaries bring peace. Imagine this is your digital space — you&apos;re at the center.
           The walls around you represent areas of your online life. You choose what protects you. Each wall gets
           stronger with a principle you believe in.
         </p>
@@ -98,7 +103,7 @@ export default function BSBoundary(): JSX.Element {
                     onChange={(e) => handleSelect(wallId, e.target.value)}
                     value={wallAssignments[wallId] || ''}
                   >
-                    <option value="" disabled>Select a value</option>
+                    <option value="" disabled>Tell me what you think?</option>
                     {options.map(item => (
                       <option key={item} value={item}>
                         {`${categoryIcons[category]} ${item}`}
