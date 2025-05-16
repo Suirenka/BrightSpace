@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.71af229b.css",
-    "main.js": "/static/js/main.e7cdc498.js",
+    "main.css": "/static/css/main.6466ff09.css",
+    "main.js": "/static/js/main.8e387235.js",
     "static/js/453.be624ea4.chunk.js": "/static/js/453.be624ea4.chunk.js",
     "static/media/Boundary.png": "/static/media/Boundary.26e61d455cb09c5a7201.png",
     "static/media/Quiz.jpg": "/static/media/Quiz.f0280b74190cb32312dd.jpg",
@@ -21,17 +21,18 @@
     "static/media/Quiz_5.jpg": "/static/media/Quiz_5.b79273f737fcfd03c9f3.jpg",
     "static/media/Quiz_4.jpg": "/static/media/Quiz_4.81174693273d2121cd8b.jpg",
     "static/media/WhenTargeted.png": "/static/media/WhenTargeted.57e897a87ff71c377c3f.png",
+    "static/media/boundary-bg.jpg": "/static/media/boundary-bg.6c3025c2a1ff07bdd322.jpg",
     "static/media/instagram.svg": "/static/media/instagram.fe4919af484ac7cdd8909acbd6b47e46.svg",
     "static/media/snapchat.svg": "/static/media/snapchat.1093028f73dcfa4165fb0e2fff749b23.svg",
     "index.html": "/index.html",
     "static/media/discord.svg": "/static/media/discord.105be1048fb59c09cd2923ae3d30d75d.svg",
     "static/media/tiktok.svg": "/static/media/tiktok.a57d4d5b1145b81bd85dceb79a409462.svg",
-    "main.71af229b.css.map": "/static/css/main.71af229b.css.map",
-    "main.e7cdc498.js.map": "/static/js/main.e7cdc498.js.map",
+    "main.6466ff09.css.map": "/static/css/main.6466ff09.css.map",
+    "main.8e387235.js.map": "/static/js/main.8e387235.js.map",
     "453.be624ea4.chunk.js.map": "/static/js/453.be624ea4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.71af229b.css",
-    "static/js/main.e7cdc498.js"
+    "static/css/main.6466ff09.css",
+    "static/js/main.8e387235.js"
   ]
 }

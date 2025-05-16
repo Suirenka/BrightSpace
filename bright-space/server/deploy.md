@@ -13,9 +13,6 @@ aws configure
 ### upload to AWS
 ### iteration 1 aws s3 cp project.zip s3://bright-space/code-deploy-1/project.zip
 aws s3 cp project.zip s3://bright-space/server/project.zip
-
-
-### ssh
 cd ..
 ssh ubuntu@54.206.127.22 -i BrightSpace.pem
 # iteration 1 ssh ubuntu@3.107.181.166 -i BrightSpace.pem 
