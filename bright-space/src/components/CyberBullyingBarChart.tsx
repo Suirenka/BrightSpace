@@ -68,9 +68,11 @@ const CombinedChart: React.FC = () => {
   });
 
   const yearItemStyle = (index: number): CSSProperties => ({
-    width: "6rem",
-    textAlign: "right",
-    fontSize: "0.875rem",
+    width: "2rem",
+    textAlign: "left",
+    whiteSpace: "nowrap",
+    overflow: "visible",  
+    fontSize: "0.8rem",
     fontWeight: hoveredBar?.startsWith(index.toString()) ? "700" : "500",
     color: hoveredBar?.startsWith(index.toString()) ? "#1f2937" : "#000",
     transform: animateItems ? "translateX(0)" : "translateX(-50px)",
@@ -90,7 +92,7 @@ const CombinedChart: React.FC = () => {
   return (
     <div
       style={{
-        padding: "2rem",
+        padding: "2rem 2rem 2.5rem 1rem",
         borderRadius: "12px",
         maxWidth: "56 rem",
         margin: "0 auto",
@@ -99,7 +101,7 @@ const CombinedChart: React.FC = () => {
     >
       {/* Column Headers */}
       <div style={{ display: "flex", marginBottom: "1rem" }}>
-        <div style={{ width: "6rem" }}></div>
+        <div style={{ width: "2rem" }}></div>
         <div style={{ flex: 1, display: "flex", gap: "1rem", paddingLeft: "1rem" }}>
           <div style={{
             flex: 1,

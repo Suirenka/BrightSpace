@@ -16,6 +16,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  ComposedChart,
+  Legend,
+  LabelList
 } from "recharts";
 
 const useStyles = makeStyles({
@@ -175,7 +178,13 @@ const ChartSection: React.FC<ChartSectionProps> = ({
               />
               <YAxis tickFormatter={(v) => `${v}%`} />
               <Tooltip formatter={(v: number) => `${v}%`} />
-              <Bar dataKey="value" name="% children bullied" fill="#6a5acd" maxBarSize={28} />
+              <Bar dataKey="value" name="% children bullied" fill="#6a5acd" maxBarSize={28}>
+                <LabelList 
+                  dataKey="value" 
+                  position="top" 
+                  formatter={(value: number) => `${value}%`} 
+                />
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         )}
@@ -336,14 +345,43 @@ const BSData: React.FC = () => {
   const s = useStyles();
   const navigate = useNavigate();
 
-  const populationOptions = [
-    "Victoria",
-    "Victoria - Male",
-    "Victoria - Female",
-    "Victoria - Other Gender",
-    "Victoria - Aboriginal",
-    "Victoria - Non Aboriginal",
-  ];
+  const getLineColorForKey = (key: string): string => {
+    if (key === "Victoria - Non Aboriginal") return tokens.colorStatusWarningBorderActive;
+    if (key === "Victoria - Aboriginal") return tokens.colorStatusDangerBackground3;
+    if (key.includes("Female")) return tokens.colorStatusWarningBorderActive;
+    if (key.includes("Male")) return tokens.colorStatusDangerBackground3;
+    if (key.includes("Other")) return tokens.colorStatusSuccessForeground1;
+    return tokens.colorBrandForeground1;
+  };
+  
+
+  const dimensions = {
+
+    
+    Gender: ["Victoria - Male", "Victoria - Female", "Victoria - Other Gender"],
+    "Aboriginal Status": ["Victoria - Aboriginal", "Victoria - Non Aboriginal"],
+  };
+  
+  const [dimensionKey, setDimensionKey] = React.useState<"Gender" | "Aboriginal Status">("Gender");
+  const [chartData, setChartData] = React.useState<any[]>([]);
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/3_2a/search?query=Victoria");
+      const rawData: ResultRow[] = await res.json();
+  
+      const grouped: { [year: string]: any } = {};
+      rawData.forEach(({ year, group, value }) => {
+        if (!grouped[year]) grouped[year] = { year: year.toString() };
+        grouped[year][group] = value;
+      });
+  
+      const reshaped = Object.values(grouped);
+      setChartData(reshaped);
+    };
+  
+    fetchData();
+  }, []);
 
   const yearOptions = ["2017", "2018", "2019", "2021", "2022", "2023"];
 
@@ -503,7 +541,7 @@ const BSData: React.FC = () => {
                   marginBottom: "0.5rem",
                 }}
               >
-                Key Insight
+                Key Insight (What can be seen?)
               </h3>
               <p
                 style={{
@@ -512,8 +550,8 @@ const BSData: React.FC = () => {
                   lineHeight: 1.6,
                 }}
               >
-                Bullying cases in regional areas have shown a noticeable rise since 2020,
-                especially among secondary students.
+                Victoria state data revealed that students who experienced higher levels of cyberbullying 
+                reported lower levels of emotional wellbeing and confidence.
               </p>
             </motion.div>
 
@@ -543,12 +581,13 @@ const BSData: React.FC = () => {
               </h3>
               <p
                 style={{
-                  color: tokens.colorNeutralForeground2,
+                  color: tokens.colorBrandForeground2,
                   fontSize: "0.95rem",
                   lineHeight: 1.6,
                 }}
               >
-                Grouped visualisation helps us reveal gaps and patterns inform better interventions and student wellbeing support strategies.
+                This trend underscores a pressing need for effective support systems 
+                to help young people navigate online challenges.
               </p>
             </motion.div>
 
@@ -559,7 +598,7 @@ const BSData: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               style={{
-                backgroundColor: tokens.colorNeutralBackground1,
+                backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
                 borderLeft: `6px solid ${tokens.colorPaletteDarkOrangeBorderActive ?? "#ea580c"}`,
                 padding: "1rem",
                 borderRadius: "8px",
@@ -578,12 +617,13 @@ const BSData: React.FC = () => {
               </h3>
               <p
                 style={{
-                  color: tokens.colorNeutralForeground2,
+                  color: tokens.colorPaletteDarkOrangeBackground3,
                   fontSize: "0.95rem",
                   lineHeight: 1.6,
                 }}
               >
-                You're not alone — explore real data, see shared struggles, and find the support you deserve in a safe, understanding space.
+                You're not alone. Explore real data, see shared experiences, and find support in a safe, understanding space. 
+                BrightSpace helps you build resilience, emotional intelligence, and confidence through interactive, real-life scenarios.
               </p>
             </motion.div>
           </div>
@@ -595,10 +635,15 @@ const BSData: React.FC = () => {
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "2rem 3rem",
-          borderRadius: "0",
-          marginTop: "1rem",
+          // marginTop: "1rem",
         }}
       >
+        <div
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+          }}
+        >
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -613,24 +658,134 @@ const BSData: React.FC = () => {
         >
           📊 Who Is Most at Risk? Explore Bullying by Group.
         </motion.h2>
+        <section className={s.section}>
+          <div className={s.chartWrapper}>
+            <ResponsiveContainer width="100%" height="90%">
+              <ComposedChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis tickFormatter={(v) => `${v}%`} />
+                <Tooltip
+                  formatter={(value: number, name: string) => [`${value?.toFixed(2)}%`, name]}
+                  labelFormatter={(label: string) => `${label} — Proportion of bullied children`}
+                />
+                <Legend />
+                <Bar
+                  dataKey="Victoria"
+                  barSize={28}
+                  fill={tokens.colorBrandForeground1 }
+                  name="Victoria"
+                  >
+                  <LabelList 
+                  dataKey="Victoria" 
+                  position="top" 
+                  formatter={(value: number) => `${value}%`} 
+                  />
+                </Bar>
 
-        <ChartSection
-          title="Bullying by Population Group"
-          description={
-            <p>
-              Compare Victoria-wide data and specific population groups. Select a group from the dropdown to
-              visualise the percentage of people experiencing bullying in the chosen cohort.
-            </p>
-          }
-          dropdownLabel="Select a population group"
-          options={populationOptions}
-          queryKey="group"
-        />
+                {dimensions[dimensionKey].map((key, index) => (
+                  <Line
+                    key={key}
+                    type="monotone"
+                    dataKey={key}
+                    name={key}
+                    stroke={getLineColorForKey(key)}
+                    dot={{ r: 3 }}
+                  />
+                ))}
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "480px",
+              flex: "1 1 320px",
+              minWidth: "280px",
+              gap: "2rem",
+            }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={s.textBlock}
+              style={{
+                borderLeft: `6px solid ${tokens.colorBrandStroke1}`,
+                backgroundColor: tokens.colorNeutralBackground1,
+              }}
+            >
+              <h3 style={{ color: tokens.colorBrandForeground1, marginBottom: "0.5rem" }}>
+                🎯 Bullying by Population Group
+              </h3>
+              <p style={{ marginBottom: "1rem" }}>
+                Compare Victoria-wide data and specific population groups. Use the filter below to explore bullying across cohorts.
+              </p>
+
+                <div className={s.controls}>
+                <Combobox
+                  placeholder="Select a dimension"
+                  value={dimensionKey}
+                  onOptionSelect={(_, data) => setDimensionKey(data.optionValue as any)}
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid black",
+                    backgroundColor: tokens.colorNeutralBackground2,
+                    color: tokens.colorNeutralForeground1,
+                    minWidth: "240px",
+                    boxShadow: tokens.shadow8,
+                  }}
+                >
+                  {Object.keys(dimensions).map((dim) => (
+                    <Option key={dim} value={dim}>
+                      {dim}
+                    </Option>
+                  ))}
+                </Combobox>
+              </div>
+
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={s.textBlock}
+              style={{
+                borderLeft: `6px solid ${tokens.colorPaletteSeafoamBorderActive}`,
+                backgroundColor: tokens.colorNeutralBackground1,
+              }}
+            >
+              <h3
+                style={{
+                  color: tokens.colorPaletteSeafoamForeground2,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                🧬 Differences Between Groups
+              </h3>
+              <p
+                style={{
+                  fontSize: "0.95rem",
+                  lineHeight: 1.6,
+                  color: tokens.colorNeutralForeground2,
+                }}
+              >
+                Different groups face different risks — comparing cohorts reveals how identity and background affect experiences.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+        </div> 
       </div>
 
-
       {/* Section 2 – Year */}
-      <div
+      {/* <div
         style={{
           backgroundColor: tokens.colorNeutralBackground3,
           padding: "2.5rem 1.5rem",
@@ -667,14 +822,14 @@ const BSData: React.FC = () => {
           queryKey="year"
           reverse={true}
         />
-      </div>
+      </div> */}
 
        {/* Section 3 – Region  */}
       <div
         style={{
           backgroundColor: tokens.colorPaletteDarkOrangeBackground1,
           padding: "3rem 1.5rem",
-          marginTop: "1rem",
+          marginTop: "-3rem",
           display: "flex",
           width: "100vw",
           position: "relative",
@@ -715,6 +870,7 @@ const BSData: React.FC = () => {
             dropdownLabel="Select a region"
             options={regionOptions}
             queryKey="region"
+            reverse={true}
           />
         </div>
       </div>

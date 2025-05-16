@@ -53,11 +53,13 @@ const useStyles = makeStyles({
     borderRadius: "24px",
     boxShadow: tokens.shadow16,
     maxWidth: "60vw",
+    minHeight: "330px",
     width: "100%",
     display: "flex",
     flexDirection: "column",
     gap: "1.5rem",
     margin: "2rem auto",
+    marginTop: "4rem", 
   },
   label: {
     fontSize: "1.1rem",
@@ -129,6 +131,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     width: "100%",
+    marginTop: "1rem",
   },
   recordButton: {
     backgroundColor: tokens.colorNeutralBackground1Hover,
@@ -200,6 +203,14 @@ const BSReflectiveTwin = () => {
       setLoading(false);
     }
   };
+
+  const [selectedTone, setSelectedTone] = useState<string>("");
+
+  const toneOptions = [
+    { icon: "🧘", label: "Gentle", description: "Soft, warm, encouraging." },
+    { icon: "🧠", label: "Blunt", description: "Straight-up truth, no fluff." },
+    { icon: "🎭", label: "Poetic", description: "Reflective and deep." },
+  ];
 
   const handleRecord = async () => {
     setError(null);
@@ -389,6 +400,8 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
 }) => {
   const styles = useStyles();
   const wordCloudRef = useRef<HTMLCanvasElement | null>(null);
+  const [mostFrequentWord, setMostFrequentWord] = useState<string | null>(null);
+
 
   // determine response style (unchanged) …
   let response = "";
@@ -436,6 +449,13 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
     words.forEach((w) => (freq[w] = (freq[w] || 0) + 1));
     const list: [string, number][] = Object.entries(freq);
 
+    if (list.length > 0) {
+      list.sort((a, b) => b[1] - a[1]);
+      setMostFrequentWord(list[0][0]);
+    } else {
+      setMostFrequentWord(null);
+    }
+
     WordCloud(wordCloudRef.current, {
       list,
       gridSize: 5,
@@ -453,7 +473,7 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
   return (
     <div className={styles.responseContent}>
       <Card className={styles.resCard} style={{ height: "400px" }}>
-        The most common word in your words are: {freq[0]}
+        The most common word is: {mostFrequentWord ?? "None"}
         <Divider />
         <canvas
           ref={wordCloudRef}
