@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "1.5rem",
     margin: "2rem auto",
-    marginTop: "4rem", 
+    marginTop: "4rem",
   },
   label: {
     fontSize: "1.1rem",
@@ -189,12 +189,15 @@ const BSReflectiveTwin = () => {
       const data = await res.json();
       let dataString = JSON.stringify(data);
       dataString = dataString.replace(/^"|"$/g, "");
-      const [level, suggestion, improvedPost] = dataString.split("-");
+      const [level, subclassEmotion, suggestion, processedReflection] =
+        dataString.split("-");
       const result = {
         level: level,
+        subclassEmotion: subclassEmotion,
         suggestion: suggestion,
-        improvedPost: improvedPost,
+        processedReflection: processedReflection,
       };
+      console.log(result);
       setApiResponse(result);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
@@ -375,7 +378,7 @@ const BSReflectiveTwin = () => {
           </MessageBar>
         )}
 
-        {apiResponse && <ResponseContent {...apiResponse} prompt={prompt} />}
+        {apiResponse && <ResponseContent {...apiResponse} />}
 
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <BSNavLink text="Go Back to Home" route="/" back />
@@ -387,21 +390,20 @@ const BSReflectiveTwin = () => {
 
 interface ResponseContentProps {
   level: string;
+  subclassEmotion: string;
   suggestion: string;
-  improvedPost: string;
-  prompt: string;
+  processedReflection: string;
 }
 
 const ResponseContent: React.FC<ResponseContentProps> = ({
   level,
+  subclassEmotion,
   suggestion,
-  improvedPost,
-  prompt,
+  processedReflection,
 }) => {
   const styles = useStyles();
   const wordCloudRef = useRef<HTMLCanvasElement | null>(null);
   const [mostFrequentWord, setMostFrequentWord] = useState<string | null>(null);
-
 
   // determine response style (unchanged) …
   let response = "";
@@ -422,9 +424,9 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
 
   // generate word cloud when prompt changes
   useEffect(() => {
-    if (!wordCloudRef.current || !prompt) return;
+    if (!wordCloudRef.current || !processedReflection) return;
 
-    const words = prompt
+    const words = processedReflection
       .split(/\s+/)
       .map((w) => w.toLowerCase().replace(/[^a-z0-9]/g, ""))
       .filter(
@@ -471,29 +473,35 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
   }, [prompt]);
 
   return (
-    <div className={styles.responseContent}>
-      <Card className={styles.resCard} style={{ height: "400px" }}>
-        The most common word is: {mostFrequentWord ?? "None"}
-        <Divider />
-        <canvas
-          ref={wordCloudRef}
-          width={800}
-          height={800}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </Card>
-      <Card className={styles.resCard}>
-        <CardHeader
-          image={<img src={RTAvatar} alt="Reflective Twin avatar" />}
-          header={
-            <Body1>
-              <b>Reflective Twin</b>
-            </Body1>
-          }
-        />
-        {suggestion}
-      </Card>
-    </div>
+    <>
+      <Body1>
+        According to your words, the most likely emotion is:{" "}
+        <b>{subclassEmotion}</b>. <br />
+        The most frequent word in your reflection is: <b>{mostFrequentWord}</b>.
+      </Body1>
+      <Divider />
+      <div className={styles.responseContent}>
+        <Card className={styles.resCard} style={{ height: "400px" }}>
+          <canvas
+            ref={wordCloudRef}
+            width={800}
+            height={800}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </Card>
+        <Card className={styles.resCard}>
+          <CardHeader
+            image={<img src={RTAvatar} alt="Reflective Twin avatar" />}
+            header={
+              <Body1>
+                <b>Reflective Twin</b>
+              </Body1>
+            }
+          />
+          {suggestion}
+        </Card>
+      </div>
+    </>
   );
 };
 
