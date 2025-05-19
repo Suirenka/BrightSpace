@@ -64,18 +64,49 @@ export default function BSBoundary(): JSX.Element {
     <div className={styles.container}>
       <motion.div
         className={styles.introSection}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
       >
-        <h1>Build My Boundaries</h1>
-        <h3>Your online life, your values.</h3>
-        <p>
+        <motion.h1
+          initial={{ opacity: 0, y: -50, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 1,
+            ease: [0.6, -0.05, 0.01, 0.99],
+            delay: 0.2
+          }}
+        >
+          Build My Boundaries
+        </motion.h1>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 1,
+            ease: "easeOut",
+            delay: 0.8
+          }}
+        >
           In a world full of noise, boundaries bring peace. Imagine this is your digital space — you&apos;re at the center.
           The walls around you represent areas of your online life. You choose what protects you. Each wall gets
           stronger with a principle you believe in.
-        </p>
-        <button style={{ marginBottom: "5rem" }} onClick={() => document.getElementById('instruction')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Start Building</button>
+        </motion.p>
+        <motion.button
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.8,
+            ease: "easeOut",
+            delay: 1.2
+          }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => document.getElementById('instruction')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+        >
+          Start Building
+        </motion.button>
       </motion.div>
 
       <div id="canvas" className={styles.canvasSection}>
@@ -147,9 +178,10 @@ export default function BSBoundary(): JSX.Element {
         )}
       </div>
 
-      <div className={styles.navWrapper}>
+      <div className={styles.navWrapper} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <BSNavLink text={"Go Back to Home"} route={"/"} back={true} />
       </div>
+
       <BackToTopButton />
     </div>
   );
