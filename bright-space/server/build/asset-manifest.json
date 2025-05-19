@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6466ff09.css",
-    "main.js": "/static/js/main.4b6d7f84.js",
+    "main.js": "/static/js/main.89cd487e.js",
     "static/js/453.be624ea4.chunk.js": "/static/js/453.be624ea4.chunk.js",
     "static/media/Boundary.png": "/static/media/Boundary.26e61d455cb09c5a7201.png",
     "static/media/Quiz.jpg": "/static/media/Quiz.f0280b74190cb32312dd.jpg",
@@ -28,11 +28,11 @@
     "static/media/discord.svg": "/static/media/discord.105be1048fb59c09cd2923ae3d30d75d.svg",
     "static/media/tiktok.svg": "/static/media/tiktok.a57d4d5b1145b81bd85dceb79a409462.svg",
     "main.6466ff09.css.map": "/static/css/main.6466ff09.css.map",
-    "main.4b6d7f84.js.map": "/static/js/main.4b6d7f84.js.map",
+    "main.89cd487e.js.map": "/static/js/main.89cd487e.js.map",
     "453.be624ea4.chunk.js.map": "/static/js/453.be624ea4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6466ff09.css",
-    "static/js/main.4b6d7f84.js"
+    "static/js/main.89cd487e.js"
   ]
 }

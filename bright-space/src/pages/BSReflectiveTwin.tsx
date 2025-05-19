@@ -168,7 +168,7 @@ const BSReflectiveTwin = () => {
     ev: React.ChangeEvent<HTMLTextAreaElement>,
     data: { value: string }
   ) => {
-    if (data.value.length <= 1000) {
+    if (data.value.length <= 5000) {
       setPrompt(data.value);
     }
   };
@@ -408,18 +408,22 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
   // determine response style (unchanged) …
   let response = "";
   let responseStyle = styles.neutralResponse;
+  let colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"];
   if (level === "0") {
-    response = "Mood: Angry";
+    response = "Not Meaningful";
     responseStyle = styles.harshResponse;
+    colors = ["#7f7f7f", "#b3b3b3", "#d9d9d9", "#f2f2f2", "#ffffff"]; // gray
   } else if (level === "1") {
-    response = "Mood: Sad";
-    responseStyle = styles.negativeResponse;
+    response = "Negative";
+    colors = ["#00008B", "#4682B4", "#1E90FF", "#1A237E", "#0000CD"]; // blue
   } else if (level === "2") {
-    response = "Mood: Neutral";
+    response = "Ambiguous";
     responseStyle = styles.neutralResponse;
+    colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"]; // purple
   } else {
-    response = "Mood: Happy";
+    response = "Positive";
     responseStyle = styles.positiveResponse;
+    colors = ["#6fcf6e", "#56c8a7", "#3db8b0", "#2ab8b0", "#1f9fb0", "#1f9fb0"]; // green
   }
 
   // generate word cloud when prompt changes
@@ -445,6 +449,18 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
             "her",
             "it",
             "its",
+            "to",
+            "a",
+            "an",
+            "the",
+            "and",
+            "or",
+            "of",
+            "for",
+            "in",
+            "on",
+            "at",
+            "today",
           ].includes(w)
       );
     const freq: Record<string, number> = {};
@@ -464,7 +480,6 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
       weightFactor: 60,
       fontFamily: "sans-serif",
       color: () => {
-        const colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"];
         return colors[Math.floor(Math.random() * colors.length)];
       },
       rotateRatio: 0,
@@ -472,12 +487,18 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
     });
   }, [prompt]);
 
+  const finalSuggestion = suggestion
+    .replaceAll("<", "")
+    .replaceAll(">", "")
+    .replace("action plan", "")
+    .replaceAll("\\n", "");
+
   return (
     <>
       <Body1>
         According to your words, the most likely emotion is:{" "}
         <b>{subclassEmotion}</b>. <br />
-        The most frequent word in your reflection is: <b>{mostFrequentWord}</b>.
+        The most frequent word related is: <b>{mostFrequentWord}</b>.
       </Body1>
       <Divider />
       <div className={styles.responseContent}>
@@ -498,7 +519,7 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
               </Body1>
             }
           />
-          {suggestion}
+          {finalSuggestion}
         </Card>
       </div>
     </>
