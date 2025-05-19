@@ -5,6 +5,7 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import BoundaryImage from "../assets/images/home/Boundary.png";
+import RTBanner from "../assets/images/ReflectiveTwin.jpg";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
 import { useNavigate } from "react-router-dom";
@@ -370,6 +371,38 @@ const BSHome = () => {
             </button>
           </div>
         </motion.div>
+
+        <motion.div
+          className={`${styles.section} ${styles.reverse}`}
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5 }}
+          viewport={{ once: true }}
+        >
+          <div className={styles.imageSection}>
+            <img
+              src={RTBanner}
+              className={styles.image}
+              alt="Reflective Twin"
+            />
+          </div>
+          <div className={styles.textSection}>
+            <h2 className={styles.title}>Reflective Twin</h2>
+            <p className={styles.description}>
+              Share your thoughts — by typing or speaking — and Reflective Twin will
+              help you understand how you're feeling through tone analysis, emotional
+              feedback, and a personalized word cloud.
+            </p>
+            <button
+              className={styles.button}
+              onClick={() => navigate("/bs-reflective-twin")}
+            >
+              Try Reflective Twin
+            </button>
+          </div>
+        </motion.div>
+
+
       </div>
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
@@ -424,6 +457,8 @@ const BSHome = () => {
           </button>
         </div>
       </motion.div>
+
+      
       <BackToTopButton />
       <DailyChallengeNotification />
     </>
