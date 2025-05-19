@@ -58,6 +58,11 @@ const rt_moodAnalyze = fs.readFileSync(
   "utf-8"
 );
 
+const rt_wordProcess = fs.readFileSync(
+  path.join(__dirname, "..", "rt_wordProcess.md"),
+  "utf-8"
+);
+
 function getClient(): AzureOpenAI {
   return new AzureOpenAI({
     endpoint: whisperEndpoint,
@@ -221,14 +226,44 @@ app.get(
       };
 
       const response = await axios.post(url, payload, { headers });
+      const reflection = response.data.choices[0].message.content;
+      const [, subclassEmotion, ] =
+        reflection.split("-");
 
-      res.json(response.data.choices[0].message.content);
-    } catch (error: any) {
-      console.error("Error calling Azure OpenAI API:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while processing your request" });
-    }
+      const input_Prompt = rt_wordProcess.replace("{{input}}", userInput);
+      const wp_Prompt = input_Prompt.replace("{{emotion}}", subclassEmotion);
+
+      try {
+        const url = `${azureEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+
+        const payload = {
+          messages: [
+            { role: "system", content: "You will process a paragraph according to a specified mood. Remove any words that do not match the given mood." },
+            { role: "user", content: wp_Prompt },
+          ],
+        };
+
+        const headers = {
+          "Content-Type": "application/json",
+          "api-key": apiKey!,
+        };
+
+        const wp_response = await axios.post(url, payload, { headers });
+        const final_response = reflection + "-" + wp_response.data.choices[0].message.content;
+        res.json(final_response);
+      } catch (error: any) {
+        console.error("Error calling Azure OpenAI API:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while processing your request" });
+      }
+        
+      } catch (error: any) {
+        console.error("Error calling Azure OpenAI API:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while processing your request" });
+      }
   }
 );
 

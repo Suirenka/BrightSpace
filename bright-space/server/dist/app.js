@@ -35,6 +35,7 @@ const systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, ".
 const userPromptTemplate = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "prompt.md"), "utf-8");
 const rt_systemPrompt = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "rt_systemRole.md"), "utf-8");
 const rt_moodAnalyze = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "rt_moodAnalyze.md"), "utf-8");
+const rt_wordProcess = fs_1.default.readFileSync(path_1.default.join(__dirname, "..", "rt_wordProcess.md"), "utf-8");
 function getClient() {
     return new openai_1.AzureOpenAI({
         endpoint: whisperEndpoint,
@@ -162,7 +163,32 @@ app.get("/api/reflective-twin", async (req, res) => {
             "api-key": apiKey,
         };
         const response = await axios_1.default.post(url, payload, { headers });
-        res.json(response.data.choices[0].message.content);
+        const reflection = response.data.choices[0].message.content;
+        const [, subclassEmotion,] = reflection.split("-");
+        const input_Prompt = rt_wordProcess.replace("{{input}}", userInput);
+        const wp_Prompt = input_Prompt.replace("{{emotion}}", subclassEmotion);
+        try {
+            const url = `${azureEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=${apiVersion}`;
+            const payload = {
+                messages: [
+                    { role: "system", content: "You will process a paragraph according to a specified mood. Remove any words that do not match the given mood." },
+                    { role: "user", content: wp_Prompt },
+                ],
+            };
+            const headers = {
+                "Content-Type": "application/json",
+                "api-key": apiKey,
+            };
+            const wp_response = await axios_1.default.post(url, payload, { headers });
+            const final_response = reflection + "-" + wp_response.data.choices[0].message.content;
+            res.json(final_response);
+        }
+        catch (error) {
+            console.error("Error calling Azure OpenAI API:", error);
+            res
+                .status(500)
+                .json({ error: "An error occurred while processing your request" });
+        }
     }
     catch (error) {
         console.error("Error calling Azure OpenAI API:", error);

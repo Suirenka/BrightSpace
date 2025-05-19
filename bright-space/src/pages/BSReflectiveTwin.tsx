@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "1.5rem",
     margin: "2rem auto",
-    marginTop: "4rem", 
+    marginTop: "4rem",
   },
   label: {
     fontSize: "1.1rem",
@@ -168,7 +168,7 @@ const BSReflectiveTwin = () => {
     ev: React.ChangeEvent<HTMLTextAreaElement>,
     data: { value: string }
   ) => {
-    if (data.value.length <= 1000) {
+    if (data.value.length <= 5000) {
       setPrompt(data.value);
     }
   };
@@ -189,12 +189,15 @@ const BSReflectiveTwin = () => {
       const data = await res.json();
       let dataString = JSON.stringify(data);
       dataString = dataString.replace(/^"|"$/g, "");
-      const [level, suggestion, improvedPost] = dataString.split("-");
+      const [level, subclassEmotion, suggestion, processedReflection] =
+        dataString.split("-");
       const result = {
         level: level,
+        subclassEmotion: subclassEmotion,
         suggestion: suggestion,
-        improvedPost: improvedPost,
+        processedReflection: processedReflection,
       };
+      console.log(result);
       setApiResponse(result);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
@@ -375,7 +378,7 @@ const BSReflectiveTwin = () => {
           </MessageBar>
         )}
 
-        {apiResponse && <ResponseContent {...apiResponse} prompt={prompt} />}
+        {apiResponse && <ResponseContent {...apiResponse} />}
 
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <BSNavLink text="Go Back to Home" route="/" back />
@@ -387,44 +390,47 @@ const BSReflectiveTwin = () => {
 
 interface ResponseContentProps {
   level: string;
+  subclassEmotion: string;
   suggestion: string;
-  improvedPost: string;
-  prompt: string;
+  processedReflection: string;
 }
 
 const ResponseContent: React.FC<ResponseContentProps> = ({
   level,
+  subclassEmotion,
   suggestion,
-  improvedPost,
-  prompt,
+  processedReflection,
 }) => {
   const styles = useStyles();
   const wordCloudRef = useRef<HTMLCanvasElement | null>(null);
   const [mostFrequentWord, setMostFrequentWord] = useState<string | null>(null);
 
-
   // determine response style (unchanged) …
   let response = "";
   let responseStyle = styles.neutralResponse;
+  let colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"];
   if (level === "0") {
-    response = "Mood: Angry";
+    response = "Not Meaningful";
     responseStyle = styles.harshResponse;
+    colors = ["#7f7f7f", "#b3b3b3", "#d9d9d9", "#f2f2f2", "#ffffff"]; // gray
   } else if (level === "1") {
-    response = "Mood: Sad";
-    responseStyle = styles.negativeResponse;
+    response = "Negative";
+    colors = ["#00008B", "#4682B4", "#1E90FF", "#1A237E", "#0000CD"]; // blue
   } else if (level === "2") {
-    response = "Mood: Neutral";
+    response = "Ambiguous";
     responseStyle = styles.neutralResponse;
+    colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"]; // purple
   } else {
-    response = "Mood: Happy";
+    response = "Positive";
     responseStyle = styles.positiveResponse;
+    colors = ["#6fcf6e", "#56c8a7", "#3db8b0", "#2ab8b0", "#1f9fb0", "#1f9fb0"]; // green
   }
 
   // generate word cloud when prompt changes
   useEffect(() => {
-    if (!wordCloudRef.current || !prompt) return;
+    if (!wordCloudRef.current || !processedReflection) return;
 
-    const words = prompt
+    const words = processedReflection
       .split(/\s+/)
       .map((w) => w.toLowerCase().replace(/[^a-z0-9]/g, ""))
       .filter(
@@ -443,6 +449,18 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
             "her",
             "it",
             "its",
+            "to",
+            "a",
+            "an",
+            "the",
+            "and",
+            "or",
+            "of",
+            "for",
+            "in",
+            "on",
+            "at",
+            "today",
           ].includes(w)
       );
     const freq: Record<string, number> = {};
@@ -462,7 +480,6 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
       weightFactor: 60,
       fontFamily: "sans-serif",
       color: () => {
-        const colors = ["#5b5fc7", "#4f52b2", "#383966", "#7f85f5", "#b6bcfa"];
         return colors[Math.floor(Math.random() * colors.length)];
       },
       rotateRatio: 0,
@@ -470,30 +487,43 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
     });
   }, [prompt]);
 
+  const finalSuggestion = suggestion
+    .replaceAll("<", "")
+    .replaceAll(">", "")
+    .replaceAll("`", "")
+    .replace("action plan", "")
+    .replaceAll("\\n", "");
+
   return (
-    <div className={styles.responseContent}>
-      <Card className={styles.resCard} style={{ height: "400px" }}>
-        The most common word is: {mostFrequentWord ?? "None"}
-        <Divider />
-        <canvas
-          ref={wordCloudRef}
-          width={800}
-          height={800}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </Card>
-      <Card className={styles.resCard}>
-        <CardHeader
-          image={<img src={RTAvatar} alt="Reflective Twin avatar" />}
-          header={
-            <Body1>
-              <b>Reflective Twin</b>
-            </Body1>
-          }
-        />
-        {suggestion}
-      </Card>
-    </div>
+    <>
+      <Body1>
+        According to your words, the most likely emotion is:{" "}
+        <b>{subclassEmotion}</b>. <br />
+        The most frequent word related is: <b>{mostFrequentWord}</b>.
+      </Body1>
+      <Divider />
+      <div className={styles.responseContent}>
+        <Card className={styles.resCard} style={{ height: "400px" }}>
+          <canvas
+            ref={wordCloudRef}
+            width={800}
+            height={800}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </Card>
+        <Card className={styles.resCard}>
+          <CardHeader
+            image={<img src={RTAvatar} alt="Reflective Twin avatar" />}
+            header={
+              <Body1>
+                <b>Reflective Twin</b>
+              </Body1>
+            }
+          />
+          {finalSuggestion}
+        </Card>
+      </div>
+    </>
   );
 };
 
