@@ -490,6 +490,7 @@ const ResponseContent: React.FC<ResponseContentProps> = ({
   const finalSuggestion = suggestion
     .replaceAll("<", "")
     .replaceAll(">", "")
+    .replaceAll("`", "")
     .replace("action plan", "")
     .replaceAll("\\n", "");
 
