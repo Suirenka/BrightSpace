@@ -12,8 +12,10 @@ import BSNavLink from "./BSLinks/BSNavLink";
 
 const useHeaderStyles = makeStyles({
   header: {
-    position: "sticky",
+    position: "fixed",
     top: 0,
+    left: 0,
+    width: "100vw",
     zIndex: 1000,
     backgroundColor: tokens.colorBrandBackground2,
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
@@ -23,7 +25,8 @@ const useHeaderStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "85%",
+    maxWidth: "1280px",
+    width: "100%",
     margin: "0 auto",
   },
   brand: {
@@ -48,11 +51,17 @@ const useHeaderStyles = makeStyles({
   navLink: {
     color: tokens.colorNeutralForeground1,
     textDecoration: "none",
+    transition: "color 0.3s ease",
+    ":hover": {
+      color: tokens.colorBrandForeground1,
+      fontWeight: 600,
+      textDecoration: "none",
+    },
   },
+  
   activeNavLink: {
     color: tokens.colorBrandForeground1,
     fontWeight: 600,
-    borderBottom: `2px solid ${tokens.colorBrandForeground1}`,
   },
 });
 
@@ -62,7 +71,6 @@ const Header = () => {
   const styles = useHeaderStyles();
 
   const links = [
-    { text: "Home", route: "/" },
     { text: "Insights", route: "/bs-data" },
     { text: "Resources", route: "/bs-resource" },
     { text: "Post Coach", route: "/bs-posting-coach" },
@@ -74,7 +82,7 @@ const Header = () => {
   return (
     <motion.header
       className={styles.header}
-      initial={{ opacity: 0, y: -80 }}
+      initial={false} 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, ease: "easeOut" }}
     >

@@ -53,7 +53,7 @@ function App() {
         >
           <Header />
 
-          <div style={{ flexGrow: 1 }}>
+          <div style={{ flexGrow: 1, paddingTop: "5rem"}}>
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<BSHome />} />

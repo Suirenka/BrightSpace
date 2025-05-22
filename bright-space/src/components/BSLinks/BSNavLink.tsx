@@ -17,22 +17,10 @@ const useStyles = makeStyles({
     ...shorthands.gap("6px"),
     transition: "color .25s ease",
 
-    ":hover": { color: tokens.colorBrandForeground1 },
-
-    "::after": {
-      content: '""',
-      position: "absolute",
-      left: 0,
-      bottom: "-4px",
-      width: "100%",
-      height: "3px",
-      backgroundColor: tokens.colorBrandForeground1,
-      transform: "scaleX(0)",
-      transformOrigin: "left",
-      transition: "transform .25s ease",
-      borderRadius: "2px",
+    ":hover": {
+      color: tokens.colorBrandForeground1,
+      textDecoration: "none",
     },
-    ":hover::after": { transform: "scaleX(1)" },
   },
 });
 

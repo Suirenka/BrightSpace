@@ -100,7 +100,6 @@ const Footer = () => {
 
         <div className={styles.column}>
           <Text className={styles.columnTitle}>Quick Links</Text>
-          <BSNavLink text="Home" route="/" noArrow />
           <BSNavLink text="Insights" route="/bs-data" noArrow />
           <BSNavLink text="Resources" route="/bs-resource" noArrow />
           <BSNavLink text="Post Coach" route="/bs-posting-coach" noArrow />
