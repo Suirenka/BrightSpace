@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     borderRadius: "24px",
     boxShadow: tokens.shadow16,
     maxWidth: "60vw",
-    minHeight: "330px",
+    minHeight: "350px",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -319,40 +319,71 @@ const BSReflectiveTwin = () => {
           Your feelings matter. Let your Reflective Twin help you understand
           them better.
         </motion.p>
+        <motion.button
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 1.2 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            const target = document.getElementById("cardTop");
+            if (target) {
+              const headerOffset = 80;
+              const y = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+              window.scrollTo({ top: y, behavior: "smooth" });
+            }
+          }}
+          style={{
+            marginTop: "2rem",
+            padding: "0.75rem 1.5rem",
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            backgroundColor: tokens.colorBrandBackground,
+            color: tokens.colorNeutralForegroundOnBrand,
+            border: "none",
+            borderRadius: "9999px",
+            boxShadow: tokens.shadow8,
+            cursor: "pointer",
+          }}
+        >
+          Start Reflecting
+        </motion.button>
       </div>
 
-      <div className={styles.card}>
-        <Field label="Tell us your feelings..." className={styles.label}>
-          <div className={styles.inputBox}>
-            <Textarea
-              placeholder={
-                transcribing
-                  ? "Transcribing..."
-                  : isRecording
-                  ? "Press the mic again to stop recording..."
-                  : "Type what's on your mind ... or click on the mic to transcribe your voice into text."
-              }
-              value={prompt}
-              onChange={onChange}
-              className={styles.textarea}
-              style={{ height: "100px", width: "100%" }}
-            />
-            <Button
-              className={styles.recordButton}
-              onClick={handleRecord}
-              disabled={transcribing}
-              icon={
-                transcribing ? (
-                  <MicSparkle24Regular />
-                ) : isRecording ? (
-                  <MicProhibited24Regular />
-                ) : (
-                  <Mic24Regular />
-                )
-              }
-            ></Button>
-          </div>
-        </Field>
+      <div className={styles.card} id="cardTop">
+        <div id="reflectInput">
+          <Field label="Tell us your feelings..." className={styles.label}>
+            <div className={styles.inputBox}>
+              <Textarea
+                placeholder={
+                  transcribing
+                    ? "Transcribing..."
+                    : isRecording
+                    ? "Press the mic again to stop recording..."
+                    : "Type what's on your mind ... or click on the mic to transcribe your voice into text."
+                }
+                value={prompt}
+                onChange={onChange}
+                className={styles.textarea}
+                style={{ height: "100px", width: "100%" }}
+              />
+              <Button
+                className={styles.recordButton}
+                onClick={handleRecord}
+                disabled={transcribing}
+                icon={
+                  transcribing ? (
+                    <MicSparkle24Regular />
+                  ) : isRecording ? (
+                    <MicProhibited24Regular />
+                  ) : (
+                    <Mic24Regular />
+                  )
+                }
+              />
+            </div>
+          </Field>
+        </div>
 
         <Button
           onClick={handleSubmit}
