@@ -5,7 +5,7 @@ import BackToTopButton from "../components/BackToTopButton";
 import ResourceImage from "../assets/images/home/Resource.png";
 import PostingCoachImage from "../assets/images/home/Coach.png";
 import BoundaryImage from "../assets/images/home/Boundary.png";
-import RTBanner from "../assets/images/ReflectiveTwin.jpg";
+import RTImage from "../assets/images/home/ReflectiveTwin.jpg";
 import { motion } from "framer-motion";
 import DailyChallengeNotification from "../components/DailyChallengeNotification";
 import { useNavigate } from "react-router-dom";
@@ -155,7 +155,9 @@ const BSHome = () => {
             }}
           >
             The Heart Behind{" "}
-            <span style={{ color: tokens.colorBrandForeground1 }}>BrightSpace</span>
+            <span style={{ color: tokens.colorBrandForeground1 }}>
+              BrightSpace
+            </span>
           </h2>
           <p
             style={{
@@ -171,109 +173,81 @@ const BSHome = () => {
             conversation.
           </p>
           {(() => {
-          const stats = [
-            {
-              icon: "📊",
-              title: "Cyberbullying Still Hurts",
-              desc: (
-                <>
-                  2,383 cases reported by eSafety in Australia in 2023.
-                </>
-              ),
-            },
-            {
-              icon: "🛡️",
-              title: "Need for Online Safety",
-              desc: (
-                <>
-                  Estimated 18,300 cases in Victoria by 2028.
-                </>
-              ),
-            },
-            {
-              icon: "📩",
-              
-              title: "Real Stories from Victoria",
-              desc: (
-                <>
-                  748 eSafety reports in Victoria in 2022.
-                </>
-              ),
-            },
-          ];
+            const stats = [
+              {
+                icon: "📊",
+                title: "Cyberbullying Still Hurts",
+                desc: (
+                  <>2,383 cases reported by eSafety in Australia in 2023.</>
+                ),
+              },
+              {
+                icon: "🛡️",
+                title: "Need for Online Safety",
+                desc: <>Estimated 18,300 cases in Victoria by 2028.</>,
+              },
+              {
+                icon: "📩",
 
-          return (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexWrap: "wrap",
-                gap: "1.5rem",
-                marginTop: "1.5rem",
-              }}
-            >
-              {stats.map((item, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  style={{
-                    flex: "1 1 280px",
-                    backgroundColor: tokens.colorNeutralBackground1,
-                    borderRadius: "16px",
-                    padding: "2rem",
-                    boxShadow: tokens.shadow28,
-                    display: "flex",
-                    alignItems: "center",
-                    textAlign: "left",
-                    gap: "1rem",
-                  }}
-                >
-                  <div style={{ fontSize: "2rem" }}>{item.icon}</div>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: "1.25rem",
-                        fontWeight: 800,
-                        color: tokens.colorNeutralForeground1,
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                    {item.title}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "1rem",
-                        color: tokens.colorNeutralForeground2,
-                        lineHeight: "1.6",
-                      }}
-                    >
-                      {item.desc}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          );
-        })()}
+                title: "Real Stories from Victoria",
+                desc: <>748 eSafety reports in Victoria in 2022.</>,
+              },
+            ];
 
-          <div
-          style={{
-            marginTop: "2rem",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1.5rem",
-          }}
-        >
-          <button
-            className={styles.button}
-            onClick={() => navigate("/bs-data")}
-          >
-            View Full Data Insights
-          </button>
-        </div>
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  gap: "1.5rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                {stats.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    style={{
+                      flex: "1 1 280px",
+                      backgroundColor: tokens.colorNeutralBackground1,
+                      borderRadius: "16px",
+                      padding: "2rem",
+                      boxShadow: tokens.shadow28,
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "left",
+                      gap: "1rem",
+                    }}
+                  >
+                    <div style={{ fontSize: "2rem" }}>{item.icon}</div>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: "1.25rem",
+                          fontWeight: 800,
+                          color: tokens.colorNeutralForeground1,
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        {item.title}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "1rem",
+                          color: tokens.colorNeutralForeground2,
+                          lineHeight: "1.6",
+                        }}
+                      >
+                        {item.desc}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            );
+          })()}
 
           <div
             style={{
@@ -285,7 +259,24 @@ const BSHome = () => {
               gap: "1.5rem",
             }}
           >
+            <button
+              className={styles.button}
+              onClick={() => navigate("/bs-data")}
+            >
+              View Full Data Insights
+            </button>
           </div>
+
+          <div
+            style={{
+              marginTop: "2rem",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "1.5rem",
+            }}
+          ></div>
         </div>
       </div>
 
@@ -380,18 +371,14 @@ const BSHome = () => {
           viewport={{ once: true }}
         >
           <div className={styles.imageSection}>
-            <img
-              src={RTBanner}
-              className={styles.image}
-              alt="Reflective Twin"
-            />
+            <img src={RTImage} className={styles.image} alt="Reflective Twin" />
           </div>
           <div className={styles.textSection}>
             <h2 className={styles.title}>Reflective Twin</h2>
             <p className={styles.description}>
-              Share your thoughts — by typing or speaking — and Reflective Twin will
-              help you understand how you're feeling through tone analysis, emotional
-              feedback, and a personalized word cloud.
+              Share your thoughts — by typing or speaking — and Reflective Twin
+              will help you understand how you're feeling through tone analysis,
+              emotional feedback, and a personalized word cloud.
             </p>
             <button
               className={styles.button}
@@ -401,8 +388,6 @@ const BSHome = () => {
             </button>
           </div>
         </motion.div>
-
-
       </div>
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
@@ -458,7 +443,6 @@ const BSHome = () => {
         </div>
       </motion.div>
 
-      
       <BackToTopButton />
       <DailyChallengeNotification />
     </>

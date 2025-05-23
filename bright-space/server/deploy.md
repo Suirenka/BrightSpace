@@ -15,8 +15,9 @@ aws configure
 aws s3 cp project.zip s3://bright-space/server/project.zip
 cd ..
 ssh ubuntu@54.206.127.22 -i BrightSpace.pem
-# iteration 1 ssh ubuntu@3.107.181.166 -i BrightSpace.pem 
-# iteration 2 ssh ubuntu@3.107.181.166 -i BrightSpace.pem 
+# iteration 1 ssh ubuntu@13.54.221.187 -i BrightSpace.pem 
+# iteration 2 ssh ubuntu@13.55.180.152 -i BrightSpace.pem 
+# iteration 3 ssh ubuntu@52.63.101.235 -i BrightSpace.pem 
 
 ## In the server
 ### iteration 1 aws s3 cp s3://bright-space/code-deploy-1/project.zip project.zip
@@ -27,7 +28,7 @@ npm install --prefix Code/express-codedeploy-1/
 npm run build --prefix Code/express-codedeploy-1/
 
 screen -ls
-screen -X -S 12345.bright_space quit
+screen -X -S 2920.bright_space quit
 screen -S bright_space
 
 npm start --prefix Code/express-codedeploy-1/
@@ -53,6 +54,12 @@ server {
     listen [::]:80 default_server;
 
     server_name _;   # matches any host
+    root /var/www/html;
+
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
 
     location / {
                 # First attempt to serve request as file, then
@@ -70,5 +77,13 @@ server {
         }
 }
 
+sudo nginx -t
+sudo systemctl reload nginx
+
+# relaunch server:
+screen -S bright_space
+
+npm start --prefix Code/express-codedeploy-1/
+sudo htpasswd -c /etc/nginx/.htpasswd bs-test-user
 sudo nginx -t
 sudo systemctl reload nginx
